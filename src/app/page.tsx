@@ -1,17 +1,10 @@
-"use client"
+import DashboardPage from "./(dashboard)/page";
 
-import Image from "next/image";
-
-import { Button } from "@/components/ui/button/button";
-
-export default function Home() {
+// app/page.tsx
+export default function Page() {
   return (
-    <div className="flex">
-      <Button>Default</Button>
-      <Button variant="destructive">Delete</Button>
-      <Button variant="outline" >Small</Button>
-      <Button isLoading>Saving...</Button>
-      <Button>Add</Button>
+    <div>
+      <DashboardPage />
     </div>
   );
 }
