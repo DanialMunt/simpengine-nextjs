@@ -1,5 +1,7 @@
+"use client"
+
 export default function Events() {
     return (
-        <div className="events">Events</div>
+        <div className="events">This is the events</div>
     )
 }

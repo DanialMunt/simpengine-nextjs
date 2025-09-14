@@ -1,13 +1,13 @@
-
-
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <div className="flex min-h-screen">
-      <div className="Sidebar">Sidebar</div>
-      <div className="flex-1 flex flex-col">
-        <div className="NavBar">NavBar</div>
-        <main className="flex-1 p-4">{children}</main>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md p-6 bg-white rounded-xl shadow">
+        {children}
       </div>
     </div>
-  );
+  )
 }

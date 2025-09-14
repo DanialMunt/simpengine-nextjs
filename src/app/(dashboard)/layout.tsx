@@ -1,13 +1,16 @@
+import { Header } from "@/components/Header";
 
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex min-h-screen">
-      <div className="Sidebar">Sidebar</div>
-      <div className="flex-1 flex flex-col">
-        <div className="NavBar">NavBar</div>
-        <main className="flex-1 p-4">{children}</main>
+    <section className="flex min-h-screen ">
+      <div className="w-[200px] h-screen bg-purple-500">
+        <Header />
       </div>
-    </div>
+      <div className="flex-1 flex flex-col">
+        <div className=" bg-red-500 h-[100px]">NavBar</div>
+        <section className="flex-1 p-4">{children}</section>
+      </div>
+    </section>
   );
 }
