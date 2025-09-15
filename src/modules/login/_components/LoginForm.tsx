@@ -7,22 +7,26 @@ import { Input } from "@/components/ui/input/input";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 const loginSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  login: z.string() //.email("Invalid email address")
+  ,
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
+
+import { useRouter } from 'next/navigation'
 
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const router = useRouter()
   const { mutate: login, isPending } = useLogin();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting,  },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
+      login: "",
       password: "",
     },
   });
@@ -30,11 +34,13 @@ export default function LoginForm() {
   const onSubmit = (data: LoginFormValues) => {
    login(data, {
       onSuccess: (data) => {
-        console.log("✅ Logged in:", data);
+        console.log("Logged in:", data);
+        router.push("/dashboard")
        
       },
       onError: (err) => {
-        console.error("❌ Login failed:", err.message);
+        console.error("Login failed:", err.message);
+  
       },
     });
   };
@@ -43,12 +49,14 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full max-w-sm mx-auto">
       <div>
         <Input
-          type="email"
-          placeholder="Email"
-          {...register("email")}
+     
+          placeholder="Login"
+          {...register("login", 
+                    { minLength: 10 }
+                )}
         />
-        {errors.email && (
-          <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+        {errors.login && (
+          <p className="text-red-500 text-sm mt-1">{errors.login.message}</p>
         )}
       </div>
 
