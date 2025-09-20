@@ -35,7 +35,7 @@ export default function LoginForm() {
    login(data, {
       onSuccess: (data) => {
         console.log("Logged in:", data);
-        router.push("/dashboard")
+        router.push("/zustand")
        
       },
       onError: (err) => {
