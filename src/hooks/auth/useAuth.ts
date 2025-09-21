@@ -16,14 +16,11 @@ export const useLogin = (options?: {
   return useMutation<AuthResponse, Error, LoginDto>({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      // ✅ store in zustand
-      if (data.accessToken) {
-        useAuthStore.getState().setAccessToken(data.accessToken);
+      if (data.token) {
+        useAuthStore.getState().setToken(data.token);
       }
       if (data.user) {
         useAuthStore.getState().setUser(data.user);
-
-        // ✅ also sync into tanstack cache
         qc.setQueryData(userKey, data.user);
       }
 
@@ -44,8 +41,8 @@ export const useRegister = (options?: {
   return useMutation<AuthResponse, Error, RegisterDto>({
     mutationFn: registerApi,
     onSuccess: (data) => {
-      if (data.accessToken) {
-        useAuthStore.getState().setAccessToken(data.accessToken);
+      if (data.token) {
+        useAuthStore.getState().setToken(data.token);
       }
       if (data.user) {
         useAuthStore.getState().setUser(data.user);
@@ -69,19 +66,16 @@ export const useLogout = (options?: {
   return useMutation<void, Error>({
     mutationFn: logoutApi,
     onSuccess: () => {
-      // ✅ clear zustand + tanstack cache
       useAuthStore.getState().clearAuth();
       qc.removeQueries({ queryKey: userKey });
 
       options?.onSuccess?.();
 
-      // optional: hard redirect to login
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       }
     },
     onError: (err) => {
-      // even if logout API fails, clear local state
       useAuthStore.getState().clearAuth();
       qc.removeQueries({ queryKey: userKey });
 
