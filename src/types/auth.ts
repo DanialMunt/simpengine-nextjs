@@ -9,12 +9,12 @@ export interface RegisterDto {
   name: string;
 }
 
+
 export interface AuthResponse {
-  accessToken: string;
-  refreshToken?: string;
-  user: {
+  token: string; 
+  user?: {
     id: string;
-    email: string;
-    name: string;
+    login: string;
   };
 }
+

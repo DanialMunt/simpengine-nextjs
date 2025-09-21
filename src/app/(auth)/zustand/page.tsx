@@ -1,14 +1,12 @@
 "use client";
 import useAuthStore from "@/stores/useAuthStore";
 
-export default function DebugAuth() {
-  const { user, accessToken } = useAuthStore();
-
+export default function AuthDebugPanel() {
+  const { token, user } = useAuthStore();
   return (
-    <div className="p-4 bg-gray-100">
-      <h2 className="font-bold">Auth Debug Panel</h2>
-      <pre>User: {JSON.stringify(user, null, 2)}</pre>
-      <pre>AccessToken: {accessToken}</pre>
+    <div className=" text-xs rounded">
+      <div>Token: {token ? token.slice(0, 10) + "..." : "null"}</div>
+      <div>User: {user ? JSON.stringify(user) : "null"}</div>
     </div>
   );
 }
