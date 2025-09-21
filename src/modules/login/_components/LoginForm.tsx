@@ -7,8 +7,7 @@ import { Input } from "@/components/ui/input/input";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 const loginSchema = z.object({
-  login: z.string() //.email("Invalid email address")
-  ,
+  login: z.string(),
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
@@ -35,7 +34,7 @@ export default function LoginForm() {
    login(data, {
       onSuccess: (data) => {
         console.log("Logged in:", data);
-        router.push("/zustand")
+        router.push("/dashboard")
        
       },
       onError: (err) => {
