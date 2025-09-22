@@ -1,9 +1,10 @@
 "use client"
 
-import Home from "../../../modules/dashboard/Home";
+
+import Dashboard from "@/modules/dashboard/Dashboard";
 
 export default function DashboardPage() {
   return (
-    <div>This is the dashboard</div>
+    <Dashboard />
   );
 }
