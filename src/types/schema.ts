@@ -6,7 +6,7 @@ export const onboardingSchema = z.object({
     lastName: z.string().min(3).max(20),
     password: z.string().min(6).max(100),
     confirmPassword: z.string().min(6).max(100),
-    terms: z.boolean().refine((val) => val === true, { message: "You must accept the terms and conditions" }),
+    terms: z.boolean().refine((val) => val),
 });
 
 export type OnboardingSchema = z.infer<typeof onboardingSchema>;

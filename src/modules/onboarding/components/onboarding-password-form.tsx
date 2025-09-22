@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input/input";
 import { useRouter } from "next/navigation";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
+import { useEffect } from "react";
 
 
 const onboardingPasswordSchema = onboardingSchema.pick({ 
@@ -25,6 +26,11 @@ type OnboardingPasswordSchema = z.infer<typeof onboardingPasswordSchema>;
 
 export default function OnboardingPasswordForm() {
   const router = useRouter();
+
+  const firstName = useOnboardingStore((state) => state.firstName);
+  const lastName = useOnboardingStore((state) => state.lastName);
+
+
   const setData = useOnboardingStore((state) => state.setData);
     const form = useForm<OnboardingPasswordSchema>( {
         resolver: zodResolver(onboardingPasswordSchema),
@@ -39,6 +45,15 @@ export default function OnboardingPasswordForm() {
         router.push("/onboarding/username");
     }
 
+    useEffect(() => {
+   //   if (!useOnboardingStore.persist.hasHydrated) return;
+
+      if (!firstName || !lastName) {
+        router.push("/onboarding/name");
+      }
+    // }, [useOnboardingStore.persist.hasHydrated, firstName, lastName, router]);
+    }, [firstName, lastName, router]);
+
     return <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
@@ -49,9 +64,9 @@ export default function OnboardingPasswordForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>First Name</FormLabel>
+              <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input placeholder="John" {...field} />
+                <Input placeholder="****" {...field} />
               </FormControl>
               <FormDescription>This is your password.</FormDescription>
               <FormMessage />
@@ -63,9 +78,9 @@ export default function OnboardingPasswordForm() {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Last Name</FormLabel>
+              <FormLabel>Confirm</FormLabel>
               <FormControl>
-                <Input placeholder="Doe" {...field} />
+                <Input placeholder="*****" {...field} />
               </FormControl>
               <FormDescription>This is your password confirmation.</FormDescription>
               <FormMessage />
