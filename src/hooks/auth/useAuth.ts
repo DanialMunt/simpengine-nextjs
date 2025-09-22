@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { loginApi, registerApi, logoutApi } from "@/api/auth/auth";
+import { loginApi, registerApi, logoutApi } from "@/api/auth/authApi";
 import useAuthStore from "@/stores/useAuthStore";
 import type { LoginDto, RegisterDto, AuthResponse } from "@/types/auth";
 
