@@ -1,5 +1,5 @@
 "use client"
-import { useSimpTargets, useCreateSimpTarget } from "@/hooks/simp-target/useSimpTarget";
+import { useSimpTargets, useCreateSimpTarget } from "@/modules/simp-target/hooks/useSimpTarget";
 
 export default function SimpTargetPage() {
   const { data: targets, isLoading } = useSimpTargets();
