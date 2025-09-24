@@ -1,6 +1,6 @@
 import React from 'react'
 
- import { Button } from "@/components/ui/button/button";
+ import { Button } from "@/components/ui/button";
 import { Input } from '@/components/ui/input/input';
 
 // import { Button } from '@/components/ui/button';
@@ -15,7 +15,6 @@ const UILibrary = () => {
                     <Button variant="destructive">Delete</Button>
                     <Button variant="outline"  >Small</Button>
               
-                     <Button isLoading>Saving</Button>
                 </div>
             </div>
 
