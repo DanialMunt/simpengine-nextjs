@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 const loginSchema = z.object({
   login: z.string(),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  password: z.string().min(3, "Password must be at least 3 characters"),
 });
 
 import { useRouter } from 'next/navigation'
