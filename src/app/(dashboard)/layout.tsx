@@ -1,5 +1,5 @@
 
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import Header from "@/components/layout/header/header";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -13,9 +13,12 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>
      
       <div className="flex-1 flex flex-col">
+       <SidebarTrigger />
         <div className="h-20">
+            
           <Header />
         </div>
+       
         <section className="flex-1 p-4">{children}</section>
       </div>
     </section>
