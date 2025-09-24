@@ -6,7 +6,7 @@ import {
   createSimpTargetApi,
   updateSimpTargetApi,
   deleteSimpTargetApi,
-} from "@/api/simp-target/simpTargetApi";
+} from "@/modules/simp-target/api/simpTargetApi";
 import { SimpTarget } from "@/types/simpTarget";
 
 
