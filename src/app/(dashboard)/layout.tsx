@@ -6,7 +6,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   return (
     <SidebarProvider>
       
-    <section className="flex min-h-screen w-full">
+    <section className="flex min-h-screen bg-secondary w-full">
       <div className="flex bg-blue-500 z-10">
 
         <AppSidebar />
