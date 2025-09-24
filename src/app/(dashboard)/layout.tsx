@@ -1,6 +1,7 @@
-import SideBar from "@/components/ui/sidebar/sidebar";
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
+import Header from "@/components/layout/header/header";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
@@ -12,7 +13,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       </div>
      
       <div className="flex-1 flex flex-col">
-        <div className=" bg-red-500 h-[100px]">NavBar</div>
+        <div className="h-20">
+          <Header />
+        </div>
         <section className="flex-1 p-4">{children}</section>
       </div>
     </section>
