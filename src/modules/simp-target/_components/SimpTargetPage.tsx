@@ -19,7 +19,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet"
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
@@ -77,8 +77,10 @@ export default function SimpTargetPage() {
     )
 
   return (
-    <div className="flex flex-col gap-5">
-      <h1>All Targets</h1>
+    <div className="flex flex-col gap-3 overflow-auto">
+       {/* <h1>Search</h1>
+      <input type="text" className="input mb-3 input-bordered w-full bg-white py-2 px-5 rounded-md max-w-xs" placeholder="Search by name..." />
+      <h1>All Targets</h1> */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {targets?.map((t) => (
           <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
@@ -105,7 +107,7 @@ export default function SimpTargetPage() {
 
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="grid gap-4 py-4"
+            className="grid gap-4 px-4 py-4"
           >
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>

@@ -1,8 +1,9 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { usePathname } from "next/navigation";
 import { CirclePlus } from "lucide-react";
+import Link from "next/link";
 const pathNameMap: Record<string, string> = {
   "/": "Home",
   "/dashboard": "Dashboard",
@@ -20,7 +21,7 @@ export default function Header() {
       <span>{pageName}</span>
       <div className="flex gap-3">
         
-        <Button variant="default"><CirclePlus />Add new simp target</Button>
+        <Button variant="default"><CirclePlus /><Link href="/onboarding/name" >Add new simp target</Link></Button>
          <Button variant="secondary"><CirclePlus />Create new romantic event</Button>
       </div>
     </header>
