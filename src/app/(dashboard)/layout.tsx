@@ -14,7 +14,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
      
       <div className="flex-1 flex flex-col">
        <SidebarTrigger />
-        <div className="h-20">
+        <div className="h-16 ">
             
           <Header />
         </div>

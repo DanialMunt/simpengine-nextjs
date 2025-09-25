@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input/input";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 const loginSchema = z.object({
   login: z.string(),
@@ -34,7 +34,7 @@ export default function LoginForm() {
    login(data, {
       onSuccess: (data) => {
         console.log("Logged in:", data);
-        router.push("/zustand")
+        router.push("/dashboard")
        
       },
       onError: (err) => {
