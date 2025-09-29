@@ -19,7 +19,7 @@ type SimpTargetCardProps = {
 
 export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
   const deleteTarget = useDeleteSimpTarget();
-  const avatarEmojis = ["👩🏻", "👩🏽", "👩🏼‍🦱", "👩🏾‍🦰", "👱🏻‍♀️", "🧕🏽", "👩🏻‍🎓"];
+  const avatarEmojis = ["👩🏽‍🔧", "👩🏿‍🎓", "👰🏼‍♀️", "👩🏼‍⚕️", "🧕🏽", "👩🏽‍🍳"];
   const avatarBackgrounds = [
     "bg-linear-to-t from-sky-400 to-sky-300",
     "bg-linear-to-t from-violet-400 to-violet-300",
@@ -31,7 +31,8 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
 
   const [toggle, setToggle] = useState(false);
   function getEmojiAvatar(id: number) {
-    return avatarEmojis[id % avatarEmojis.length];
+      const hash = (id * 2654435761) % 3 ** 32; 
+    return avatarEmojis[hash % avatarEmojis.length];
   }
   function getBackground(id: number) {
   const hash = (id * 2654435761) % 2 ** 32; 
@@ -84,9 +85,9 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
   
       <div className="flex flex-col mb-5 gap-2 mt-7 p-2 ">
         <h2 className="text-lg font-semibold text-gray-800">{target.name}</h2>
-        <p className="py-1 w-fit px-3 bg-chart-2 text-sm rounded-md text-white">
+        {/* <p className="py-1 w-fit px-3 bg-chart-2 text-sm rounded-md text-white">
           Current target
-        </p>
+        </p> */}
         {target.description && (
           <p className="text-sm text-muted-foreground max-h-16">
             {target.description}

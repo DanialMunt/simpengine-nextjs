@@ -1,8 +1,8 @@
-"use client"
+"use client";
 import { onboardingSchema } from "@/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import {z} from "zod";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -18,28 +18,31 @@ import { useRouter } from "next/navigation";
 import { use } from "react";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 
-const onboardingNameSchema = onboardingSchema.pick({ 
-    firstName: true,
-lastName: true});
+const onboardingNameSchema = onboardingSchema.pick({
+  firstName: true,
+  lastName: true,
+});
+
 type OnboardingNameSchema = z.infer<typeof onboardingNameSchema>;
 
 export default function OnboardingNameForm() {
   const router = useRouter();
   const setData = useOnboardingStore((state) => state.setData);
-    const form = useForm<OnboardingNameSchema>( {
-        resolver: zodResolver(onboardingNameSchema),
-        defaultValues: {
-            firstName: "",
-            lastName: "",
-        },
-    })
+  const form = useForm<OnboardingNameSchema>({
+    resolver: zodResolver(onboardingNameSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+    },
+  });
 
-    const onSubmit = (data: OnboardingNameSchema) => {
-        setData(data);
-        router.push("/onboarding/password");
-    }
+  const onSubmit = (data: OnboardingNameSchema) => {
+    setData(data);
+    router.push("/onboarding/password");
+  };
 
-    return <Form {...form}>
+  return (
+    <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-[300px] space-y-8"
@@ -75,6 +78,5 @@ export default function OnboardingNameForm() {
         <Button type="submit">Next</Button>
       </form>
     </Form>
-    
-
+  );
 }

@@ -1,3 +1,4 @@
+
 import {z} from "zod";
 
 export const onboardingSchema = z.object({
@@ -8,5 +9,8 @@ export const onboardingSchema = z.object({
     confirmPassword: z.string().min(6).max(100),
     terms: z.boolean().refine((val) => val),
 });
+
+
+
 
 export type OnboardingSchema = z.infer<typeof onboardingSchema>;

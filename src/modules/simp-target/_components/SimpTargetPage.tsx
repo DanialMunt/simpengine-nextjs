@@ -81,7 +81,7 @@ export default function SimpTargetPage() {
        {/* <h1>Search</h1>
       <input type="text" className="input mb-3 input-bordered w-full bg-white py-2 px-5 rounded-md max-w-xs" placeholder="Search by name..." />
       <h1>All Targets</h1> */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1  sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {targets?.map((t) => (
           <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
         ))}
