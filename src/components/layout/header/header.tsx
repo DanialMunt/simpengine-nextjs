@@ -22,7 +22,7 @@ export default function Header() {
       <div className="flex gap-3">
         
         <Button variant="default"><CirclePlus /><Link href="/onboarding/name" >Add new simp target</Link></Button>
-         <Button variant="secondary"><CirclePlus />Create new romantic event</Button>
+         <Button variant="secondary"><CirclePlus /><Link href="/romantic-event/step-one" >Create new romantic event</Link></Button>
       </div>
     </header>
   );

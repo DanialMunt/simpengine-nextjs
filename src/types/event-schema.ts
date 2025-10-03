@@ -12,10 +12,12 @@ export const eventOption = z.object({
 })
 
 export const romanticEvent = z.object({
+    id: z.number().optional(),
     title: z.string().min(3).max(20),
     description: z.string().min(3).max(100),
-    event_date: z.string().min(3).max(20),
-    simp_target_id: z.number().min(1),
+    //event_date: z.date(),
+    event_date: z.string().min(3).max(30),
+    simp_target_id: z.number().min(1) ,
     steps: z.array(eventStep).min(1),
     
 });

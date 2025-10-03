@@ -14,28 +14,32 @@ import {
 import { Button } from "@/components/ui/button/button";
 import { Input } from "@/components/ui/input/input";
 import { useRouter } from "next/navigation";
-import { useSimpTargets } from "@/modules/simp-target/hooks/useSimpTarget";
 import { useRomanticEventStore } from "@/stores/useRomanticEventStore";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { useCreateRomanticEvent } from "../hooks/useRomanticEvent";
 
-import { NumberSelect } from "@/components/ui/number-select";
-
-const stepTwoChema = romanticEvent.pick({ title: true ,
-    description: true, event_date: true
+const stepTwoChema = romanticEvent.pick({
+  title: true,
+  description: true,
+  event_date: true,
 });
 
 type StepTwoSchema = z.infer<typeof stepTwoChema>;
 
 export default function StepTwo() {
-  const { data: targets, isLoading } = useSimpTargets();
-
+  const createEvent = useCreateRomanticEvent();
   const router = useRouter();
+
+  const simp_target_id = useRomanticEventStore((state) => state.simp_target_id);
+ 
 
   const setData = useRomanticEventStore((state) => state.setData);
 
@@ -44,14 +48,21 @@ export default function StepTwo() {
     defaultValues: {
       title: "",
       description: "",
-      event_date: ""
+      event_date: "",
     },
   });
 
   const onSubmit = (data: StepTwoSchema) => {
-    console.log("data of step two", data);
-    setData(data);
-    router.push("/romantic-event/step-three");
+    
+    createEvent.mutate({...data, simp_target_id}, {
+        onSuccess: (data) => {
+            console.log("Created event", {...data, simp_target_id});
+            router.push("/romantic-event/step-three");
+        },
+        onError: (error) => {
+            console.error("Error creating event", error);
+        }
+    });
   };
 
   return (
@@ -80,14 +91,58 @@ export default function StepTwo() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Our first romantical event, special moment" {...field} />
+                <Input
+                  placeholder="Our first romantical event, special moment"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        
+        <FormField
+  control={form.control}
+  name="event_date"
+  render={({ field }) => (
+    <FormItem className="flex flex-col">
+      <FormLabel>Date of birth</FormLabel>
+      <Popover>
+        <PopoverTrigger asChild>
+          <FormControl>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[240px] pl-3 text-left font-normal",
+                !field.value && "text-muted-foreground"
+              )}
+            >
+              {field.value ? (
+                format(new Date(field.value), "PPP") // convert string → Date
+              ) : (
+                <span>Pick a date</span>
+              )}
+              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+            </Button>
+          </FormControl>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar
+            mode="single"
+            selected={field.value ? new Date(field.value) : undefined} // string → Date
+            onSelect={(date) => {
+              field.onChange(date?.toISOString()); // Date → string
+            }}
+            disabled={(date) => date < new Date() || date < new Date("1900-01-01") }
+            captionLayout="dropdown"
+          />
+        </PopoverContent>
+      </Popover>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
 
         <Button type="submit">Next Fucking Go</Button>
       </form>
