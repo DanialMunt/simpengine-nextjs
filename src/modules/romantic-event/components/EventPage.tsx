@@ -1,10 +1,8 @@
 "use client"
-import {useState} from "react";
-import { useEvents } from "../hooks/useEvent";
 
-
+import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
 export default function EventsPage() {
-    const {data: events, isLoading} = useEvents();
+    const {data: events, isLoading} = useGetRomanticEvent();
     return <div>
         {isLoading && <div>Loading...</div>}
         {events?.map((event) => (
