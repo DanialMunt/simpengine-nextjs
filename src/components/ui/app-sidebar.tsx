@@ -21,7 +21,7 @@ const items = [
   },
   {
     title: "Events",
-    url: "/events",
+    url: "/romantic-event",
     icon: CalendarCheck,
   },
   {

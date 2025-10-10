@@ -8,9 +8,15 @@ import {
   deleteSimpTargetApi,
 } from "@/modules/simp-target/api/simpTargetApi";
 import { SimpTarget } from "@/types/simpTarget";
+import { Event } from "@/types/events";
+import { createRomanticEventApi, getRomanticEventsApi } from "../api/romanticEventApi";
 
-import { createRomanticEventApi } from "../api/romanticEventApi";
-
+export const useGetRomanticEvent = (params?: Partial<Event>) => {
+  return useQuery({
+    queryKey: ["events", params],
+    queryFn: () => getRomanticEventsApi(params),
+  });
+}
 
 export const useCreateRomanticEvent = () => {
     const qc = useQueryClient();

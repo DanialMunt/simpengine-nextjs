@@ -28,12 +28,12 @@ export default function RootLayout({
 
 
   return (
-    <html lang="en" data-theme="dark">
+    <html lang="en" data-theme="dark" >
        <QueryProvider>
        
           
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           {children}
         </body>

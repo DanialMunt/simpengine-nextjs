@@ -23,16 +23,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import { useCreateRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
 import { NumberSelect } from "@/components/ui/number-select";
 
 const stepOneChema = romanticEvent.pick({ simp_target_id: true });
 
 type StepOneSchema = z.infer<typeof stepOneChema>;
 
-export default function StepOne() {
+export default function StepThree() {
   const { data: targets, isLoading } = useSimpTargets();
-
+    const createEvent = useCreateRomanticEvent();
   const router = useRouter();
 
   const setData = useRomanticEventStore((state) => state.setData);
@@ -51,7 +51,7 @@ export default function StepOne() {
       ...data,
       simp_target_id: id, 
     });
-    router.push("/romantic-event/step-two");
+    router.push("/romantic-event-creation/step-two");
   };
 
   return (
