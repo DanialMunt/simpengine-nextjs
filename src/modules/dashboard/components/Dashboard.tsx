@@ -114,7 +114,7 @@ export default function Dashboard() {
       <section className="flex-1 min-h-0">
         <div className="flex h-full gap-4 ">
           <div className="justify-center items-center flex-[2] bg-background rounded-lg border border-border p-3">
-             Events Created Per Day
+            Events Created Per Day
             <ResponsiveContainer
               style={{
                 paddingRight: "50px",
@@ -189,7 +189,6 @@ export default function Dashboard() {
                   <div className="w-4 h-4 bg-[#FFBB28]"></div>
                   <p className="text-sm">Pending</p>
                 </div>
-
               </div>
             </div>
           </div>
@@ -202,13 +201,14 @@ export default function Dashboard() {
             <p>Simp targets</p>
           </div>
 
+          <div className="w-full bg-background max-h-[400px] rounded-lg border border-border px-3 overflow-auto">
+            <div className="flex pt-3 pb-2 justify-between items-center sticky top-0 bg-background">
+              <span> Simp targets</span>
+              <Link href="/simp-target">
+                <span className="text-blue-500 text-base">View all</span>
+              </Link>
+            </div>
 
-
-          <div className="w-full bg-background max-h-[400px] rounded-lg border border-border p-3 overflow-auto">
-           <div className="flex pb-2 justify-between items-center">
-            <span> Simp targets</span>
-            <Link href="/simp-target"><span className="text-blue-500 text-base">View all</span></Link>
-           </div>
             {isLoading && <div>Loading...</div>}
             {targets?.map((target, index) => (
               <SimpTargetMiniCard key={index} target={target} />
