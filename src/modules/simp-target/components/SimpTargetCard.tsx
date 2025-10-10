@@ -42,7 +42,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
 }
 
   return (
-    <div className="rounded-xl border border-border flex flex-col bg-background hover:border-primary/20 transition h-80 max-h-80">
+    <div className="rounded-xl border w-full border-border flex flex-col bg-background hover:border-primary/20 transition h-80 max-h-80">
      
       <div
         className={`flex justify-center relative gap-3 rounded-t-xl h-24 items-center ${getBackground(
@@ -98,7 +98,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
       </div>
 
      
-      <div className=" flex justify-center gap-3 p-2">
+      <div className=" flex flex-col justify-center gap-3 p-2">
         <Button>Invite for a date</Button>
         <Button variant="secondary">Check events</Button>
       </div>
