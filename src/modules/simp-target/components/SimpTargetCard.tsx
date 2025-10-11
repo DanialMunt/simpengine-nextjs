@@ -2,7 +2,7 @@
 
 import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteSimpTarget } from "@/modules/simp-target/hooks/useSimpTarget";
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/ui/button";
 
 import { EllipsisVertical } from "lucide-react";
 import {
@@ -42,14 +42,14 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
 }
 
   return (
-    <div className="rounded-xl border w-full border-border flex flex-col bg-background hover:border-primary/20 transition h-80 max-h-80">
+    <div className="rounded-xl border w-full border-border flex flex-col bg-card  hover:border-foreground/15 transition h-80 max-h-80">
      
       <div
         className={`flex justify-center relative gap-3 rounded-t-xl h-24 items-center ${getBackground(
           target.id
         )}`}
       >
-        <div className="text-6xl absolute top-10 bg-white shadow-md border-4 p-4 rounded-full">
+        <div className="text-6xl absolute top-10 bg-white shadow-md border-4 border-border p-4 rounded-full">
           {getEmojiAvatar(target.id)}
         </div>
 
@@ -86,7 +86,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
 
   
       <div className="flex flex-col mb-5 gap-2 mt-7 p-2 ">
-        <h2 className="text-lg font-semibold text-gray-800">{target.name}</h2>
+        <h2 className="text-lg font-semibold ">{target.name}</h2>
         {/* <p className="py-1 w-fit px-3 bg-chart-2 text-sm rounded-md text-white">
           Current target
         </p> */}
