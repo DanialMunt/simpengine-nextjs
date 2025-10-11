@@ -1,14 +1,16 @@
 "use client";
 
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { CirclePlus } from "lucide-react";
+import { UserPlus } from "lucide-react";
+import { CalendarPlus } from "lucide-react";
 import Link from "next/link";
+import { ThemeSwitch } from "../themeSwitch";
 const pathNameMap: Record<string, string> = {
   "/": "Home",
   "/dashboard": "Dashboard",
   "/simp-target": "Simp targets",
-  "/events": "Events",
+  "/romantic-event": "Romantic Events",
 };
 
 export default function Header() {
@@ -18,11 +20,28 @@ export default function Header() {
 
   return (
     <header className=" h-full flex justify-between items-center text-foreground text-xl font-medium p-4">
-      <span>{pageName}</span>
+      <span className="max-w-48 w-full truncate">{pageName}</span>
+      <ThemeSwitch />
       <div className="flex gap-3">
-        
-        <Button variant="default"><CirclePlus /><Link href="/onboarding/name" >Add new simp target</Link></Button>
-         <Button variant="secondary"><CirclePlus /><Link href="/romantic-event/step-one" >Create new romantic event</Link></Button>
+        <Link href="/romantic-event/step-one" passHref>
+          <Button asChild variant="default">
+            <div>
+              <UserPlus />
+              <span className="hidden lg:inline">Add new simp target</span>
+            </div>
+          </Button>
+        </Link>
+
+        <Link href="/romantic-event-creation/step-one" passHref>
+          <Button asChild variant="secondary">
+            <div>
+              <CalendarPlus />
+              <span className="hidden lg:inline">
+                Create new romantic event
+              </span>
+            </div>
+          </Button>
+        </Link>
       </div>
     </header>
   );

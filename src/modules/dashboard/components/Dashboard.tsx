@@ -95,7 +95,7 @@ export default function Dashboard() {
           {stats.map((info, index) => (
             <div
               key={index}
-              className="p-4 border border-border rounded-lg flex gap-5 bg-background"
+              className="p-4 border border-border rounded-lg flex gap-5 bg-card"
             >
               <div
                 className={`w-12 h-12 rounded-full flex ${info.color} justify-center items-center`}
@@ -103,7 +103,7 @@ export default function Dashboard() {
                 {info.img}
               </div>
               <div className="flex flex-col">
-                <h2 className="text-md ">{info.name}</h2>
+                <h2 className="text-md text-muted-foreground">{info.name}</h2>
                 <p className="text-xl font-semibold ">{info.num}</p>
               </div>
             </div>
@@ -112,8 +112,8 @@ export default function Dashboard() {
       </section>
 
       <section className="flex-1 min-h-0">
-        <div className="flex h-full gap-4 ">
-          <div className="justify-center items-center flex-[2] bg-background rounded-lg border border-border p-3">
+        <div className="flex lg:flex-row  flex-col h-full gap-4 ">
+          <div className="justify-center items-center flex-[2] bg-card rounded-lg border border-border p-3">
             Events Created Per Day
             <ResponsiveContainer
               style={{
@@ -152,7 +152,7 @@ export default function Dashboard() {
               </LineChart>
             </ResponsiveContainer>
           </div>
-          <div className="justify-center items-center flex-[1] bg-background rounded-lg border border-border p-3">
+          <div className="justify-center items-center flex-[1] bg-card rounded-lg border border-border p-3">
             Events Status
             <div className="flex items-center h-full w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -197,12 +197,12 @@ export default function Dashboard() {
 
       <section className="flex-1 min-h-0 ">
         <div className="flex h-full gap-4 ">
-          <div className="w-full bg-background rounded-lg border border-border p-3">
+          <div className="w-full bg-card rounded-lg border border-border p-3">
             <p>Simp targets</p>
           </div>
 
-          <div className="w-full bg-background max-h-[400px] rounded-lg border border-border px-3 overflow-auto">
-            <div className="flex pt-3 pb-2 justify-between items-center sticky top-0 bg-background">
+          <div className="w-full bg-card max-h-[400px] rounded-lg border border-border px-3 overflow-auto">
+            <div className="flex pt-3 pb-2 justify-between items-center sticky top-0 bg-card">
               <span> Simp targets</span>
               <Link href="/simp-target">
                 <span className="text-blue-500 text-base">View all</span>
