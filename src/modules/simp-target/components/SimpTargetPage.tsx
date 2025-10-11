@@ -9,6 +9,8 @@ import { CardSkeleton } from "@/components/ui/loading/cardSkeleton"
 import { useSimpTargets, useCreateSimpTarget , useUpdateSimpTarget} from "@/modules/simp-target/hooks/useSimpTarget"
 import { SimpTargetCard } from "./SimpTargetCard"
 
+import { updateSimpTargetSchema, } from "@/types/simpTarget"
+
 import {
   Sheet,
   SheetContent,
@@ -19,7 +21,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet"
 
-import { Button } from "@/components/ui/button/button"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 

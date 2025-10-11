@@ -1,5 +1,5 @@
 import { api } from "@/lib/axios";
-import { SimpTarget } from "@/types/simpTarget";
+import { SimpTarget, CreateSimpTarget, UpdateSimpTarget } from "@/types/simpTarget";
 
 export const getSimpTargetsApi = async (params?: Partial<SimpTarget>): Promise<SimpTarget[]> => {
   const res = await api.get<SimpTarget[]>("/simp-target", {
@@ -14,7 +14,7 @@ export const getSimpTargetByIdApi = async (id: number): Promise<SimpTarget> => {
 };
 
 export const createSimpTargetApi = async (
-  data: Omit<SimpTarget, "id"> 
+  data: CreateSimpTarget 
 ): Promise<SimpTarget> => {
   const res = await api.post<SimpTarget>("/simp-target", data);
   return res.data;

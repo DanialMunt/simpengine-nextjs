@@ -6,7 +6,7 @@ import {
   updateSimpTargetApi,
   deleteSimpTargetApi,
 } from "@/modules/simp-target/api/simpTargetApi";
-import { SimpTarget } from "@/types/simpTarget";
+import { SimpTarget, UpdateSimpTarget } from "@/types/simpTarget";
 
 
 export const useSimpTargets = (params?: Partial<SimpTarget>) => {

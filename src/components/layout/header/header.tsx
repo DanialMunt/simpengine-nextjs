@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { CalendarPlus, UserPlus, Bell } from "lucide-react";
 import Link from "next/link";
 import { ThemeSwitch } from "../themeSwitch";
+import { useModalStore } from "@/stores/useModalStore";
 const pathNameMap: Record<string, string> = {
   "/": "Home",
   "/dashboard": "Dashboard",
@@ -13,6 +14,7 @@ const pathNameMap: Record<string, string> = {
 };
 
 export default function Header() {
+  const { open } = useModalStore();
   const pathname = usePathname();
 
   const pageName = pathNameMap[pathname] || "Page";
@@ -22,14 +24,14 @@ export default function Header() {
       <span className="max-w-48 w-full truncate">{pageName}</span>
       <ThemeSwitch />
       <div className="flex gap-3 items-center">
-        <Link href="/romantic-event/step-one" passHref>
-          <Button asChild variant="default">
+
+          <Button asChild variant="default" onClick={open}>
             <div>
               <UserPlus />
               <span className="hidden lg:inline">Add new simp target</span>
             </div>
           </Button>
-        </Link>
+ 
 
         <Link href="/romantic-event-creation/step-one" passHref>
           <Button asChild variant="secondary">

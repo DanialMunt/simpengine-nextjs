@@ -2,6 +2,7 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import Header from "@/components/layout/header/header";
+import SimpTargetModal from "@/modules/simp-target/components/SimpTargetModal";
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
@@ -21,6 +22,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
        
         <section className="flex-1 p-4">{children}</section>
       </div>
+      <SimpTargetModal />
     </section>
     </SidebarProvider>
   );
