@@ -1,6 +1,6 @@
 // components/ui/global-modal.tsx
 "use client";
-
+import { useEffect } from "react";
 import { useModalStore } from "@/stores/useModalStore";
 import { useCreateSimpTarget } from "../hooks/useSimpTarget";
 import { useForm } from "react-hook-form";
@@ -22,12 +22,20 @@ export default function SimpTargetModal() {
     },
   });
 
+  //Check this fn in future
+  useEffect(() => {
+    if (form.formState.isSubmitSuccessful) {
+      form.reset({ name: "", description: "", })
+    }
+  }, [form.formState, form.reset])
+
   const onSubmit = (values: CreateSimpTarget) => {
     createTarget.mutate(
       { name: values.name, description: values.description },
       {
         onSuccess: () => {
-          console.log("Mutation success");
+          
+
           close();
         },
       }
