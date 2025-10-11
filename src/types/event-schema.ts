@@ -19,7 +19,7 @@ export const romanticEvent = z.object({
     event_date: z.string().min(3).max(30),
     simp_target_id: z.number().min(1) ,
     steps: z.array(eventStep).min(1),
-    
+    status: z.string().min(3).max(20)
 });
 
 export type RomanticEvent = z.infer<typeof romanticEvent>;

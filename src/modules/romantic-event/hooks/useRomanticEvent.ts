@@ -9,11 +9,11 @@ import {
 } from "@/modules/simp-target/api/simpTargetApi";
 import { SimpTarget } from "@/types/simpTarget";
 import { Event } from "@/types/events";
-import { createRomanticEventApi, getRomanticEventsApi } from "../api/romanticEventApi";
+import { createRomanticEventApi, getRomanticEventsApi, deleteRomanticEventApi } from "../api/romanticEventApi";
 
 export const useGetRomanticEvent = (params?: Partial<Event>) => {
   return useQuery({
-    queryKey: ["events", params],
+    queryKey: ["romanticEvents", params],
     queryFn: () => getRomanticEventsApi(params),
   });
 }
@@ -28,5 +28,16 @@ export const useCreateRomanticEvent = () => {
         },
     });
 }
+
+export const useDeleteRomanticEvent = () => {
+  const qc = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number) => deleteRomanticEventApi(id),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["romanticEvents"] });
+    },
+  });
+};
 
 

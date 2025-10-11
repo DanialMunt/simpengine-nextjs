@@ -3,6 +3,7 @@ import { MessageCircleHeart } from "lucide-react";
 import { Rose } from "lucide-react";
 import { BadgeCheck } from "lucide-react";
 import { CircleX } from "lucide-react";
+import { BarChart, Bar } from "recharts";
 import {
   LineChart,
   Line,
@@ -46,6 +47,50 @@ const renderCustomizedLabel = ({
 };
 
 export default function Dashboard() {
+  const data = [
+  {
+    name: 'Page A',
+    uv: 4000,
+    pv: 2400,
+    amt: 2400,
+  },
+  {
+    name: 'Page B',
+    uv: 3000,
+    pv: 1398,
+    amt: 2210,
+  },
+  {
+    name: 'Page C',
+    uv: 2000,
+    pv: 9800,
+    amt: 2290,
+  },
+  {
+    name: 'Page D',
+    uv: 2780,
+    pv: 3908,
+    amt: 2000,
+  },
+  {
+    name: 'Page E',
+    uv: 1890,
+    pv: 4800,
+    amt: 2181,
+  },
+  {
+    name: 'Page F',
+    uv: 2390,
+    pv: 3800,
+    amt: 2500,
+  },
+  {
+    name: 'Page G',
+    uv: 3490,
+    pv: 4300,
+    amt: 2100,
+  },
+];
   const stats = [
     {
       name: "All dates",
@@ -89,7 +134,7 @@ export default function Dashboard() {
   const { data: targets, isLoading } = useSimpTargets();
 
   return (
-    <section className="flex flex-col gap-4 h-full min-h-0 flex-grow">
+    <section className="flex flex-col gap-4 h-full ">
       <section className="flex-none">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((info, index) => (
@@ -111,10 +156,10 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="flex-1 min-h-0">
-        <div className="flex lg:flex-row  flex-col h-full gap-4 ">
+      <section className="h-full min-h-[40vh]">
+        <div className="flex lg:flex-row flex-col h-full gap-4 ">
           <div className="justify-center items-center flex-[2] bg-card rounded-lg border border-border p-3">
-            Events Created Per Day
+            Events Created
             <ResponsiveContainer
               style={{
                 paddingRight: "50px",
@@ -151,6 +196,27 @@ export default function Dashboard() {
                 />
               </LineChart>
             </ResponsiveContainer>
+            {/* <ResponsiveContainer width="100%" height="100%">
+              <BarChart
+                width={500}
+                height={300}
+                data={data}
+                margin={{
+                  top: 20,
+                  right: 30,
+                  left: 20,
+                  bottom: 20,
+                }}
+              >
+                <CartesianGrid strokeWidth={1} strokeOpacity={100} strokeDasharray={2} />
+                <XAxis tick={{ fontSize: 12 }} dataKey="name" />
+                <YAxis tick={{ fontSize: 12 }} />
+                <Tooltip />
+               
+                <Bar dataKey="pv" stackId="a" fill="#465ef6" />
+                <Bar dataKey="uv" stackId="a" fill="#262626"  />
+              </BarChart>
+            </ResponsiveContainer> */}
           </div>
           <div className="justify-center items-center flex-[1] bg-card rounded-lg border border-border p-3">
             Events Status
@@ -194,8 +260,8 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
-
-      <section className="flex-1 min-h-0 ">
+{/* flex-1 min-h-0 */}
+      <section className="max-h-[40vh] ">
         <div className="flex h-full gap-4 ">
           <div className="w-full bg-card rounded-lg border border-border p-3">
             <p>Simp targets</p>

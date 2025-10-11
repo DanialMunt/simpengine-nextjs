@@ -18,3 +18,7 @@ export const getRomanticEventsApi = async (params?: Partial<Event>): Promise<Eve
   });
   return res.data;
 }
+
+export const deleteRomanticEventApi = async (id: number): Promise<void> => {
+  await api.delete(`/romantic-event/${id}`)
+}

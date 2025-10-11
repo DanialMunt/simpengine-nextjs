@@ -39,7 +39,6 @@ export default function StepTwo() {
   const router = useRouter();
 
   const simp_target_id = useRomanticEventStore((state) => state.simp_target_id);
- 
 
   const setData = useRomanticEventStore((state) => state.setData);
 
@@ -53,16 +52,18 @@ export default function StepTwo() {
   });
 
   const onSubmit = (data: StepTwoSchema) => {
-    
-    createEvent.mutate({...data, simp_target_id}, {
+    createEvent.mutate(
+      { ...data, simp_target_id },
+      {
         onSuccess: (data) => {
-            console.log("Created event", {...data, simp_target_id});
-            router.push("/romantic-event-creation/step-three");
+          console.log("Created event", { ...data, simp_target_id });
+          router.push("/romantic-event");
         },
         onError: (error) => {
-            console.error("Error creating event", error);
-        }
-    });
+          console.error("Error creating event", error);
+        },
+      }
+    );
   };
 
   return (
@@ -102,47 +103,48 @@ export default function StepTwo() {
         />
 
         <FormField
-  control={form.control}
-  name="event_date"
-  render={({ field }) => (
-    <FormItem className="flex flex-col">
-      <FormLabel>Date of birth</FormLabel>
-      <Popover>
-        <PopoverTrigger asChild>
-          <FormControl>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[240px] pl-3 text-left font-normal",
-                !field.value && "text-muted-foreground"
-              )}
-            >
-              {field.value ? (
-                format(new Date(field.value), "PPP") // convert string → Date
-              ) : (
-                <span>Pick a date</span>
-              )}
-              <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-            </Button>
-          </FormControl>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0" align="start">
-          <Calendar
-            mode="single"
-            selected={field.value ? new Date(field.value) : undefined} // string → Date
-            onSelect={(date) => {
-              field.onChange(date?.toISOString()); // Date → string
-            }}
-            disabled={(date) => date < new Date() || date < new Date("1900-01-01") }
-            captionLayout="dropdown"
-          />
-        </PopoverContent>
-      </Popover>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-
+          control={form.control}
+          name="event_date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col">
+              <FormLabel>Date of birth</FormLabel>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[240px] pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(new Date(field.value), "PPP") // convert string → Date
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value ? new Date(field.value) : undefined} // string → Date
+                    onSelect={(date) => {
+                      field.onChange(date?.toISOString()); // Date → string
+                    }}
+                    disabled={(date) =>
+                      date < new Date() || date < new Date("1900-01-01")
+                    }
+                    captionLayout="dropdown"
+                  />
+                </PopoverContent>
+              </Popover>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         <Button type="submit">Next Fucking Go</Button>
       </form>

@@ -1,10 +1,15 @@
 "use client";
 
 import { SimpTarget } from "@/types/simpTarget";
-import { useDeleteSimpTarget } from "@/modules/simp-target/hooks/useSimpTarget";
+import { useDeleteRomanticEvent } from "../hooks/useRomanticEvent";
 import { Button } from "@/components/ui/button/button";
-
-import { EllipsisVertical } from "lucide-react";
+import { RomanticEvent } from "@/types/event-schema";
+import {
+  EllipsisVertical,
+  Image as ImageIcon,
+  Calendar,
+  CircleDotDashed,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,70 +17,84 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
+import Image from "next/image";
 
 type EventCard = {
-  target: SimpTarget;
-  onEdit?: (target: SimpTarget) => void;
+  event: RomanticEvent;
+  onEdit?: (event: RomanticEvent) => void;
 };
 
-export function EventCard({ target, onEdit }: EventCard) {
-  const deleteTarget = useDeleteSimpTarget();
-  
- 
+export function EventCard({ event, onEdit }: EventCard) {
+  const deleteRomanticEvent = useDeleteRomanticEvent();
 
-
-  
   return (
-    <div className="rounded-xl border border-border flex flex-col bg-background hover:border-primary/20 transition h-80 max-h-80">
-     
-      <div className="flex justify-center relative gap-3 rounded-t-xl h-24 items-center">
-       
-       
-        <div className="absolute right-2 top-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="p-2 hover:bg-primary/10 cursor-pointer rounded-xl">
-                <EllipsisVertical color="white" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-40">
-              {onEdit && (
+    <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-2 p-3 max-h-70">
+      <div className="rounded-lg flex justify-between ">
+        <div className="flex items-center gap-2">
+          <div className="p-3 bg-gray-200 rounded-lg flex justify-center items-center w-36 h-36">
+            <ImageIcon color="gray" className="h-[3rem] w-[3rem]" />
+          </div>
+          <div className="flex flex-col gap-1  ">
+            <h2 className="text-lg font-semibold">{event.title}</h2>
+
+            <p className="text-sm text-muted-foreground max-h-16">
+              {event.description}
+            </p>
+          </div>
+        </div>
+
+        <div className="flex justify-center relative gap-3 rounded-t-xl h-12 items-center">
+          <div className="absolute right-1 ">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="p-2  cursor-pointer rounded-xl">
+                  <EllipsisVertical />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-40">
+                {onEdit && (
+                  <DropdownMenuItem
+                    onClick={() => {
+                      onEdit(event);
+                    }}
+                  >
+                    Edit
+                  </DropdownMenuItem>
+                )}
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  onClick={() => {
-                    onEdit(target);
-                  }}
+                  disabled={deleteRomanticEvent.isPending}
+                  onClick={() => deleteRomanticEvent.mutate(event.id)}
+                  className="text-red-600 focus:bg-red-100"
                 >
-                  Edit
+                  {deleteRomanticEvent.isPending ? "Deleting..." : "Delete"}
                 </DropdownMenuItem>
-              )}
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                disabled={deleteTarget.isPending}
-                onClick={() => deleteTarget.mutate(target.id)}
-                className="text-red-600 focus:bg-red-100"
-              >
-                {deleteTarget.isPending ? "Deleting..." : "Delete"}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
         </div>
       </div>
 
-  
-      <div className="flex flex-col mb-5 gap-2 mt-7 p-2 ">
-        <h2 className="text-lg font-semibold text-gray-800">{target.name}</h2>
-        {target.description && (
-          <p className="text-sm text-muted-foreground max-h-16">
-            {target.description}
-          </p>
-        )}
-      </div>
+      <div className="flex flex-col gap-2">
+        <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-1 text-muted-foreground text-sm">
+            <Calendar className="w-[1.2rem] h-[1.2rem]" />
+            <p>Date</p>
+          </div>
 
-     
-      <div className=" flex justify-center gap-3 p-2">
-        <Button>Invite for a date</Button>
-        <Button variant="secondary">Check events</Button>
+          <p>{event.event_date}</p>
+        </div>
+
+        <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-1 text-muted-foreground text-sm">
+            <CircleDotDashed className="w-[1.2rem] h-[1.2rem]" />
+            <p>Status</p>
+          </div>
+         
+          <p className="py-1 px-5 bg-yellow-500 text-white w-fit rounded-lg">
+            {event.status}
+          </p>
+        </div>
       </div>
     </div>
   );
