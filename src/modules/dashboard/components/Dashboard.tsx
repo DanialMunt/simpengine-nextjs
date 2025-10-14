@@ -288,7 +288,7 @@ export default function Dashboard() {
               </Link>
             </div>
 
-            {targetsLoading && <div>Loading...</div>}
+            {targetsLoading && <div >Loading...</div>}
             {targets?.map((target, index) => (
               <SimpTargetMiniCard key={index} target={target} />
             ))}

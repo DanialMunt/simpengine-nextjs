@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { SimpTarget, simpTargetSchema, createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
+import { createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
 
 export default function SimpTargetModal() {
   const { isOpen, close } = useModalStore();
@@ -45,13 +45,13 @@ export default function SimpTargetModal() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 z-50 flex backdrop-blur-xs items-center justify-center bg-black/50">
       <div
         className={`bg-white dark:bg-zinc-900 p-6 rounded-xl w-full max-w-md shadow-lg transition-all delay-75 ${
           isOpen ? " opacity-100" : "opacity-0"
         }`}
       >
-        <h2 className="text-lg font-semibold mb-4">Form Modal</h2>
+        <h2 className="text-lg text-center font-semibold mb-4">Add New Simp Target</h2>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="grid gap-2">
             <Label htmlFor="name">Name</Label>
