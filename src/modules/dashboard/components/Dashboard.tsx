@@ -16,7 +16,9 @@ import {
 } from "recharts";
 import { Cell, Pie, PieChart } from "recharts";
 import { useSimpTargets } from "@/modules/simp-target/hooks/useSimpTarget";
+import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
 import SimpTargetMiniCard from "@/modules/simp-target/components/SimpTargetMiniCard";
+import EventMiniCard from "@/modules/romantic-event/components/EventMiniCard";
 import Link from "next/link";
 const RADIAN = Math.PI / 180;
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
@@ -131,7 +133,9 @@ export default function Dashboard() {
     { name: "Pending", value: 300 },
   ];
 
-  const { data: targets, isLoading } = useSimpTargets();
+  const { data: targets, isLoading: targetsLoading } = useSimpTargets();
+
+  const { data: romanticEvents, isLoading: EventsLoading} = useGetRomanticEvent()
 
   return (
     <section className="flex flex-col gap-4 h-full ">
@@ -156,9 +160,9 @@ export default function Dashboard() {
         </div>
       </section>
 
-      <section className="h-full min-h-[40vh]">
+      <section className="h-full ">
         <div className="flex lg:flex-row flex-col h-full gap-4 ">
-          <div className="justify-center items-center flex-[2] bg-card rounded-lg border border-border p-3">
+          <div className="justify-center items-center flex-[2] bg-card min-h-[40vh] rounded-lg border border-border p-3">
             Events Created
             <ResponsiveContainer
               style={{
@@ -218,7 +222,7 @@ export default function Dashboard() {
               </BarChart>
             </ResponsiveContainer> */}
           </div>
-          <div className="justify-center items-center flex-[1] bg-card rounded-lg border border-border p-3">
+          <div className="justify-center items-center flex-[1] bg-card min-h-[40vh] rounded-lg border border-border p-3">
             Events Status
             <div className="flex items-center h-full w-full">
               <ResponsiveContainer width="100%" height="100%">
@@ -261,21 +265,30 @@ export default function Dashboard() {
         </div>
       </section>
 {/* flex-1 min-h-0 */}
-      <section className="max-h-[40vh] ">
-        <div className="flex h-full gap-4 ">
-          <div className="w-full bg-card rounded-lg border border-border p-3">
-            <p>Simp targets</p>
+      <section className="lg:max-h-[40vh] ">
+        <div className="flex h-full gap-4 flex-col lg:flex-row">
+          <div className="w-full bg-card max-h-96 rounded-lg border border-border px-3 overflow-auto">
+            <div className="flex pt-3 pb-2 justify-between items-center sticky top-0 bg-card">
+              <p>Romantic Events</p>
+              <Link href="/romantic-event">
+                <span className="text-primary text-base">View all</span>
+              </Link>
+            </div>
+            {EventsLoading && <div>Loading...</div>}
+            {romanticEvents?.map((event, index) => (
+              <EventMiniCard key={index} event={event} />
+            ))}
           </div>
 
-          <div className="w-full bg-card max-h-[400px] rounded-lg border border-border px-3 overflow-auto">
+          <div className="w-full bg-card max-h-96 rounded-lg border border-border px-3 overflow-auto">
             <div className="flex pt-3 pb-2 justify-between items-center sticky top-0 bg-card">
-              <span> Simp targets</span>
+              <p>Simp targets</p>
               <Link href="/simp-target">
-                <span className="text-blue-500 text-base">View all</span>
+                <span className="text-primary text-base">View all</span>
               </Link>
             </div>
 
-            {isLoading && <div>Loading...</div>}
+            {targetsLoading && <div>Loading...</div>}
             {targets?.map((target, index) => (
               <SimpTargetMiniCard key={index} target={target} />
             ))}
