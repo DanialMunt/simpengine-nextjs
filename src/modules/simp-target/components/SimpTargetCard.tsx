@@ -49,7 +49,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
           target.id
         )}`}
       >
-        <div className="text-6xl absolute top-10 bg-white shadow-md border-4 border-border p-4 rounded-full">
+        <div className="text-6xl absolute top-8 bg-white shadow-md border-4 border-border p-4 rounded-full">
           {getEmojiAvatar(target.id)}
         </div>
 
@@ -85,7 +85,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
       </div>
 
   
-      <div className="flex flex-col mb-5 gap-2 mt-7 p-2 ">
+      <div className="flex flex-col mb-5  mt-8 p-2 ">
         <h2 className="text-lg font-semibold ">{target.name}</h2>
         {/* <p className="py-1 w-fit px-3 bg-chart-2 text-sm rounded-md text-white">
           Current target
