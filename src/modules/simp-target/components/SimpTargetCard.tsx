@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 
+
 type SimpTargetCardProps = {
   target: SimpTarget;
   onEdit?: (target: SimpTarget) => void;
