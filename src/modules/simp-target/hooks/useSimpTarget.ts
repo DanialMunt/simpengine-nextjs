@@ -39,7 +39,7 @@ export const useUpdateSimpTarget = () => {
   const qc = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, data }: { id: number; data: Partial<Omit<SimpTarget, "id">> }) =>
+    mutationFn: ({ id, data }: { id: number; data: UpdateSimpTarget }) =>
       updateSimpTargetApi(id, data),
     onSuccess: (updated) => {
       qc.invalidateQueries({ queryKey: ["simpTargets"] });

@@ -6,10 +6,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 
 import { CardSkeleton } from "@/components/ui/loading/cardSkeleton"
-import { useSimpTargets, useCreateSimpTarget , useUpdateSimpTarget} from "@/modules/simp-target/hooks/useSimpTarget"
+import { useSimpTargets , useUpdateSimpTarget} from "@/modules/simp-target/hooks/useSimpTarget"
 import { SimpTargetCard } from "./SimpTargetCard"
 
-import { updateSimpTargetSchema, } from "@/types/simpTarget"
 
 import {
   Sheet,
@@ -24,24 +23,26 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { createSimpTargetSchema } from "@/types/simpTarget"
+import { CreateSimpTarget } from "@/types/simpTarget"
+// const targetSchema = z.object({
+//   name: z.string().min(1, "Name is required"),
+//   description: z.string().min(1, "Description is required"),
+// })
 
-const targetSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().min(1, "Description is required"),
-})
+// type TargetFormValues = z.infer<typeof targetSchema>
 
-type TargetFormValues = z.infer<typeof targetSchema>
+
 
 export default function SimpTargetPage() {
   const { data: targets, isLoading } = useSimpTargets()
-  const createTarget = useCreateSimpTarget()
   const updateTarget = useUpdateSimpTarget()
 
   const [open, setOpen] = useState(false)
   const [selectedTarget, setSelectedTarget] = useState<any | null>(null)
 
-  const form = useForm<TargetFormValues>({
-    resolver: zodResolver(targetSchema),
+  const form = useForm<CreateSimpTarget>({
+    resolver: zodResolver(createSimpTargetSchema),
     defaultValues: {
       name: "",
       description: "",
@@ -57,7 +58,7 @@ export default function SimpTargetPage() {
     setOpen(true)
   }
 
-  const onSubmit = (values: TargetFormValues) => {
+  const onSubmit = (values: CreateSimpTarget) => {
     if (!selectedTarget) return
     updateTarget.mutate(
       { id: selectedTarget.id, data: values },
@@ -88,14 +89,6 @@ export default function SimpTargetPage() {
           <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
         ))}
       </div>
-
-      {/* <button
-        onClick={() =>
-          createTarget.mutate({ name: "New Target", description: "Test" })
-        }
-      >
-        Add Target
-      </button> */}
 
 
       <Sheet open={open} onOpenChange={setOpen}>
