@@ -78,22 +78,30 @@ export default function SimpTargetPage() {
           className="input border input-bordered w-full bg-card py-2 px-5 rounded-md max-w-xs"
           placeholder="Search by name..."
         />
-        <div className="flex border rounded-lg">
+        <div className="relative flex border rounded-lg overflow-hidden">
           <Button
-            variant={view === "cards" ? "default" : "ghost"}
+            variant="ghost"
             onClick={() => setView("cards")}
-            aria-pressed={view === "cards"}
+            className="relative z-10 flex-1"
           >
-            <Grid2X2 />
+            <Grid2X2 className="w-4 h-4" />
           </Button>
 
           <Button
-            variant={view === "table" ? "default" : "ghost"}
+           variant="ghost"
             onClick={() => setView("table")}
-            aria-pressed={view === "table"}
+            className="relative z-10 flex-1"
           >
-            <Rows3 />
+            <Rows3 className="w-4 h-4" />
           </Button>
+
+          <motion.div
+            layout
+            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            className={`absolute top-0 bottom-0 w-1/2 bg-card rounded-lg ${
+              view === "cards" ? "left-0" : "left-1/2"
+            }`}
+          />
         </div>
       </div>
       <h1>All Targets</h1>
