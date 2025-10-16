@@ -4,7 +4,7 @@ import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteSimpTarget } from "@/modules/simp-target/hooks/useSimpTarget";
 import { Button } from "@/components/ui/button";
 
-import { EllipsisVertical } from "lucide-react";
+import { EllipsisVertical, MessageCircleHeart, CalendarSearch } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -100,8 +100,8 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
 
      
       <div className=" flex flex-col justify-center gap-3 p-2">
-        <Button>Invite for a date</Button>
-        <Button variant="secondary">Check events</Button>
+        <Button><MessageCircleHeart />Invite for a date</Button>
+        <Button variant="secondary"><CalendarSearch />Check events</Button>
       </div>
     </div>
   );

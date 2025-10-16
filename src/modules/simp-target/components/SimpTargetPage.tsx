@@ -11,15 +11,22 @@ import { CardSkeleton } from "@/components/ui/loading/cardSkeleton";
 import { SimpTargetCard } from "./SimpTargetCard";
 import UpdateSheet from "./UpdateSheet";
 import { createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
-import { Rows3, Grid2X2 } from "lucide-react";
-import { th } from "date-fns/locale";
+import {
+  Rows3,
+  Grid2X2,
+  MessageCircleHeart,
+  CalendarSearch,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { motion, AnimatePresence } from "framer-motion";
+
 export default function SimpTargetPage() {
   const { data: targets, isLoading } = useSimpTargets();
   const updateTarget = useUpdateSimpTarget();
 
   const [open, setOpen] = useState(false);
   const [selectedTarget, setSelectedTarget] = useState<any | null>(null);
-  const [tabs, setTabs] = useState(0);
+  const [view, setView] = useState<"table" | "cards">("cards");
 
   const form = useForm<CreateSimpTarget>({
     resolver: zodResolver(createSimpTargetSchema),
@@ -51,8 +58,7 @@ export default function SimpTargetPage() {
   const avatarEmojis = ["👩🏽‍🔧", "👩🏿‍🎓", "👰🏼‍♀️", "👩🏼‍⚕️", "🧕🏽", "👩🏽‍🍳"];
 
   function getEmojiAvatar(id: number) {
-    const hash = (id * 2654435761) % 3 ** 32;
-    return avatarEmojis[hash % avatarEmojis.length];
+    return avatarEmojis[id % avatarEmojis.length];
   }
 
   if (isLoading)
@@ -72,52 +78,84 @@ export default function SimpTargetPage() {
           className="input border input-bordered w-full bg-card py-2 px-5 rounded-md max-w-xs"
           placeholder="Search by name..."
         />
-        <div className="flex border rounded-lg gap-1">
-          <div
-            onClick={() => setTabs(0)}
-            className={`${tabs === 0 ? "bg-card" : "bg-none"} rounded-lg p-3 `}
-          >
-            <Rows3 />
-          </div>
-          <div
-            onClick={() => setTabs(1)}
-            className={`${tabs === 0 ? "bg-none" : "bg-card"} rounded-lg p-3 `}
+        <div className="flex border rounded-lg">
+          <Button
+            variant={view === "cards" ? "default" : "ghost"}
+            onClick={() => setView("cards")}
+            aria-pressed={view === "cards"}
           >
             <Grid2X2 />
-          </div>
+          </Button>
+
+          <Button
+            variant={view === "table" ? "default" : "ghost"}
+            onClick={() => setView("table")}
+            aria-pressed={view === "table"}
+          >
+            <Rows3 />
+          </Button>
         </div>
       </div>
       <h1>All Targets</h1>
-      {tabs === 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {targets?.map((t) => (
-            <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
-          ))}
-        </div>
-      ) : (
-        <table className="border p-3 bg-card w-full border-collapse rounded-lg ">
-          <thead className="">
-            <tr className=" ">
-              <th className="border p-3 w-5">Emoji</th>
-              <th className="border p-3">Name</th>
-              <th className="border">Description</th>
-              <th className="border">Status</th>
-              <th className="border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
+      <AnimatePresence mode="wait">
+        {view === "cards" ? (
+          <motion.div
+            key="card-view"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+          >
             {targets?.map((t) => (
-              <tr key={t.id}>
-                <td className="p-3 border text-2xl">{getEmojiAvatar(t.id)}</td>
-                <td className="p-3 border">{t.name}</td>
-                <td className="p-3 border">{t.description}</td>
-                <td className="p-3 border">{t.description}</td>
-                <td className="p-3 border">{t.description}</td>
-              </tr>
+              <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
             ))}
-          </tbody>
-        </table>
-      )}
+          </motion.div>
+        ) : (
+          <motion.div
+            key="table-view"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="rounded-lg bg-card border"
+          >
+            <table className="w-full border-collapse text-sm">
+              <thead className="bg-muted/50">
+                <tr>
+                  <th className="p-3 text-left font-medium">Name</th>
+                  <th className="text-left font-medium">Description</th>
+                  <th className="text-left font-medium">Status</th>
+                  <th className="text-left font-medium">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {targets?.map((t) => (
+                  <tr key={t.id} className="border-t border-muted">
+                    <td className="p-3">
+                      {getEmojiAvatar(t.id)} {t.name}
+                    </td>
+                    <td>{t.description}</td>
+                    <td>
+                      <span className="py-1 px-3 bg-amber-400 rounded-lg text-white text-xs">
+                        Active
+                      </span>
+                    </td>
+                    <td className="flex gap-2 py-2">
+                      <Button size="sm">
+                        <MessageCircleHeart />
+                      </Button>
+                      <Button size="sm" variant="secondary">
+                        <CalendarSearch />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <UpdateSheet
         open={open}
