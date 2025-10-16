@@ -31,7 +31,7 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
   const handleDelete = (id: number) => {
     deleteTarget.mutate(id, {
       onSuccess: () => {
-        toast.success("Success!", { description: "Delete was successful" });
+        toast.success("Delete was successful");
       },
       onError: (error) => {
         toast.error((error as any)?.message);

@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { toast } from "sonner";
 export default function SimpTargetModal() {
   const { isOpen, close } = useModalStore();
   const createTarget = useCreateSimpTarget();
@@ -29,7 +29,15 @@ export default function SimpTargetModal() {
   const onSubmit = (values: CreateSimpTarget) => {
     createTarget.mutate(
       { name: values.name, description: values.description },
-      { onSuccess: close }
+      {
+        onSuccess: () => {
+          toast.success("Simp target was created");
+          close();
+        },
+        onError: (error) => {
+          toast.error((error as any)?.message);
+        },
+      }
     );
   };
 
@@ -61,7 +69,10 @@ export default function SimpTargetModal() {
               <h2 className="text-lg text-center font-semibold mb-4">
                 Add New Simp Target
               </h2>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-4"
+              >
                 <div className="grid gap-2">
                   <Label htmlFor="name">Name</Label>
                   <Input id="name" {...form.register("name")} />

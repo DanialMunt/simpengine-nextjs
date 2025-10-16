@@ -24,7 +24,7 @@ export default function DashboardLayout({
           <section className="flex-1 p-4">{children}</section>
         </div>
         <SimpTargetModal />
-        <Toaster />
+        
       </section>
     </SidebarProvider>
   );

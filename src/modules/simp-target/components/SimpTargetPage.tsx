@@ -52,13 +52,12 @@ export default function SimpTargetPage() {
       { id: selectedTarget.id, data: values },
       {
         onSuccess: () => {
-          setOpen(false), toast.success("Success!",
-            {description: "Update was successful"}
-          );
+          setOpen(false),
+            toast.success("Update was successful!");
         },
-         onError: (error) => {
+        onError: (error) => {
           setOpen(false), toast.error((error as any)?.message);
-         }
+        },
       }
     );
   };

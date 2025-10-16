@@ -12,7 +12,8 @@ const loginSchema = z.object({
 });
 
 import { useRouter } from 'next/navigation'
-
+import { Spinner } from "@/components/ui/spinner";
+import { toast } from "sonner";
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
@@ -33,12 +34,11 @@ export default function LoginForm() {
   const onSubmit = (data: LoginFormValues) => {
    login(data, {
       onSuccess: (data) => {
-        console.log("Logged in:", data);
         router.push("/dashboard")
        
       },
-      onError: (err) => {
-        console.error("Login failed:", err.message);
+      onError: (error) => {
+         toast.error((error as any)?.message);
   
       },
     });
@@ -71,7 +71,7 @@ export default function LoginForm() {
       </div>
 
       <Button type="submit" disabled={isPending} className="w-full">
-        {isPending ? "Logging in..." : "Login"}
+        {isPending ? <Spinner /> : "Login"}
       </Button>
     </form>
   );
