@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { EventCard } from "./EventCard";
-import { CardSkeleton } from "@/components/ui/loading/cardSkeleton"
+import { CardSkeleton } from "@/components/ui/loadingComp/cardSkeleton"
 import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
 export default function EventsPage() {
   const { data: events, isLoading } = useGetRomanticEvent();

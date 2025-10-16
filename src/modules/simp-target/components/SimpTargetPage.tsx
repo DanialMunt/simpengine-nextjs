@@ -7,7 +7,7 @@ import {
   useSimpTargets,
   useUpdateSimpTarget,
 } from "@/modules/simp-target/hooks/useSimpTarget";
-import { CardSkeleton } from "@/components/ui/loading/cardSkeleton";
+import { CardSkeleton } from "@/components/ui/loadingComp/cardSkeleton";
 import { SimpTargetCard } from "./SimpTargetCard";
 import UpdateSheet from "./UpdateSheet";
 import { createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-
+import { toast } from "sonner";
 export default function SimpTargetPage() {
   const { data: targets, isLoading } = useSimpTargets();
   const updateTarget = useUpdateSimpTarget();
@@ -50,7 +50,14 @@ export default function SimpTargetPage() {
     updateTarget.mutate(
       { id: selectedTarget.id, data: values },
       {
-        onSuccess: () => setOpen(false),
+        onSuccess: () => {
+          setOpen(false), toast.success("Success!",
+            {description: "Update was successful"}
+          );
+        },
+         onError: (error) => {
+          setOpen(false), toast.error((error as any)?.message);
+         }
       }
     );
   };
@@ -88,7 +95,7 @@ export default function SimpTargetPage() {
           </Button>
 
           <Button
-           variant="ghost"
+            variant="ghost"
             onClick={() => setView("table")}
             className="relative z-10 flex-1"
           >
