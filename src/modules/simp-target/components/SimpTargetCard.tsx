@@ -4,7 +4,11 @@ import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteSimpTarget } from "@/modules/simp-target/hooks/useSimpTarget";
 import { Button } from "@/components/ui/button";
 
-import { EllipsisVertical, MessageCircleHeart, CalendarSearch } from "lucide-react";
+import {
+  EllipsisVertical,
+  MessageCircleHeart,
+  CalendarSearch,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,16 +16,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-
-
+import { AlertDialogComp } from "@/components/ui/alertDialogComp/alert";
+import { useState } from "react";
 type SimpTargetCardProps = {
   target: SimpTarget;
   onEdit?: (target: SimpTarget) => void;
 };
-
+import { toast } from "sonner";
 export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
+  const [openDialog, setOpenDialog] = useState(false);
+
   const deleteTarget = useDeleteSimpTarget();
+
+  const handleDelete = (id: number) => {
+    deleteTarget.mutate(id, {
+      onSuccess: () => {
+        toast.success("Success!", { description: "Delete was successful" });
+      },
+      onError: (error) => {
+        toast.error((error as any)?.message);
+      },
+    });
+  };
+
   const avatarEmojis = ["👩🏽‍🔧", "👩🏿‍🎓", "👰🏼‍♀️", "👩🏼‍⚕️", "🧕🏽", "👩🏽‍🍳"];
   const avatarBackgrounds = [
     "bg-linear-to-t from-sky-400 to-sky-300",
@@ -32,19 +49,17 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
     "bg-linear-to-t from-pink-500 to-pink-300",
   ];
 
- 
   function getEmojiAvatar(id: number) {
-      const hash = (id * 2654435761) % 3 ** 32; 
+    const hash = (id * 2654435761) % 3 ** 32;
     return avatarEmojis[hash % avatarEmojis.length];
   }
   function getBackground(id: number) {
-  const hash = (id * 2654435761) % 2 ** 32; 
-  return avatarBackgrounds[hash % avatarBackgrounds.length];
-}
+    const hash = (id * 2654435761) % 2 ** 32;
+    return avatarBackgrounds[hash % avatarBackgrounds.length];
+  }
 
   return (
     <div className="rounded-xl border w-full border-border flex flex-col bg-card  hover:border-foreground/15 transition h-80 max-h-80">
-     
       <div
         className={`flex justify-center relative gap-3 rounded-t-xl h-24 items-center ${getBackground(
           target.id
@@ -54,7 +69,6 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
           {getEmojiAvatar(target.id)}
         </div>
 
-       
         <div className="absolute right-2 top-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -73,19 +87,34 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
                 </DropdownMenuItem>
               )}
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                disabled={deleteTarget.isPending}
-                onClick={() => deleteTarget.mutate(target.id)}
-                className="text-red-600 focus:bg-red-100"
-              >
-                {deleteTarget.isPending ? "Deleting..." : "Delete"}
-              </DropdownMenuItem>
+              <AlertDialogComp
+                trigger={
+                  <DropdownMenuItem
+                    onSelect={(e) => {
+                      e.preventDefault();
+                      setOpenDialog(true);
+                    }}
+                    disabled={deleteTarget.isPending}
+                    variant="destructive"
+                  >
+                    {deleteTarget.isPending ? "Deleting..." : "Delete"}
+                  </DropdownMenuItem>
+                }
+                open={openDialog}
+                onOpenChange={setOpenDialog}
+                title="Delete Target"
+                description="This action cannot be undone. The target will be permanently deleted."
+                confirmText="Delete"
+                cancelText="Cancel"
+                destructive
+                isLoading={deleteTarget.isPending}
+                onConfirm={() => handleDelete(target.id)}
+              />
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </div>
 
-  
       <div className="flex flex-col mb-5  mt-8 p-2 ">
         <h2 className="text-lg font-semibold ">{target.name}</h2>
         {/* <p className="py-1 w-fit px-3 bg-chart-2 text-sm rounded-md text-white">
@@ -98,10 +127,15 @@ export function SimpTargetCard({ target, onEdit }: SimpTargetCardProps) {
         )}
       </div>
 
-     
       <div className=" flex flex-col justify-center gap-3 p-2">
-        <Button><MessageCircleHeart />Invite for a date</Button>
-        <Button variant="secondary"><CalendarSearch />Check events</Button>
+        <Button>
+          <MessageCircleHeart />
+          Invite for a date
+        </Button>
+        <Button variant="secondary">
+          <CalendarSearch />
+          Check events
+        </Button>
       </div>
     </div>
   );

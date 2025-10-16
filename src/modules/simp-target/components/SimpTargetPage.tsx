@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
+
 export default function SimpTargetPage() {
   const { data: targets, isLoading } = useSimpTargets();
   const updateTarget = useUpdateSimpTarget();
