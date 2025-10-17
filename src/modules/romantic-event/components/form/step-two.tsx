@@ -75,7 +75,7 @@ export default function StepTwo() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-card p-5 min-w-md border rounded-lg space-y-8"
+        className="bg-card p-5 min-w-sm lg:min-w-md border rounded-lg space-y-8"
       >
         <FormField
           control={form.control}
