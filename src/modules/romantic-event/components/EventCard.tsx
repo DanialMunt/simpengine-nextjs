@@ -18,10 +18,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
-
+import { Event } from "@/types/events";
 type EventCard = {
-  event: RomanticEvent;
-  onEdit?: (event: RomanticEvent) => void;
+  event: Event;
+  onEdit?: (event: Event) => void;
 };
 
 export function EventCard({ event, onEdit }: EventCard) {
