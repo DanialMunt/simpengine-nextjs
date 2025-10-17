@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className=" h-full flex justify-between items-center text-foreground text-xl font-medium p-4">
-      <span className="max-w-48 w-full truncate">{pageName}</span>
+      <span className="lg:max-w-48 max-w-34 w-full truncate">{pageName}</span>
       <ThemeSwitch />
       <div className="flex gap-3 items-center">
 
