@@ -1,12 +1,14 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { addDays, setHours, setMinutes, subDays } from "date-fns"
-
-import { EventCalendar, type CalendarEvent } from "../components/event-calendar"
-import { CalendarLoader } from "./event-calendar/calendar-loader"
-
-
+import { useState, useEffect } from "react";
+import { addDays, setHours, setMinutes, subDays } from "date-fns";
+import { CalendarLoader } from "../components/event-calendar/calendar-loader";
+import {
+  EventCalendar,
+  type CalendarEvent,
+} from "../components/event-calendar";
+import { mapRomanticEventsToCalendar } from "@/utils/mapEvents";
+import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
 // Sample events data with hardcoded times
 const sampleEvents: CalendarEvent[] = [
   {
@@ -25,8 +27,8 @@ const sampleEvents: CalendarEvent[] = [
     description: "Submit final deliverables",
     start: setMinutes(setHours(subDays(new Date(), 9), 13), 0), // 1:00 PM, 9 days before
     end: setMinutes(setHours(subDays(new Date(), 9), 15), 30), // 3:30 PM, 9 days before
-    color: "amber",
-    location: "Office",
+    // color: "amber",
+    // location: "Office",
   },
   {
     id: "3",
@@ -75,59 +77,59 @@ const sampleEvents: CalendarEvent[] = [
     color: "sky",
     location: "Conference Room A",
   },
-  
-  
-]
+];
 
 export default function Calendar() {
-  const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents)
-const [isLoading, setIsLoading] = useState(true)
+  //const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
+  //const [isLoading, setIsLoading] = useState(true);
+   const { data: events, isLoading } = useGetRomanticEvent();
+ const calendarEvents = events
+    ? mapRomanticEventsToCalendar(events)
+    : []
+  // useEffect(() => {
+  //   const loadEvents = async () => {
+  //     setIsLoading(true);
+  //     await new Promise((resolve) => setTimeout(resolve, 500));
+  //     setEvents(sampleEvents);
+  //     setIsLoading(false);
+  //   };
 
-    useEffect(() => {
-    const loadEvents = async () => {
-      setIsLoading(true)
-      await new Promise((resolve) => setTimeout(resolve, 500))
-      setEvents(sampleEvents)
-      setIsLoading(false)
-    }
+  //   loadEvents();
+  // }, []);
 
-    loadEvents()
-  }, [])
+  // const handleEventAdd = (event: CalendarEvent) => {
+  //   setEvents([...events, event]);
+  // };
 
-  const handleEventAdd = (event: CalendarEvent) => {
-    setEvents([...events, event])
-  }
+  // const handleEventUpdate = (updatedEvent: CalendarEvent) => {
+  //   setEvents(
+  //     events.map((event) =>
+  //       event.id === updatedEvent.id ? updatedEvent : event
+  //     )
+  //   );
+  // };
 
-  const handleEventUpdate = (updatedEvent: CalendarEvent) => {
-    setEvents(
-      events.map((event) =>
-        event.id === updatedEvent.id ? updatedEvent : event
-      )
-    )
-  }
+  // const handleEventDelete = (eventId: string) => {
+  //   setEvents(events.filter((event) => event.id !== eventId));
+  // };
 
-  const handleEventDelete = (eventId: string) => {
-    setEvents(events.filter((event) => event.id !== eventId))
-  }
-
-   if (isLoading) {
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-full text-muted-foreground">
         <CalendarLoader />
       </div>
-    )
+    );
   }
 
   return (
     // Add min-h-screen to make it full height
     <div className="flex flex-col ">
       <EventCalendar
-        events={events}
-        onEventAdd={handleEventAdd}
-        onEventUpdate={handleEventUpdate}
-        onEventDelete={handleEventDelete}
+        events={calendarEvents}
+        // onEventAdd={handleEventAdd}
+        // onEventUpdate={handleEventUpdate}
+        // onEventDelete={handleEventDelete}
       />
-
     </div>
-  )
+  );
 }

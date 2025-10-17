@@ -6,7 +6,8 @@ export interface Event {
   published_at: string;      // ISO string (or empty)
   public_token: string;      // can be used for sharing
   simp_target_id: number;
-  steps: Step[] | null;      // nullable if no steps yet
+  steps: Step[] | null;  
+  status: string    // nullable if no steps yet
 }
 export interface Step {
   id: number;

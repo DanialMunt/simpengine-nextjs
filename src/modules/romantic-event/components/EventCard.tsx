@@ -2,7 +2,7 @@
 
 import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteRomanticEvent } from "../hooks/useRomanticEvent";
-import { Button } from "@/components/ui/button/button";
+import { Button } from "@/components/ui/button";
 import { RomanticEvent } from "@/types/event-schema";
 import {
   EllipsisVertical,

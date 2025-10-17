@@ -10,9 +10,9 @@ import {
 import { SimpTarget } from "@/types/simpTarget";
 import { Event } from "@/types/events";
 import { createRomanticEventApi, getRomanticEventsApi, deleteRomanticEventApi } from "../api/romanticEventApi";
-
+import { RomanticEvent } from "@/types/event-schema"
 export const useGetRomanticEvent = (params?: Partial<Event>) => {
-  return useQuery({
+  return useQuery({ 
     queryKey: ["romanticEvents", params],
     queryFn: () => getRomanticEventsApi(params),
   });

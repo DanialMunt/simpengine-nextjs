@@ -46,6 +46,8 @@ import {
   WeekView,
 } from "../event-calendar"
 
+import { RomanticEvent } from "@/types/event-schema";
+
 export interface EventCalendarProps {
   events?: CalendarEvent[]
   onEventAdd?: (event: CalendarEvent) => void
