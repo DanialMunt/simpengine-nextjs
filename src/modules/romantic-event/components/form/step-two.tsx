@@ -25,7 +25,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { useCreateRomanticEvent } from "../../hooks/useRomanticEvent";
-
+import Link from "next/link";
 const stepTwoChema = romanticEvent.pick({
   title: true,
   description: true,
@@ -58,8 +58,7 @@ export default function StepTwo() {
     }
 
     createEvent.mutate(
-      { ...data, simp_target_id, steps: [],
-    status: "" },
+      { ...data, simp_target_id, steps: [], status: "" },
       {
         onSuccess: (data) => {
           console.log("Created event", { ...data, simp_target_id });
@@ -76,7 +75,7 @@ export default function StepTwo() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-[300px] space-y-8"
+        className="bg-card p-5 min-w-md border rounded-lg space-y-8"
       >
         <FormField
           control={form.control}
@@ -151,8 +150,13 @@ export default function StepTwo() {
             </FormItem>
           )}
         />
+        <div className="flex justify-between">
+          <Link href="/romantic-event-creation/step-one">
+            <Button variant="outline">Back</Button>
+          </Link>
 
-        <Button type="submit">Next Fucking Go</Button>
+          <Button type="submit">Next Step</Button>
+        </div>
       </form>
     </Form>
   );

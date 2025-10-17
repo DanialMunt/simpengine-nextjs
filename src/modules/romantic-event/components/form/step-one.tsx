@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
+import Link from "next/link";
 import { NumberSelect } from "@/components/ui/number-select";
 
 const stepOneChema = romanticEvent.pick({ simp_target_id: true });
@@ -58,15 +58,16 @@ export default function StepOne() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-[300px] space-y-8"
+        className="bg-card p-5 min-w-md border rounded-lg space-y-8"
       >
         <FormField
+       
           control={form.control}
           name="simp_target_id"
           render={({ field }) => (
             <FormItem>
               <FormLabel>First Name</FormLabel>
-              {/* <Select onValueChange={field.onChange}> */}
+             
               <NumberSelect onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -87,7 +88,13 @@ export default function StepOne() {
           )}
         />
 
-        <Button type="submit">Next Fucking Go</Button>
+       <div className="flex justify-between">
+          <Link href="/dashboard">
+            <Button variant="outline">Cancel</Button>
+          </Link>
+
+          <Button type="submit">Next Step</Button>
+        </div>
       </form>
     </Form>
   );
