@@ -1,8 +1,13 @@
 import { info } from "console";
 import { MessageCircleHeart } from "lucide-react";
-import { Rose } from "lucide-react";
-import { BadgeCheck } from "lucide-react";
-import { CircleX } from "lucide-react";
+import { User } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  CircleX,
+  ArrowUpWideNarrow,
+  ChevronDownIcon,
+  BadgeCheck,
+} from "lucide-react";
 import { BarChart, Bar } from "recharts";
 import {
   LineChart,
@@ -14,6 +19,13 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Cell, Pie, PieChart } from "recharts";
 import { useSimpTargets } from "@/modules/simp-target/hooks/useSimpTarget";
 import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticEvent";
@@ -22,7 +34,7 @@ import EventMiniCard from "@/modules/romantic-event/components/EventMiniCard";
 import Link from "next/link";
 import { PieLabelRenderProps } from "recharts";
 const RADIAN = Math.PI / 180;
-const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+const COLORS = ["#3c9aeb", "#50C099", "#FFC565", "#FF8042"];
 
 type CustomLabelProps = {
   cx: number;
@@ -116,25 +128,25 @@ export default function Dashboard() {
       name: "All dates",
       num: 12,
       img: <MessageCircleHeart color="white" />,
-      color: "bg-chart-1",
+      color: "bg-primary",
     },
     {
       name: "All targets",
       num: 4,
-      img: <Rose color="white" />,
-      color: "bg-chart-2",
+      img: <User color="white" />,
+      color: "bg-blue",
     },
     {
       name: "Successful dates",
       num: 9,
       img: <BadgeCheck color="white" />,
-      color: "bg-chart-3",
+      color: "bg-green",
     },
     {
       name: "Declined dates",
       num: 3,
       img: <CircleX color="white" />,
-      color: "bg-chart-4",
+      color: "bg-red",
     },
   ];
 
@@ -159,14 +171,14 @@ export default function Dashboard() {
   return (
     <section className="flex flex-col gap-4 h-full ">
       <section className="flex-none">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((info, index) => (
             <div
               key={index}
               className="p-4 border border-border rounded-lg flex gap-5 bg-card"
             >
               <div
-                className={`w-12 h-12 rounded-full flex ${info.color} justify-center items-center`}
+                className={`min-w-12 min-h-12 max-w-12 max-h-12  rounded-full flex ${info.color} justify-center items-center`}
               >
                 {info.img}
               </div>
@@ -181,15 +193,42 @@ export default function Dashboard() {
 
       <section className="h-full ">
         <div className="flex lg:flex-row flex-col h-full gap-4 ">
-          <div className="justify-center items-center flex-[2] bg-card min-h-[40vh] rounded-lg border border-border p-3">
-            Events Created
+          <div className="justify-center items-center flex-[2] min-h-[40vh] lg:min-h-[50vh]  bg-card rounded-lg border border-border p-3">
+            <div className="flex justify-between">
+              <p>Events Created</p>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="gap-1.5 max-[479px]:h-8">
+                    <span>
+                      <span className="min-[480px]:hidden" aria-hidden="true">
+                        Week
+                      </span>
+                      <span className="max-[479px]:sr-only">Week</span>
+                    </span>
+                    <ChevronDownIcon
+                      className="-me-1 opacity-60"
+                      size={16}
+                      aria-hidden="true"
+                    />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="min-w-32">
+                  <DropdownMenuItem>Month</DropdownMenuItem>
+                  <DropdownMenuItem>Week</DropdownMenuItem>
+                  <DropdownMenuItem>Day</DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+
+           
             <ResponsiveContainer
               style={{
                 paddingRight: "50px",
-                paddingTop: "20px",
+                paddingTop: "10px",
+          
               }}
               width="100%"
-              height="90%"
+              height="80%"
             >
               <LineChart
                 data={LineChartData}
@@ -213,46 +252,71 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="eventsCreated"
-                  stroke="#8884d8"
+                  stroke="#465ef6"
                   strokeWidth={2}
                   activeDot={{ r: 6 }}
                 />
               </LineChart>
             </ResponsiveContainer>
-            {/* <ResponsiveContainer width="100%" height="100%">
-              <BarChart
-                width={500}
-                height={300}
-                data={data}
-                margin={{
-                  top: 20,
-                  right: 30,
-                  left: 20,
-                  bottom: 20,
-                }}
-              >
-                <CartesianGrid strokeWidth={1} strokeOpacity={100} strokeDasharray={2} />
-                <XAxis tick={{ fontSize: 12 }} dataKey="name" />
-                <YAxis tick={{ fontSize: 12 }} />
-                <Tooltip />
-               
-                <Bar dataKey="pv" stackId="a" fill="#465ef6" />
-                <Bar dataKey="uv" stackId="a" fill="#262626"  />
-              </BarChart>
-            </ResponsiveContainer> */}
+
+             <div className="flex justify-around ml-12 mr-10">
+              {/* Stat 1 */}
+              <div className="relative flex items-end gap-2">
+                <div className="relative">
+                  <p className="text-3xl font-semibold">5</p>
+                   <div className="absolute -top-2 left-3 lg:-top-1 lg:left-5 flex items-center">
+                    <p className="text-[0.6rem] font-semibold text-[#02a92b]">
+                      +2.5%
+                    </p>
+                    <ArrowUpWideNarrow
+                      className="w-[0.6rem] h-[0.6rem] ml-[1px]"
+                      color="#02a92b"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs lg:text-base text-muted-foreground">events created</p>
+              </div>
+
+              {/* Stat 2 */}
+              <div className="relative flex items-end gap-2">
+                <div className="relative">
+                  <p className="text-3xl font-semibold">2</p>
+                  <div className="absolute -top-2 left-3 lg:-top-1 lg:left-5 flex items-center">
+                    <p className="text-[0.6rem] font-semibold text-[#02a92b]">
+                      +1.3%
+                    </p>
+                    <ArrowUpWideNarrow
+                      className="w-[0.6rem] h-[0.6rem] ml-[1px]"
+                      color="#02a92b"
+                    />
+                  </div>
+                </div>
+                <p className="text-xs lg:text-base text-muted-foreground">targets added</p>
+              </div>
+
+              {/* Stat 3 */}
+              <div className="flex items-end gap-2">
+                <p className="text-3xl font-semibold">4</p>
+                <p className="text-xs lg:text-base text-muted-foreground">
+                  events completed
+                </p>
+              </div>
+            </div>
+
           </div>
-          <div className="justify-center items-center flex-[1] bg-card min-h-[40vh] rounded-lg border border-border p-3">
-            Events Status
-            <div className="flex items-center h-full w-full">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart width={500} height={500}>
+
+          <div className="justify-center items-center flex-[1] bg-card min-h-[35vh] lg:min-h-[50vh] rounded-lg border border-border p-3">
+            <p>Events Status</p>
+            <div className="flex flex-col items-center h-full">
+              <ResponsiveContainer width="100%" height="80%">
+                <PieChart width={100} height={60}>
                   <Pie
                     data={PieChartData}
                     cx="50%"
                     cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    outerRadius={80}
+                    outerRadius={110}
                     fill="#8884d8"
                     dataKey="value"
                   >
@@ -265,17 +329,17 @@ export default function Dashboard() {
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
-              <div className="flex flex-col mr-5">
+              <div className="flex gap-5  ">
                 <div className="flex gap-1 items-center">
-                  <div className="w-4 h-4 bg-[#0088FE]"></div>
+                  <div className="w-4 h-4 bg-blue rounded-full"></div>
                   <p className="text-sm">Accepted</p>
                 </div>
                 <div className="flex gap-1 items-center">
-                  <div className="w-4 h-4 bg-[#00C49F]"></div>
+                  <div className="w-4 h-4 bg-green rounded-full"></div>
                   <p className="text-sm">Declined</p>
                 </div>
                 <div className="flex gap-1 items-center">
-                  <div className="w-4 h-4 bg-[#FFBB28]"></div>
+                  <div className="w-4 h-4 bg-yellow rounded-full"></div>
                   <p className="text-sm">Pending</p>
                 </div>
               </div>
@@ -294,8 +358,12 @@ export default function Dashboard() {
               </Link>
             </div>
             {EventsLoading ? (
-              <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
-            ) : romanticEvents && Array.isArray(romanticEvents) && romanticEvents.length > 0 ? (
+              <div className="animate-pulse text-muted-foreground p-3 text-center">
+                Loading...
+              </div>
+            ) : romanticEvents &&
+              Array.isArray(romanticEvents) &&
+              romanticEvents.length > 0 ? (
               romanticEvents.map((event, index) => (
                 <EventMiniCard key={index} event={event} />
               ))
@@ -315,10 +383,12 @@ export default function Dashboard() {
             </div>
 
             {targetsLoading ? (
-              <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
+              <div className="animate-pulse text-muted-foreground p-3 text-center">
+                Loading...
+              </div>
             ) : targets && Array.isArray(targets) && targets.length > 0 ? (
               targets.map((target, index) => (
-                 <SimpTargetMiniCard key={index} target={target} />
+                <SimpTargetMiniCard key={index} target={target} />
               ))
             ) : (
               <p className="text-muted-foreground p-3 text-center">

@@ -31,9 +31,18 @@ export function EventCard({ event, onEdit }: EventCard) {
     <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-2 p-3 max-h-70 ">
       <div className="rounded-lg flex justify-between ">
         <div className="flex items-center gap-2">
-          <div className="p-3 bg-gray-200 rounded-lg flex justify-center items-center w-36 h-36">
+          {/* <div className=" bg-gray-200 rounded-lg flex justify-center items-center w-36 h-36">
             <ImageIcon color="gray" className="h-[3rem] w-[3rem]" />
-          </div>
+                </div> */}
+            <Image
+              src="/event-placeholder.jpg"
+              alt="Event Image"
+              width={150}
+              height={150}
+              className="object-cover min-h-34 rounded-lg"
+            />
+      
+
           <div className="flex flex-col gap-1  ">
             <h2 className="text-lg font-semibold">{event.title}</h2>
 
