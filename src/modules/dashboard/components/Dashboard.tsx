@@ -20,8 +20,19 @@ import { useGetRomanticEvent } from "@/modules/romantic-event/hooks/useRomanticE
 import SimpTargetMiniCard from "@/modules/simp-target/components/SimpTargetMiniCard";
 import EventMiniCard from "@/modules/romantic-event/components/EventMiniCard";
 import Link from "next/link";
+import { PieLabelRenderProps } from "recharts";
 const RADIAN = Math.PI / 180;
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
+type CustomLabelProps = {
+  cx: number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
+  index?: number;
+};
 
 const renderCustomizedLabel = ({
   cx,
@@ -30,69 +41,76 @@ const renderCustomizedLabel = ({
   innerRadius,
   outerRadius,
   percent,
-}: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-(midAngle ?? 0) * RADIAN);
-  const y = cy + radius * Math.sin(-(midAngle ?? 0) * RADIAN);
+}: PieLabelRenderProps) => {
+  const cX = Number(cx ?? 0);
+  const cY = Number(cy ?? 0);
+  const iR = Number(innerRadius ?? 0);
+  const oR = Number(outerRadius ?? 0);
+  const angle = Number(midAngle ?? 0);
+  const p = Number(percent ?? 0); // << important for the arithmetic
+
+  const radius = iR + (oR - iR) * 0.5;
+  const x = cX + radius * Math.cos(-angle * RADIAN);
+  const y = cY + radius * Math.sin(-angle * RADIAN);
 
   return (
     <text
       x={x}
       y={y}
       fill="white"
-      textAnchor={x > cx ? "start" : "end"}
+      textAnchor={x > cX ? "start" : "end"}
       dominantBaseline="central"
     >
-      {`${((percent ?? 1) * 100).toFixed(0)}%`}
+      {`${(p * 100).toFixed(0)}%`}
     </text>
   );
 };
 
 export default function Dashboard() {
   const data = [
-  {
-    name: 'Page A',
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: 'Page B',
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: 'Page C',
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: 'Page D',
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: 'Page E',
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: 'Page F',
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: 'Page G',
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-];
+    {
+      name: "Page A",
+      uv: 4000,
+      pv: 2400,
+      amt: 2400,
+    },
+    {
+      name: "Page B",
+      uv: 3000,
+      pv: 1398,
+      amt: 2210,
+    },
+    {
+      name: "Page C",
+      uv: 2000,
+      pv: 9800,
+      amt: 2290,
+    },
+    {
+      name: "Page D",
+      uv: 2780,
+      pv: 3908,
+      amt: 2000,
+    },
+    {
+      name: "Page E",
+      uv: 1890,
+      pv: 4800,
+      amt: 2181,
+    },
+    {
+      name: "Page F",
+      uv: 2390,
+      pv: 3800,
+      amt: 2500,
+    },
+    {
+      name: "Page G",
+      uv: 3490,
+      pv: 4300,
+      amt: 2100,
+    },
+  ];
   const stats = [
     {
       name: "All dates",
@@ -135,7 +153,8 @@ export default function Dashboard() {
 
   const { data: targets, isLoading: targetsLoading } = useSimpTargets();
 
-  const { data: romanticEvents, isLoading: EventsLoading} = useGetRomanticEvent()
+  const { data: romanticEvents, isLoading: EventsLoading } =
+    useGetRomanticEvent();
 
   return (
     <section className="flex flex-col gap-4 h-full ">
@@ -264,7 +283,7 @@ export default function Dashboard() {
           </div>
         </div>
       </section>
-{/* flex-1 min-h-0 */}
+      {/* flex-1 min-h-0 */}
       <section className="lg:max-h-[40vh] ">
         <div className="flex h-full gap-4 flex-col lg:flex-row">
           <div className="w-full bg-card max-h-96 rounded-lg border border-border px-3 overflow-auto">
@@ -288,7 +307,7 @@ export default function Dashboard() {
               </Link>
             </div>
 
-            {targetsLoading && <div >Loading...</div>}
+            {targetsLoading && <div>Loading...</div>}
             {targets?.map((target, index) => (
               <SimpTargetMiniCard key={index} target={target} />
             ))}

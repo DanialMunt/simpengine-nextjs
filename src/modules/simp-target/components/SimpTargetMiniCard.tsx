@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
+import { SimpTarget } from "@/types/simpTarget";
 import { HandHeart } from "lucide-react";
-export default function SimpTargetMiniCard({ target }: { target: any }) {
+export default function SimpTargetMiniCard({ target }: { target: SimpTarget }) {
   const avatarEmojis = ["👩🏽‍🔧", "👩🏿‍🎓", "👰🏼‍♀️", "👩🏼‍⚕️", "🧕🏽", "👩🏽‍🍳"];
   function getEmojiAvatar(id: number) {
     const hash = (id * 2654435761) % 3 ** 32;

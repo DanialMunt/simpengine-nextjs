@@ -11,6 +11,7 @@ import { CardSkeleton } from "@/components/ui/loadingComp/cardSkeleton";
 import { SimpTargetCard } from "./SimpTargetCard";
 import UpdateSheet from "./UpdateSheet";
 import { createSimpTargetSchema, CreateSimpTarget } from "@/types/simpTarget";
+import { SimpTarget } from "@/types/simpTarget";
 import {
   Rows3,
   Grid2X2,
@@ -26,7 +27,7 @@ export default function SimpTargetPage() {
   const updateTarget = useUpdateSimpTarget();
 
   const [open, setOpen] = useState(false);
-  const [selectedTarget, setSelectedTarget] = useState<any | null>(null);
+  const [selectedTarget, setSelectedTarget] = useState<SimpTarget | null>(null);
   const [view, setView] = useState<"table" | "cards">("cards");
 
   const form = useForm<CreateSimpTarget>({
@@ -37,7 +38,7 @@ export default function SimpTargetPage() {
     },
   });
 
-  const handleEdit = (target: any) => {
+  const handleEdit = (target: SimpTarget) => {
     setSelectedTarget(target);
     form.reset({
       name: target.name,
@@ -52,11 +53,17 @@ export default function SimpTargetPage() {
       { id: selectedTarget.id, data: values },
       {
         onSuccess: () => {
-          setOpen(false),
-            toast.success("Update was successful!");
+          setOpen(false), toast.success("Update was successful!");
         },
-        onError: (error) => {
-          setOpen(false), toast.error((error as any)?.message);
+        onError: (error: unknown) => {
+          setOpen(false)
+          const message =
+            error instanceof Error
+              ? error.message
+              : typeof error === "string"
+              ? error
+              : "Something went wrong";
+           toast.error(message);
         },
       }
     );

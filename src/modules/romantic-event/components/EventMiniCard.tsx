@@ -1,7 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight, ImageIcon } from "lucide-react";
-export default function EventMiniCard({ event }: { event: any }) {
+import { RomanticEvent } from "@/types/event-schema";
+import { Event } from "@/types/events";
+export default function EventMiniCard({ event }: { event: Event }) {
  
   return (
      <div className="p-4 mb-3 flex justify-between bg-card border b rounded-lg hover:bg-accent transition cursor-pointer">

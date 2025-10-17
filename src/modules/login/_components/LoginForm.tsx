@@ -11,18 +11,18 @@ const loginSchema = z.object({
   password: z.string().min(3, "Password must be at least 3 characters"),
 });
 
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-  const router = useRouter()
+  const router = useRouter();
   const { mutate: login, isPending } = useLogin();
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting,  },
+    formState: { errors, isSubmitting },
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,28 +32,30 @@ export default function LoginForm() {
   });
 
   const onSubmit = (data: LoginFormValues) => {
-   login(data, {
+    login(data, {
       onSuccess: (data) => {
-        router.push("/dashboard")
-       
+        router.push("/dashboard");
       },
-      onError: (error) => {
-         toast.error((error as any)?.message);
-  
+      onError: (error: unknown) => {
+        const message =
+          error instanceof Error
+            ? error.message
+            : typeof error === "string"
+            ? error
+            : "Something went wrong";
+
+        toast.error(message);
       },
     });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 w-full max-w-sm mx-auto">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="space-y-4 w-full max-w-sm mx-auto"
+    >
       <div>
-        <Input
-     
-          placeholder="Login"
-          {...register("login", 
-                    { minLength: 10 }
-                )}
-        />
+        <Input placeholder="Login" {...register("login", { minLength: 10 })} />
         {errors.login && (
           <p className="text-red-500 text-sm mt-1">{errors.login.message}</p>
         )}

@@ -34,8 +34,15 @@ export default function SimpTargetModal() {
           toast.success("Simp target was created");
           close();
         },
-        onError: (error) => {
-          toast.error((error as any)?.message);
+        onError: (error: unknown) => {
+          const message =
+            error instanceof Error
+              ? error.message
+              : typeof error === "string"
+              ? error
+              : "Something went wrong";
+
+          toast.error(message);
         },
       }
     );
