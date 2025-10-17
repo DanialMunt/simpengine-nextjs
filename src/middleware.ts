@@ -10,6 +10,10 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
+  // if (pathname.startsWith("/")) {
+  //   return NextResponse.redirect(new URL("/login", req.url));
+  // }
+
   const token = req.cookies.get("jwt")?.value;
 
   // if (!token) {

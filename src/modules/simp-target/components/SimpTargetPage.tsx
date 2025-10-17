@@ -56,14 +56,14 @@ export default function SimpTargetPage() {
           setOpen(false), toast.success("Update was successful!");
         },
         onError: (error: unknown) => {
-          setOpen(false)
+          setOpen(false);
           const message =
             error instanceof Error
               ? error.message
               : typeof error === "string"
               ? error
               : "Something went wrong";
-           toast.error(message);
+          toast.error(message);
         },
       }
     );
@@ -129,9 +129,13 @@ export default function SimpTargetPage() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            {targets?.map((t) => (
-              <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
-            ))}
+            {targets && targets.length > 0 ? (
+              targets?.map((t) => (
+                <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
+              ))
+            ) : (
+              <p className="text-muted-foreground ">No targets found</p>
+            )}
           </motion.div>
         ) : (
           <motion.div
@@ -152,27 +156,31 @@ export default function SimpTargetPage() {
                 </tr>
               </thead>
               <tbody>
-                {targets?.map((t) => (
-                  <tr key={t.id} className="border-t border-muted">
-                    <td className="p-3">
-                      {getEmojiAvatar(t.id)} {t.name}
-                    </td>
-                    <td>{t.description}</td>
-                    <td>
-                      <span className="py-1 px-3 bg-amber-400 rounded-lg text-white text-xs">
-                        Active
-                      </span>
-                    </td>
-                    <td className="flex gap-2 py-2">
-                      <Button size="sm">
-                        <MessageCircleHeart />
-                      </Button>
-                      <Button size="sm" variant="secondary">
-                        <CalendarSearch />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
+                {targets && targets.length > 0 ? (
+                  targets?.map((t) => (
+                    <tr key={t.id} className="border-t border-muted">
+                      <td className="p-3">
+                        {getEmojiAvatar(t.id)} {t.name}
+                      </td>
+                      <td>{t.description}</td>
+                      <td>
+                        <span className="py-1 px-3 bg-amber-400 rounded-lg text-white text-xs">
+                          Active
+                        </span>
+                      </td>
+                      <td className="flex gap-2 py-2">
+                        <Button size="sm">
+                          <MessageCircleHeart />
+                        </Button>
+                        <Button size="sm" variant="secondary">
+                          <CalendarSearch />
+                        </Button>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr className="text-muted-foreground"><td className="p-3">No targets found</td></tr>
+                )}
               </tbody>
             </table>
           </motion.div>

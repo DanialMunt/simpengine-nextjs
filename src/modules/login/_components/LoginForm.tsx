@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
+import Image from "next/image";
 const loginSchema = z.object({
   login: z.string(),
   password: z.string().min(3, "Password must be at least 3 characters"),
@@ -52,8 +53,9 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-4 w-full max-w-sm mx-auto"
+      className="space-y-4 w-full max-w-sm mx-auto bg-card border p-5 rounded-lg"
     >
+      
       <div>
         <Input placeholder="Login" {...register("login", { minLength: 10 })} />
         {errors.login && (

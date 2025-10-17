@@ -26,9 +26,13 @@ export default function EventsPage() {
           transition={{ duration: 0.25 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {events?.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
+          {events && events.length > 0 ? (
+            events?.map((event) => <EventCard key={event.id} event={event} />)
+          ) : (
+            <p className="text-muted-foreground ">
+              No events found
+            </p>
+          )}
         </motion.div>
       </AnimatePresence>
     </div>
