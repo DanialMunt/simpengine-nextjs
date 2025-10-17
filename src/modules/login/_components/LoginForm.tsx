@@ -55,7 +55,16 @@ export default function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       className="space-y-4 w-full max-w-sm mx-auto bg-card border p-5 rounded-lg"
     >
-      
+      <div className="flex justify-center items-center text-2xl font-bold flex-col ">
+        <Image
+          className="rounded-lg"
+          src="/simpengine-logo.jpg"
+          alt="SimpEngine"
+          width={150}
+          height={150}
+        />
+        <p>SimpEngine</p>
+      </div>
       <div>
         <Input placeholder="Login" {...register("login", { minLength: 10 })} />
         {errors.login && (
