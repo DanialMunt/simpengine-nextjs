@@ -64,7 +64,13 @@ export function EventCard({ event, onEdit }: EventCard) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   disabled={deleteRomanticEvent.isPending}
-                  onClick={() => deleteRomanticEvent.mutate(event.id)}
+                  onClick={() => {
+                    if (event.id !== undefined) {
+                      deleteRomanticEvent.mutate(event.id);
+                    } else {
+                      console.warn("Event id is missing");
+                    }
+                  }}
                   className="text-red-600 focus:bg-red-100"
                 >
                   {deleteRomanticEvent.isPending ? "Deleting..." : "Delete"}
@@ -90,7 +96,7 @@ export function EventCard({ event, onEdit }: EventCard) {
             <CircleDotDashed className="w-[1.2rem] h-[1.2rem]" />
             <p>Status</p>
           </div>
-         
+
           <p className="py-1 px-5 bg-yellow-500 text-white w-fit rounded-lg">
             {event.status}
           </p>
