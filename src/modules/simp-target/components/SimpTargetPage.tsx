@@ -129,7 +129,7 @@ export default function SimpTargetPage() {
             transition={{ duration: 0.25 }}
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
           >
-            {targets && targets.length > 0 ? (
+            {targets && Array.isArray(targets) && targets.length > 0 ? (
               targets?.map((t) => (
                 <SimpTargetCard key={t.id} target={t} onEdit={handleEdit} />
               ))
@@ -156,7 +156,7 @@ export default function SimpTargetPage() {
                 </tr>
               </thead>
               <tbody>
-                {targets && targets.length > 0 ? (
+                {targets && Array.isArray(targets) && targets.length > 0 ? (
                   targets?.map((t) => (
                     <tr key={t.id} className="border-t border-muted">
                       <td className="p-3">

@@ -295,7 +295,7 @@ export default function Dashboard() {
             </div>
             {EventsLoading ? (
               <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
-            ) : romanticEvents && romanticEvents.length > 0 ? (
+            ) : romanticEvents && Array.isArray(romanticEvents) && romanticEvents.length > 0 ? (
               romanticEvents.map((event, index) => (
                 <EventMiniCard key={index} event={event} />
               ))
@@ -316,7 +316,7 @@ export default function Dashboard() {
 
             {targetsLoading ? (
               <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
-            ) : targets && targets.length > 0 ? (
+            ) : targets && Array.isArray(targets) && targets.length > 0 ? (
               targets.map((target, index) => (
                  <SimpTargetMiniCard key={index} target={target} />
               ))

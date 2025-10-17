@@ -26,7 +26,7 @@ export default function EventsPage() {
           transition={{ duration: 0.25 }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
-          {events && events.length > 0 ? (
+          {events && Array.isArray(events) && events.length > 0 ? (
             events?.map((event) => <EventCard key={event.id} event={event} />)
           ) : (
             <p className="text-muted-foreground ">
