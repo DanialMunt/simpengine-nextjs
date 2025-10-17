@@ -293,10 +293,17 @@ export default function Dashboard() {
                 <span className="text-primary text-base">View all</span>
               </Link>
             </div>
-            {EventsLoading && <div>Loading...</div>}
-            {romanticEvents?.map((event, index) => (
-              <EventMiniCard key={index} event={event} />
-            ))}
+            {EventsLoading ? (
+              <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
+            ) : romanticEvents && romanticEvents.length > 0 ? (
+              romanticEvents.map((event, index) => (
+                <EventMiniCard key={index} event={event} />
+              ))
+            ) : (
+              <p className="text-muted-foreground p-3 text-center">
+                No events found
+              </p>
+            )}
           </div>
 
           <div className="w-full bg-card max-h-96 rounded-lg border border-border px-3 overflow-auto">
@@ -307,10 +314,17 @@ export default function Dashboard() {
               </Link>
             </div>
 
-            {targetsLoading && <div>Loading...</div>}
-            {targets?.map((target, index) => (
-              <SimpTargetMiniCard key={index} target={target} />
-            ))}
+            {targetsLoading ? (
+              <div className="animate-pulse text-muted-foreground p-3 text-center">Loading...</div>
+            ) : targets && targets.length > 0 ? (
+              targets.map((target, index) => (
+                 <SimpTargetMiniCard key={index} target={target} />
+              ))
+            ) : (
+              <p className="text-muted-foreground p-3 text-center">
+                No targets found
+              </p>
+            )}
           </div>
         </div>
       </section>
