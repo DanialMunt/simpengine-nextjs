@@ -80,12 +80,12 @@ const sampleEvents: CalendarEvent[] = [
 ];
 
 export default function Calendar() {
-  const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
-  const [isLoading, setIsLoading] = useState(false);
-//    const { data: events, isLoading } = useGetRomanticEvent();
-//  const calendarEvents = events
-//     ? mapRomanticEventsToCalendar(events)
-//     : []
+  // const [events, setEvents] = useState<CalendarEvent[]>(sampleEvents);
+  // const [isLoading, setIsLoading] = useState(false);
+   const { data: events, isLoading } = useGetRomanticEvent();
+ const calendarEvents = events
+    ? mapRomanticEventsToCalendar(events)
+    : []
 
 
   // const handleEventAdd = (event: CalendarEvent) => {
@@ -116,7 +116,7 @@ export default function Calendar() {
     // Add min-h-screen to make it full height
     <div className="flex flex-col ">
       <EventCalendar
-        events={sampleEvents} //calendarEvents
+        events={calendarEvents} //calendarEvents
         // onEventAdd={handleEventAdd}
         // onEventUpdate={handleEventUpdate}
         // onEventDelete={handleEventDelete}

@@ -22,8 +22,8 @@ export default function Header() {
 
   return (
     <header className=" h-full flex justify-between items-center text-foreground text-xl font-medium p-4">
-      <span className="lg:max-w-48 max-w-34 w-full truncate">{pageName}</span>
-      <ThemeSwitch />
+      <span className="lg:max-w-48 max-w-38 w-full truncate">{pageName}</span>
+      
       <div className="flex gap-3 items-center">
 
           <Button asChild variant="default" onClick={open}>
@@ -44,6 +44,7 @@ export default function Header() {
             </div>
           </Button>
         </Link>
+        <ThemeSwitch />
         <Bell className="h-[1.2rem] w-[1.2rem]" />
       </div>
     </header>
