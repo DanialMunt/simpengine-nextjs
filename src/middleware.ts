@@ -5,14 +5,14 @@ import type { NextRequest } from "next/server";
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
- 
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
   if (pathname.startsWith("/login")) {
     return NextResponse.next();
   }
 
-  // if (pathname.startsWith("/")) {
-  //   return NextResponse.redirect(new URL("/login", req.url));
-  // }
+ 
 
   const token = req.cookies.get("jwt")?.value;
 
@@ -24,5 +24,7 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/dashboard/:path*"], 
+
+  matcher: ["/", 
+    "/dashboard/:path*"], 
 }
