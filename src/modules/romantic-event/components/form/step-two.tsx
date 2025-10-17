@@ -52,8 +52,14 @@ export default function StepTwo() {
   });
 
   const onSubmit = (data: StepTwoSchema) => {
+    if (simp_target_id === undefined) {
+      console.error("Cannot create event: simp_target_id is missing");
+      return;
+    }
+
     createEvent.mutate(
-      { ...data, simp_target_id },
+      { ...data, simp_target_id, steps: [],
+    status: "" },
       {
         onSuccess: (data) => {
           console.log("Created event", { ...data, simp_target_id });
