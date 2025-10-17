@@ -12,8 +12,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button/button";
-import { Input } from "@/components/ui/input/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useOnboardingStore } from "@/stores/useOnboardingStore";
 import { useEffect } from "react";

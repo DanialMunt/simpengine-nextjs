@@ -86,16 +86,7 @@ export default function Calendar() {
  const calendarEvents = events
     ? mapRomanticEventsToCalendar(events)
     : []
-  // useEffect(() => {
-  //   const loadEvents = async () => {
-  //     setIsLoading(true);
-  //     await new Promise((resolve) => setTimeout(resolve, 500));
-  //     setEvents(sampleEvents);
-  //     setIsLoading(false);
-  //   };
 
-  //   loadEvents();
-  // }, []);
 
   // const handleEventAdd = (event: CalendarEvent) => {
   //   setEvents([...events, event]);
