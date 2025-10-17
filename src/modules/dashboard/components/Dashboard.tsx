@@ -193,7 +193,7 @@ export default function Dashboard() {
 
       <section className="h-full ">
         <div className="flex lg:flex-row flex-col h-full gap-4 ">
-          <div className="justify-center items-center flex-[2] min-h-[40vh] lg:min-h-[50vh]  bg-card rounded-lg border border-border p-3">
+          <div className="justify-center items-center flex-[2] min-h-[45vh] lg:min-h-[50vh]  bg-card rounded-lg border border-border p-3">
             <div className="flex justify-between">
               <p>Events Created</p>
               <DropdownMenu>
@@ -305,7 +305,7 @@ export default function Dashboard() {
 
           </div>
 
-          <div className="justify-center items-center flex-[1] bg-card min-h-[35vh] lg:min-h-[50vh] rounded-lg border border-border p-3">
+          <div className="justify-center items-center flex-[1] bg-card min-h-[40vh] lg:min-h-[50vh] rounded-lg border border-border p-3">
             <p>Events Status</p>
             <div className="flex flex-col items-center h-full">
               <ResponsiveContainer width="100%" height="80%">
@@ -316,7 +316,7 @@ export default function Dashboard() {
                     cy="50%"
                     labelLine={false}
                     label={renderCustomizedLabel}
-                    outerRadius={110}
+                    outerRadius={100}
                     fill="#8884d8"
                     dataKey="value"
                   >
