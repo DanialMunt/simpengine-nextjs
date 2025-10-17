@@ -11,6 +11,7 @@ const pathNameMap: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/simp-target": "Simp targets",
   "/romantic-event": "Romantic Events",
+  "/calendar": "Calendar",
 };
 
 export default function Header() {
