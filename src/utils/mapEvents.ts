@@ -1,5 +1,4 @@
 
-import { RomanticEvent } from "@/types/event-schema"
 import {
   type CalendarEvent,
 } from "./../modules/calendar/components/event-calendar";
