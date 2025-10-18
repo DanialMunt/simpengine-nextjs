@@ -90,8 +90,8 @@ export default function LoginForm() {
         {isPending ? <Spinner /> : "Login"}
       </Button>
 
-      <div className="flex gap-1 justify-center">
-        <p className="text-sm ">{"Don't have an account?"} </p>
+      <div className="flex gap-1 justify-center items-center">
+        <p className="text-sm ">Don&apos;t have an account? </p>
         <Link href="/register" className="text-sm text-primary hover:underline">
           Register
         </Link>
