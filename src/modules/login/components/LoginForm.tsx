@@ -91,7 +91,7 @@ export default function LoginForm() {
       </Button>
 
       <div className="flex gap-1 justify-center">
-        <p className="text-sm ">Don't have an account? </p>
+        <p className="text-sm ">{"Don't have an account?"} </p>
         <Link href="/register" className="text-sm text-primary hover:underline">
           Register
         </Link>
