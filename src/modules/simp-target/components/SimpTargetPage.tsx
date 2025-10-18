@@ -89,7 +89,7 @@ export default function SimpTargetPage() {
       <div className="flex justify-between items-center">
         <input
           type="text"
-          className="input border input-bordered w-full bg-card py-2 px-5 rounded-md max-w-xs"
+          className="input border input-bordered bg-card py-2 px-5 rounded-md"
           placeholder="Search by name..."
         />
         <div className="relative flex border rounded-lg overflow-hidden">
@@ -146,13 +146,13 @@ export default function SimpTargetPage() {
             transition={{ duration: 0.25 }}
             className="rounded-lg bg-card border"
           >
-            <table className="w-full border-collapse text-sm">
+            <table className="w-full overflow-auto border-collapse text-sm">
               <thead className="bg-muted/50">
                 <tr>
-                  <th className="p-3 text-left font-medium">Name</th>
-                  <th className="text-left font-medium">Description</th>
-                  <th className="text-left font-medium">Status</th>
-                  <th className="text-left font-medium">Actions</th>
+                  <th className="w-2/4 p-3 text-left font-medium">Name</th>
+                  <th className="w-2/4 text-left font-medium">Description</th>
+                  <th className="w-1/6 text-left font-medium">Status</th>
+                  <th className="w-1/6 p-3 text-left font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -168,18 +168,22 @@ export default function SimpTargetPage() {
                           Active
                         </span>
                       </td>
-                      <td className="flex gap-2 py-2">
-                        <Button size="sm">
-                          <MessageCircleHeart />
-                        </Button>
-                        <Button size="sm" variant="secondary">
-                          <CalendarSearch />
-                        </Button>
+                      <td className="p-3">
+                        <div className="flex justify-start gap-2">
+                          <Button size="sm">
+                            <MessageCircleHeart />
+                          </Button>
+                          <Button size="sm" variant="secondary">
+                            <CalendarSearch />
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ))
                 ) : (
-                  <tr className="text-muted-foreground"><td className="p-3">No targets found</td></tr>
+                  <tr className="text-muted-foreground">
+                    <td className="p-3">No targets found</td>
+                  </tr>
                 )}
               </tbody>
             </table>
