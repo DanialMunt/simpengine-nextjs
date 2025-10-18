@@ -37,7 +37,7 @@ export default function RegisterForm() {
   const onSubmit = (data: RegisterFormValues) => {
     login(data, {
       onSuccess: (data) => {
-        router.push("/dashboard");
+        router.push("/login");
       },
       onError: (error: unknown) => {
         const message =
