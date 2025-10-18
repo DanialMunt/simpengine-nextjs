@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useRegister } from "@/hooks/auth/useAuth";
 import Image from "next/image";
+import Link from "next/link";
 const registerSchema = z.object({
 email: z.string().email("Invalid email address"),
   login: z.string(),
@@ -38,6 +39,7 @@ export default function RegisterForm() {
     login(data, {
       onSuccess: (data) => {
         router.push("/login");
+        toast.success("Registered successfully");
       },
       onError: (error: unknown) => {
         const message =
@@ -92,8 +94,15 @@ export default function RegisterForm() {
       </div>
 
       <Button type="submit" disabled={isPending} className="w-full">
-        {isPending ? <Spinner /> : "Login"}
+        {isPending ? <Spinner /> : "Register"}
       </Button>
+
+      <div className="flex gap-1 justify-center">
+        <p className="text-sm ">Already have an account? </p>
+        <Link href="/login" className="text-sm text-primary hover:underline">
+          Login
+        </Link>
+      </div>
     </form>
   );
 }

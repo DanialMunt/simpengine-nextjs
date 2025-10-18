@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 import Image from "next/image";
+
 const loginSchema = z.object({
   login: z.string(),
   password: z.string().min(3, "Password must be at least 3 characters"),
@@ -15,6 +16,7 @@ const loginSchema = z.object({
 import { useRouter } from "next/navigation";
 import { Spinner } from "@/components/ui/spinner";
 import { toast } from "sonner";
+import Link from "next/link";
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
@@ -36,6 +38,7 @@ export default function LoginForm() {
     login(data, {
       onSuccess: (data) => {
         router.push("/dashboard");
+        toast.success("Logged in successfully");
       },
       onError: (error: unknown) => {
         const message =
@@ -86,6 +89,13 @@ export default function LoginForm() {
       <Button type="submit" disabled={isPending} className="w-full">
         {isPending ? <Spinner /> : "Login"}
       </Button>
+
+      <div className="flex gap-1 justify-center">
+        <p className="text-sm ">Don't have an account? </p>
+        <Link href="/register" className="text-sm text-primary hover:underline">
+          Register
+        </Link>
+      </div>
     </form>
   );
 }
