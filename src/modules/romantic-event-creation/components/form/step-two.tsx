@@ -24,7 +24,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
-import { useCreateRomanticEvent } from "../../hooks/useRomanticEvent";
+import { useCreateRomanticEvent } from "../../../romantic-event/hooks/useRomanticEvent";
 import Link from "next/link";
 const stepTwoChema = romanticEvent.pick({
   title: true,
@@ -62,7 +62,7 @@ export default function StepTwo() {
       {
         onSuccess: (data) => {
           console.log("Created event", { ...data, simp_target_id });
-          router.push("/romantic-event");
+          router.push("/romantic-event-creation/step-three");
         },
         onError: (error) => {
           console.error("Error creating event", error);

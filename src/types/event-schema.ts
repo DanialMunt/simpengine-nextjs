@@ -1,3 +1,4 @@
+import { id } from "date-fns/locale";
 import {z} from "zod";
 
 export const eventStep = z.object({
@@ -7,9 +8,19 @@ export const eventStep = z.object({
 })
 
 export const eventOption = z.object({
+    id: z.number(),
     label: z.string().min(1).max(20),
     img_id: z.string().min(1).max(100),
 })
+
+export const templateStep = z.object({
+    id: z.number(),
+    title: z.string().min(1).max(20),
+    description: z.string().min(1).max(100),
+    options: z.array(eventOption).min(1).optional(),
+})
+
+
 
 export const romanticEvent = z.object({
     id: z.number().optional(),
@@ -23,3 +34,5 @@ export const romanticEvent = z.object({
 });
 
 export type RomanticEvent = z.infer<typeof romanticEvent>;
+export type TemplateStep = z.infer<typeof templateStep>;
+export type EventOption = z.infer<typeof eventOption>;

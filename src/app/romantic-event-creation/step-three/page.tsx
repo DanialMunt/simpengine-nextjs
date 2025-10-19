@@ -1,4 +1,4 @@
-import StepThree from "@/modules/romantic-event/components/form/step-three"
+import StepThree from "@/modules/romantic-event-creation/components/form/step-three"
 export default function RomanticEventStepOne() {
     return (
        <StepThree />

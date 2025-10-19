@@ -1,4 +1,4 @@
-import StepTwo from "@/modules/romantic-event/components/form/step-two"
+import StepTwo from "@/modules/romantic-event-creation/components/form/step-two"
 
 
 export default function RomanticEventStepTwo() {

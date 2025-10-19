@@ -1,6 +1,14 @@
 import { api } from "@/lib/axios";
 import {Event} from "@/types/events";
 import { RomanticEvent } from "@/types/event-schema";
+import { TemplateStep } from "@/types/event-schema";
+
+export const getTemplateStepsApi = async (params?: Partial<TemplateStep>): Promise<TemplateStep[]> => {
+  const res = await api.get<TemplateStep[]>("/romantic-event/template-steps", {
+      ...(params && Object.keys(params).length > 0 ? { params } : {}),
+  });
+  return res.data;
+}
 
 
 export const createRomanticEventApi = async (
