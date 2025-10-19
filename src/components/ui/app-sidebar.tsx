@@ -1,3 +1,4 @@
+"use client";
 import {
   Calendar,
   LayoutGrid,
@@ -26,6 +27,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import useAuthStore from "@/stores/useAuthStore";
 // Menu items.
 const items = [
   {
@@ -57,6 +60,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const { user } = useAuthStore();
   return (
     <Sidebar collapsible="icon">
       <SidebarContent>
@@ -99,7 +103,7 @@ export function AppSidebar() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
-                  <User2 /> Username
+                  <User2 /> {user?.login || "Guest"}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>

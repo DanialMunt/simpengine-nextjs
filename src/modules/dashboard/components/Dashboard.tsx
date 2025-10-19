@@ -33,6 +33,7 @@ import SimpTargetMiniCard from "@/modules/simp-target/components/SimpTargetMiniC
 import EventMiniCard from "@/modules/romantic-event/components/EventMiniCard";
 import Link from "next/link";
 import { PieLabelRenderProps } from "recharts";
+import MiniCardSkeleton from "@/components/ui/loadingComp/miniCardSkeleton";
 const RADIAN = Math.PI / 180;
 const COLORS = ["#3c9aeb", "#50C099", "#FFC565", "#FF8042"];
 
@@ -358,9 +359,7 @@ export default function Dashboard() {
               </Link>
             </div>
             {EventsLoading ? (
-              <div className="animate-pulse text-muted-foreground p-3 text-center">
-                Loading...
-              </div>
+              <MiniCardSkeleton />
             ) : romanticEvents &&
               Array.isArray(romanticEvents) &&
               romanticEvents.length > 0 ? (
@@ -368,7 +367,7 @@ export default function Dashboard() {
                 <EventMiniCard key={index} event={event} />
               ))
             ) : (
-              <p className="text-muted-foreground p-3 text-center">
+              <p className="text-muted-foreground p-10 text-center">
                 No events found
               </p>
             )}
@@ -383,15 +382,13 @@ export default function Dashboard() {
             </div>
 
             {targetsLoading ? (
-              <div className="animate-pulse text-muted-foreground p-3 text-center">
-                Loading...
-              </div>
+              <MiniCardSkeleton />
             ) : targets && Array.isArray(targets) && targets.length > 0 ? (
               targets.map((target, index) => (
                 <SimpTargetMiniCard key={index} target={target} />
               ))
             ) : (
-              <p className="text-muted-foreground p-3 text-center">
+              <p className="text-muted-foreground p-10 text-center">
                 No targets found
               </p>
             )}

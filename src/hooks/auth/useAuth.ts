@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginApi, registerApi, logoutApi } from "@/api/auth/authApi";
 import useAuthStore from "@/stores/useAuthStore";
 import type { LoginDto, RegisterDto, AuthResponse } from "@/types/auth";
-
+import { toast } from "sonner";
 const userKey = ["user"];
 
 export const useLogin = (options?: {
@@ -21,6 +21,7 @@ export const useLogin = (options?: {
       }
       if (data.user) {
         useAuthStore.getState().setUser(data.user);
+        
         qc.setQueryData(userKey, data.user);
       }
 
