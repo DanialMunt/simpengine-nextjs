@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 import Image from "next/image";
-
+import { AxiosError } from "axios";
 const loginSchema = z.object({
   login: z.string(),
   password: z.string().min(3, "Password must be at least 3 characters"),
@@ -41,14 +41,27 @@ export default function LoginForm() {
         toast.success("Logged in successfully");
       },
       onError: (error: unknown) => {
-        const message =
-          error instanceof Error
-            ? error.message
-            : typeof error === "string"
-            ? error
-            : "Something went wrong";
+        let toastMessage = "Something went wrong";
 
-        toast.error(message);
+        if (error && typeof error === "object") {
+        
+          const axiosErr = error as AxiosError<any>;
+
+       
+          const backendMsg = axiosErr.response?.data?.message;
+          if (typeof backendMsg === "string" && backendMsg.trim() !== "") {
+            toastMessage = backendMsg;
+          }
+      
+          else if (axiosErr.message) {
+            toastMessage = axiosErr.message;
+          }
+        } else if (typeof error === "string") {
+   
+          toastMessage = error;
+        }
+
+        toast.error(toastMessage);
       },
     });
   };
