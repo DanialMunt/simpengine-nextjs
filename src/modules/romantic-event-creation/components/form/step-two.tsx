@@ -1,5 +1,5 @@
 "use client";
-import { eventStep, eventOption, romanticEvent } from "@/types/event-schema";
+import { romanticEvent } from "@/types/event-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -37,10 +37,8 @@ type StepTwoSchema = z.infer<typeof stepTwoChema>;
 export default function StepTwo() {
   const createEvent = useCreateRomanticEvent();
   const router = useRouter();
-
+  const setData = useRomanticEventStore((s) => s.setData);
   const simp_target_id = useRomanticEventStore((state) => state.simp_target_id);
-
-  const setData = useRomanticEventStore((state) => state.setData);
 
   const form = useForm<StepTwoSchema>({
     resolver: zodResolver(stepTwoChema),
@@ -60,8 +58,14 @@ export default function StepTwo() {
     createEvent.mutate(
       { ...data, simp_target_id, steps: [], status: "" },
       {
-        onSuccess: (data) => {
-          console.log("Created event", { ...data, simp_target_id });
+        onSuccess: (created) => {
+          // assuming your API returns { id, title, description, event_date, ... }
+          setData({
+            id: created.id,
+            title: created.title,
+            description: created.description,
+            event_date: created.event_date,
+          });
           router.push("/romantic-event-creation/step-three");
         },
         onError: (error) => {

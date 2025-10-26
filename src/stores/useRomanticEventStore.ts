@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { RomanticEvent } from "@/types/event-schema";
+import { id } from "date-fns/locale";
 
 type RomanticEventState = Partial<RomanticEvent> & {
   setData: (data: Partial<RomanticEvent>) => void;
@@ -11,6 +12,7 @@ type RomanticEventState = Partial<RomanticEvent> & {
 export const useRomanticEventStore = create<RomanticEventState>()(
   persist(
     (set) => ({
+      id: undefined,
       title: "",
       description: "",
       simp_target_id: undefined,
@@ -19,6 +21,7 @@ export const useRomanticEventStore = create<RomanticEventState>()(
       setData: (data) => set((state) => ({ ...state, ...data })),
       reset: () =>
         set({
+          id: undefined,
           title: "",
           description: "",
           simp_target_id: undefined,

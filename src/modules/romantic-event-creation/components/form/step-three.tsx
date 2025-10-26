@@ -22,7 +22,8 @@ import { NumberSelect } from "@/components/ui/number-select";
 import { useGetTemplateSteps } from "../../hooks/useRomanticEventCreation";
 import { EventOption } from "@/types/event-schema";
 import { useMemo } from "react";
-
+import { GripHorizontal, Trash } from "lucide-react";
+import { useCreateRomanticEventStep } from "../../hooks/useRomanticEventCreation";
 // dnd-kit
 import {
   DndContext,
@@ -43,10 +44,14 @@ import {
   restrictToVerticalAxis,
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
+import { useRomanticEventStore } from "@/stores/useRomanticEventStore";
+import { useRouter } from "next/navigation";
+import { TemplateStep, CreateStepsPayload } from "@/types/event-schema";
 
 type EventBlock = {
   selectedEventId?: number;
   optionIds: number[];
+  description?: string;
 };
 type FormValues = {
   steps: EventBlock[];
@@ -87,7 +92,7 @@ function SortableStepCard({
     transform: CSS.Transform.toString(transform),
     transition,
     opacity: isDragging ? 0.9 : 1,
-    boxShadow: isDragging ? "0 8px 24px rgba(0,0,0,0.16)" : undefined,
+    // boxShadow: isDragging ? "0 8px 24px rgba(0,0,0,0.16)" : undefined,
   };
 
   const selectedId = watch(`steps.${index}.selectedEventId`);
@@ -112,18 +117,7 @@ function SortableStepCard({
       style={style}
       className="rounded-lg bg-card border p-3 space-y-3"
     >
-      <div className="flex items-start gap-3">
-        {/* Drag handle: grab anywhere on the left edge (you can also add a handle icon) */}
-        <button
-          type="button"
-          aria-label="Drag handle"
-          className="cursor-grab active:cursor-grabbing select-none px-2 py-1 rounded border text-xs text-muted-foreground"
-          {...attributes}
-          {...listeners}
-        >
-          Drag
-        </button>
-
+      <div className="flex justify-between items-center gap-3">
         <FormField
           control={control}
           name={`steps.${index}.selectedEventId`}
@@ -166,13 +160,17 @@ function SortableStepCard({
           )}
         />
 
-        <Button
+        {/* Drag handle: grab anywhere on the left edge (you can also add a handle icon) */}
+        <button
           type="button"
-          variant="destructive"
-          onClick={() => remove(index)}
+          aria-label="Drag handle"
+          className="cursor-grab active:cursor-grabbing select-none px-2 py-1 rounded border text-xs text-muted-foreground"
+          {...attributes}
+          {...listeners}
         >
-          Remove
-        </Button>
+          {" "}
+          <GripHorizontal size={16} />
+        </button>
       </div>
 
       {/* Options */}
@@ -204,37 +202,70 @@ function SortableStepCard({
         )
       ) : (
         <p className="text-sm text-muted-foreground">
-          Select an event to choose options.
+          Select step to choose options.
         </p>
       )}
 
-      {selectedOptionIds.length > 0 && (
-        <Button
-          type="button"
-          variant="ghost"
-          className="text-xs"
-          onClick={() =>
-            setValue(`steps.${index}.optionIds`, [], { shouldDirty: true })
-          }
-        >
-          Clear selections
+      <div className="flex justify-end">
+        {selectedOptionIds.length > 0 && (
+          <Button
+            type="button"
+            variant="ghost"
+            className="text-xs"
+            onClick={() =>
+              setValue(`steps.${index}.optionIds`, [], { shouldDirty: true })
+            }
+          >
+            Clear selections
+          </Button>
+        )}
+        <Button type="button" variant="ghost" onClick={() => remove(index)}>
+          <Trash size={16} />
         </Button>
-      )}
+      </div>
     </div>
   );
 }
 
-const ONE_BASED_ORDER = true;
+const buildPayload = (
+  values: FormValues,
+  templateSteps: TemplateStep[] | undefined,
+  optionsById: Map<number, EventOption[]>
+): CreateStepsPayload => {
+  const stepById = new Map((templateSteps ?? []).map((t) => [t.id, t] as const));
 
-const buildPayload = (values: FormValues) => ({
-  steps: values.steps.map((s, idx) => ({
-    selectedEventId: s.selectedEventId,
-    optionIds: s.optionIds ?? [],
-    step_order: ONE_BASED_ORDER ? idx + 1 : idx,
-  })),
-});
+  return {
+    steps: values.steps
+      .map((s, idx) => {
+        if (!s.selectedEventId) return null;
+
+        const meta = stepById.get(s.selectedEventId);
+        const optionMeta = optionsById.get(s.selectedEventId) ?? [];
+        const optionById = new Map(optionMeta.map((o) => [o.id, o] as const));
+
+        const options = (s.optionIds ?? [])
+          .map((oid) => optionById.get(oid))
+          .filter((o): o is EventOption => Boolean(o))
+          .map((o) => ({
+            img_id: o.img_id,  // string
+            label: o.label,
+          }));
+
+        return {
+          title: meta?.title ?? `event_${s.selectedEventId}`,
+          description: s.description ?? meta?.description ?? "",
+          options,
+          step_order: idx + 1, // 0-based
+        };
+      })
+      .filter((x): x is NonNullable<typeof x> => x !== null),
+  };
+};
 
 export default function StepThree() {
+  const router = useRouter();
+  const eventId = useRomanticEventStore((s) => s.id);
+  const createStep = useCreateRomanticEventStep();
   const { data: templateSteps } = useGetTemplateSteps();
 
   const methods = useForm<FormValues>({
@@ -260,8 +291,21 @@ export default function StepThree() {
   );
 
   const onSubmit = (values: FormValues) => {
-    const payload = buildPayload(values);
-    console.log("data:", JSON.stringify(payload, null, 2));
+    const payload = buildPayload(values, templateSteps, optionsById);
+
+    createStep.mutate(
+      { romanticEventId: eventId!, data: payload },
+      {
+        onSuccess: (data) => {
+          router.push("/romantic-event");
+          console.log("Successfully created steps:", data);
+   
+        },
+        onError: (error) => {
+          console.error("Error creating steps:", error);
+        },
+      }
+    );
   };
 
   // Map field ids for SortableContext
@@ -289,7 +333,7 @@ export default function StepThree() {
           variant="secondary"
           onClick={() => append({ selectedEventId: undefined, optionIds: [] })}
         >
-          + Add another event
+          + Add another step
         </Button>
       </div>
 
