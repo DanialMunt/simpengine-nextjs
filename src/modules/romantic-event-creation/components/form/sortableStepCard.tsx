@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { GripHorizontal, Trash } from "lucide-react";
+import { Control, UseFormWatch, UseFormSetValue } from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -18,6 +19,9 @@ import {
 import { NumberSelect } from "@/components/ui/number-select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+
+
+
 export default function SortableStepCard({
   id,
   index,
@@ -31,9 +35,9 @@ export default function SortableStepCard({
   id: string; // field.id from useFieldArray
   index: number;
   remove: (index: number) => void;
-  control: any;
-  watch: any;
-  setValue: any;
+  control: unknown;
+  watch: unknown;
+  setValue: unknown;
   templateSteps:
     | { id: number; title: string; options?: EventOption[] }[]
     | undefined;
