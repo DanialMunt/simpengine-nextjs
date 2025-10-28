@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/auth/useAuth";
 import Image from "next/image";
 import { AxiosError } from "axios";
+import { ApiError } from "@/types/api";
 const loginSchema = z.object({
   login: z.string(),
   password: z.string().min(3, "Password must be at least 3 characters"),
@@ -45,7 +46,7 @@ export default function LoginForm() {
 
         if (error && typeof error === "object") {
         
-          const axiosErr = error as AxiosError<any>;
+          const axiosErr = error as AxiosError<ApiError>;
 
        
           const backendMsg = axiosErr.response?.data?.message;
