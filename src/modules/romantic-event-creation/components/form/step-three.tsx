@@ -145,9 +145,9 @@ export default function StepThree() {
   };
 
   return (
-    <div className="flex flex-col gap-4 p-3 bg-red-500">
+    <div className="flex flex-col gap-4 w-[60vw]">
       {/* Top bar with Add button */}
-      <div className="flex items-center justify-between w-[40vw]">
+      <div className="flex items-center justify-between ">
         <h2 className="text-lg font-semibold">Events</h2>
         <Button
           type="button"
@@ -161,7 +161,7 @@ export default function StepThree() {
       <Form {...methods}>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="w-[40vw] rounded-lg space-y-6"
+          className="flex flex-col items-end rounded-lg space-y-6"
         >
           <DndContext
             sensors={sensors}
