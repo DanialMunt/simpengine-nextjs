@@ -14,8 +14,6 @@ export const eventStep = z.object({
     options: z.array(eventOption).min(1),
 })
 
-
-
 export const templateStep = z.object({
     id: z.number(),
     title: z.string().min(1).max(20),
@@ -24,10 +22,9 @@ export const templateStep = z.object({
 })
 
 
-
 export const romanticEvent = z.object({
     id: z.number().optional(),
-    title: z.string().min(3).max(20),
+    title: z.string().min(3).max(30),
     description: z.string().min(3).max(100),
     //event_date: z.date(),
     event_date: z.string().min(3).max(30),

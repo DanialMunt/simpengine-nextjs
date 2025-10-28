@@ -4,7 +4,7 @@ import { RomanticEvent } from "@/types/event-schema";
 import { TemplateStep } from "@/types/event-schema";
 import { CreateStepsPayload } from "@/types/event-schema";
 export const getTemplateStepsApi = async (params?: Partial<TemplateStep>): Promise<TemplateStep[]> => {
-  const res = await api.get<TemplateStep[]>("/romantic-event/template-steps", {
+  const res = await api.get<TemplateStep[]>("/template-event/steps", {
       ...(params && Object.keys(params).length > 0 ? { params } : {}),
   });
   return res.data;

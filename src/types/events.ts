@@ -33,21 +33,6 @@ export interface Option {
 }
 
 // For creating an event
-export interface CreateEventDto {
-  title: string;
-  description?: string;
-  event_date: string;
-  simp_target_id: number;
-  steps?: CreateStepDto[];
-}
 
-export interface CreateStepDto {
-  type: StepType;
-  title: string;
-  options?: CreateOptionDto[];
-}
 
-export interface CreateOptionDto {
-  title: string;
-  description?: string;
-}
+
