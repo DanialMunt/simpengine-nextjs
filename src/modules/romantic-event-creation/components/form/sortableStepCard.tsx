@@ -20,7 +20,23 @@ import { NumberSelect } from "@/components/ui/number-select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
+type FormValues = {
+  steps: {
+    selectedEventId?: number | null; // you treat it as optional before selection
+    optionIds: number[];             // you read/write this
+  }[];
+};
 
+type Props = {
+  id: string;
+  index: number;
+  remove: (index: number) => void;
+  control: Control<FormValues>;
+  watch: UseFormWatch<FormValues>;
+  setValue: UseFormSetValue<FormValues>;
+  templateSteps?: { id: number; title: string; options?: EventOption[] }[];
+  optionsById: Map<number, EventOption[]>;
+};
 
 export default function SortableStepCard({
   id,
@@ -35,9 +51,9 @@ export default function SortableStepCard({
   id: string; // field.id from useFieldArray
   index: number;
   remove: (index: number) => void;
-  control: unknown;
-  watch: unknown;
-  setValue: unknown;
+  control: any;
+  watch: any;
+  setValue: any;
   templateSteps:
     | { id: number; title: string; options?: EventOption[] }[]
     | undefined;

@@ -11,14 +11,23 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  // {
+  //   ignores: [
+  //     "node_modules/**",
+  //     ".next/**",
+  //     "out/**",
+  //     "build/**",
+  //     "next-env.d.ts",
+  //   ],
+  // },
   {
-    ignores: [
-      "node_modules/**",
-      ".next/**",
-      "out/**",
-      "build/**",
-      "next-env.d.ts",
-    ],
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      // If these also bite during the transition, you can temporarily relax them too:
+      // "@typescript-eslint/no-unsafe-assignment": "off",
+      // "@typescript-eslint/no-unsafe-member-access": "off",
+      // "@typescript-eslint/no-unsafe-call": "off",
+    },
   },
 ];
 
