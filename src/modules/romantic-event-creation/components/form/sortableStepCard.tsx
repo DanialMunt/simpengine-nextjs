@@ -95,7 +95,7 @@ export default function SortableStepCard({
     <div
       ref={setNodeRef}
       style={style}
-      className="rounded-lg bg-card border p-3 space-y-3"
+      className="rounded-lg  w-[60vw]  bg-card border p-3 space-y-3"
     >
       <div className="flex justify-between items-center gap-3">
         <FormField
