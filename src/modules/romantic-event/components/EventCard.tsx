@@ -9,7 +9,6 @@ import {
   Image as ImageIcon,
   Calendar,
   CircleDotDashed,
-  
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -25,19 +24,41 @@ type EventCard = {
   onEdit?: (event: Event) => void;
 };
 
+const eventsEmojis = ["❤️", "🥰", "😍", "🥀", "🌹"];
+const eventsBackgrounds = [
+  "bg-linear-to-t from-sky-400 to-sky-300",
+  "bg-linear-to-t from-violet-400 to-violet-300",
+  "bg-linear-to-t from-rose-400 to-rose-300",
+  "bg-linear-to-t from-purple-500 to-purple-300",
+  "bg-linear-to-t from-indigo-500 to-indigo-300",
+  "bg-linear-to-t from-pink-500 to-pink-300",
+];
+
+function getEmojiAvatar(id: number) {
+  const hash = (id * 2654435761) % 3 ** 32;
+  return eventsEmojis[hash % eventsEmojis.length];
+}
+function getBackground(id: number) {
+  const hash = (id * 2654435761) % 2 ** 32;
+  return eventsBackgrounds[hash % eventsBackgrounds.length];
+}
+
 export function EventCard({ event, onEdit }: EventCard) {
   const deleteRomanticEvent = useDeleteRomanticEvent();
 
   return (
-    <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-2 p-3 max-h-70 ">
+    <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-5 p-3 max-h-70 ">
       <div className="rounded-lg flex justify-between ">
         <div className="flex items-center gap-2">
-          
-      
-
+          <div
+            className={`text-6xl shadow-md border-4 border-border p-4 rounded-full ${getBackground(
+              event.id
+            )}`}
+          >
+            {getEmojiAvatar(event.id)}
+          </div>
           <div className="flex flex-col gap-1  ">
             <h2 className="text-lg font-semibold">{event.title}</h2>
-
             <p className="text-sm text-muted-foreground max-h-16">
               {event.description}
             </p>
@@ -82,14 +103,13 @@ export function EventCard({ event, onEdit }: EventCard) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <div className="flex gap-2 items-center">
           <div className="flex items-center gap-1 text-muted-foreground text-sm">
             <Calendar className="w-[1.2rem] h-[1.2rem]" />
             <p>Date</p>
           </div>
-
-          <p>{event.event_date}</p>
+          <p>{event.event_date.slice(0, 10)}</p>
         </div>
 
         <div className="flex gap-2 items-center">
@@ -97,15 +117,17 @@ export function EventCard({ event, onEdit }: EventCard) {
             <CircleDotDashed className="w-[1.2rem] h-[1.2rem]" />
             <p>Status</p>
           </div>
-
-          <p className={`py-1 px-5 ${event.status === "accepted" ? "bg-green" : "bg-red"} text-white w-fit rounded-lg`}>
+          <p
+            className={`py-1 px-5 ${
+              event.status === "accepted" ? "bg-green" : "bg-red"
+            } text-white w-fit rounded-lg`}
+          >
             {event.status}
           </p>
         </div>
-
-        <div className="flex">
-          <Button>Publish Event</Button>
-        </div>
+      </div>
+      <div className="flex w-full">
+        <Button className="w-full">Publish Event</Button>
       </div>
     </div>
   );
