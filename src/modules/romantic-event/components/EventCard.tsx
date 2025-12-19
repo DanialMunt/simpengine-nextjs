@@ -2,6 +2,7 @@
 
 import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteRomanticEvent } from "../hooks/useRomanticEvent";
+import { usePublishRomanticEvent } from "@/modules/romantic-event-publish/hooks/useRomanticEventPublish";
 import { Button } from "@/components/ui/button";
 import { RomanticEvent } from "@/types/event-schema";
 import {
@@ -30,9 +31,22 @@ const eventsBackgrounds = [
   "bg-linear-to-t from-violet-400 to-violet-300",
   "bg-linear-to-t from-rose-400 to-rose-300",
   "bg-linear-to-t from-purple-500 to-purple-300",
-  "bg-linear-to-t from-indigo-500 to-indigo-300",
-  "bg-linear-to-t from-pink-500 to-pink-300",
 ];
+
+
+const statusBackgrounds = [
+  "bg-green",
+  "bg-red",
+  "bg-yellow",
+  "bg-secondary"
+]
+
+function getStatusBackground(status: string) {
+  if(status === "accepted") return "bg-green"
+  if(status === "published") return "bg-primary"
+  if(status === "draft") return "bg-yellow"
+  if(status === "rejected") return "bg-red"
+}
 
 function getEmojiAvatar(id: number) {
   const hash = (id * 2654435761) % 3 ** 32;
@@ -45,7 +59,7 @@ function getBackground(id: number) {
 
 export function EventCard({ event, onEdit }: EventCard) {
   const deleteRomanticEvent = useDeleteRomanticEvent();
-
+  const publishRomanticEvent = usePublishRomanticEvent()
   return (
     <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-5 p-3 max-h-70 ">
       <div className="rounded-lg flex justify-between ">
@@ -119,7 +133,7 @@ export function EventCard({ event, onEdit }: EventCard) {
           </div>
           <p
             className={`py-1 px-5 ${
-              event.status === "accepted" ? "bg-green" : "bg-red"
+             getStatusBackground(event.status)
             } text-white w-fit rounded-lg`}
           >
             {event.status}
@@ -127,7 +141,9 @@ export function EventCard({ event, onEdit }: EventCard) {
         </div>
       </div>
       <div className="flex w-full">
-        <Button className="w-full">Publish Event</Button>
+        <Button variant={event.status !== 'draft' ? "outline" : "default"} disabled={event.status !== 'draft'} onClick={() => publishRomanticEvent.mutate(event.id)} className="w-full">
+          {event.status !== "draft" ? "Published" : "Publish"}
+        </Button>
       </div>
     </div>
   );
