@@ -18,6 +18,7 @@ export const useLogin = (options?: {
     onSuccess: (data) => {
       if (data.token) {
         useAuthStore.getState().setToken(data.token);
+        console.log("Token: ", data.token)
       }
       if (data.user) {
         useAuthStore.getState().setUser(data.user);

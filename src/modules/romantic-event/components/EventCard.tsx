@@ -32,16 +32,7 @@ export function EventCard({ event, onEdit }: EventCard) {
     <div className="rounded-xl border border-border flex flex-col bg-card hover:border-foreground/15 gap-2 p-3 max-h-70 ">
       <div className="rounded-lg flex justify-between ">
         <div className="flex items-center gap-2">
-          {/* <div className=" bg-gray-200 rounded-lg flex justify-center items-center w-36 h-36">
-            <ImageIcon color="gray" className="h-[3rem] w-[3rem]" />
-                </div> */}
-            <Image
-              src="/event-placeholder.jpg"
-              alt="Event Image"
-              width={150}
-              height={150}
-              className="object-cover min-h-34 rounded-lg"
-            />
+          
       
 
           <div className="flex flex-col gap-1  ">
@@ -107,9 +98,13 @@ export function EventCard({ event, onEdit }: EventCard) {
             <p>Status</p>
           </div>
 
-          <p className="py-1 px-5 bg-yellow-500 text-white w-fit rounded-lg">
+          <p className={`py-1 px-5 ${event.status === "accepted" ? "bg-green" : "bg-red"} text-white w-fit rounded-lg`}>
             {event.status}
           </p>
+        </div>
+
+        <div className="flex">
+          <Button>Publish Event</Button>
         </div>
       </div>
     </div>
