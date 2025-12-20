@@ -7,15 +7,15 @@ import { publishRomanticEvent } from "../api/romanticEventPublishApi";
 
 
 export const usePublishRomanticEvent = () => {
-     const qc = useQueryClient();
+    const qc = useQueryClient();
 
     return useMutation({
         mutationFn: (id: number) => publishRomanticEvent(id),
         onSuccess: () => {
-            qc.invalidateQueries({ queryKey: ["romanticEventsPublish"] });
+            qc.invalidateQueries({ queryKey: ["romanticEvents"] });
         },
     });
-}x
+}
 
 
 
