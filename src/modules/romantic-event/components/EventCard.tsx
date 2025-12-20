@@ -40,10 +40,9 @@ import { Input } from "@/components/ui/input";
 import { Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
-import { Event } from "@/types/events";
 type EventCard = {
-  event: Event;
-  onEdit?: (event: Event) => void;
+  event: RomanticEvent;
+  onEdit?: (event: RomanticEvent) => void;
 };
 
 const eventsEmojis = ["❤️", "🥰", "😍", "🥀", "🌹"];
@@ -86,6 +85,7 @@ export function EventCard({ event, onEdit }: EventCard) {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   const handlePublish = () => {
+    if (!event.id) return;
     publishRomanticEvent.mutate(event.id, {
       onSuccess: (data: any) => {
         if (data.token) {
@@ -102,10 +102,10 @@ export function EventCard({ event, onEdit }: EventCard) {
           <div className="flex items-center gap-2">
             <div
               className={`text-6xl shadow-md border-4 border-border p-4 rounded-full ${getBackground(
-                event.id
+                event.id ?? 0
               )}`}
             >
-              {getEmojiAvatar(event.id)}
+              {getEmojiAvatar(event.id ?? 0)}
             </div>
             <div className="flex flex-col gap-1  ">
               <h2 className="text-lg font-semibold">{event.title}</h2>

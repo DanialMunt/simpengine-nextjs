@@ -2,9 +2,9 @@
 import {
   type CalendarEvent,
 } from "./../modules/calendar/components/event-calendar";
-import { Event } from "@/types/events";
+import { RomanticEvent } from "@/types/event-schema";
 
-export function mapRomanticEventsToCalendar(events: Event[]): CalendarEvent[] {
+export function mapRomanticEventsToCalendar(events: RomanticEvent[]): CalendarEvent[] {
   return events.map((e) => ({
     id: e.id?.toString() ?? crypto.randomUUID(),
     title: e.title,
