@@ -61,7 +61,7 @@ export function StepCard({
             <Card className="border-border/50 shadow-xl bg-card/80 backdrop-blur-md">
                 <CardHeader>
                     <CardTitle className="text-2xl font-bold">{title}</CardTitle>
-                    <CardDescription className="text-lg">{description}</CardDescription>
+                    {/* <CardDescription className="text-lg">{description}</CardDescription> */}
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -113,7 +113,7 @@ export function StepCard({
                         size="lg"
                         disabled={selectedIds.length === 0}
                         onClick={() => onNext(selectedIds)}
-                        className="gap-2 bg-gradient-to-r from-primary to-purple-600 shadow-lg shadow-primary/20"
+                        className="gap-2 shadow-lg shadow-primary/20"
                     >
                         {isLastStep ? "Finish" : "Next Step"}
                         {!isLastStep && <ChevronRight className="w-4 h-4" />}

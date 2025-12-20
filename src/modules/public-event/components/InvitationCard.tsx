@@ -40,7 +40,7 @@ export function InvitationCard({
                     <div className="mx-auto bg-primary/10 p-4 rounded-full w-20 h-20 flex items-center justify-center">
                         <Heart className="w-10 h-10 text-primary animate-pulse" fill="currentColor" />
                     </div>
-                    <CardTitle className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                    <CardTitle className="text-3xl font-bold bg-primary bg-clip-text text-transparent">
                         {title}
                     </CardTitle>
                     <CardDescription className="text-lg font-medium">
@@ -55,7 +55,7 @@ export function InvitationCard({
                 <CardFooter className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center pt-6">
                     <Button
                         variant="outline"
-                        className="w-full sm:w-auto border-destructive/50 hover:bg-destructive/10 hover:text-destructive transition-colors gap-2"
+                        className="w-full text-red sm:w-auto border-destructive/50 hover:bg-destructive/10 hover:text-destructive transition-colors gap-2"
                         onClick={onReject}
                     >
                         <XCircle className="w-4 h-4" />
@@ -63,11 +63,11 @@ export function InvitationCard({
                     </Button>
                     <Button
                         size="lg"
-                        className="w-full sm:w-auto bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 gap-2 shadow-lg shadow-primary/25"
+                        className="w-full sm:w-auto  from-primary  gap-2 shadow-lg shadow-primary/25"
                         onClick={onAccept}
                     >
                         <Heart className="w-4 h-4" fill="currentColor" />
-                        I'd love to!
+                        I&apos;d love to!
                     </Button>
                 </CardFooter>
             </Card>

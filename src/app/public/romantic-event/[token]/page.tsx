@@ -4,7 +4,6 @@ import { useState, use } from "react";
 import { InvitationCard } from "@/modules/public-event/components/InvitationCard";
 import {
   StepCard,
-  PublicOption,
 } from "@/modules/public-event/components/StepCard";
 import { AnimatePresence } from "framer-motion";
 import {
@@ -13,7 +12,7 @@ import {
   useRejectPublicEvent,
   useSubmitPublicEventAnswers,
 } from "@/modules/public-event/hooks/usePublicEvent";
-import { AnswerPayload, PublicStep } from "@/modules/public-event/types";
+import { AnswerPayload } from "@/modules/public-event/types";
 import { Loader2 } from "lucide-react";
 
 type ViewState = "invitation" | "steps" | "rejected" | "finished";
@@ -158,10 +157,10 @@ export default function PublicRomanticEventPage({
             >
               <div className="text-6xl animate-bounce">🎉</div>
               <h2 className="text-2xl font-bold text-primary">
-                It's a Date!
+                It&apos;s a Date!
               </h2>
               <p className="text-muted-foreground">
-                Your choices have been sent. Can't wait for our special night!
+                Your choices have been sent. Can&apos;t wait for our special night!
               </p>
             </div>
           )}
