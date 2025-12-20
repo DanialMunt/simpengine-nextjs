@@ -11,7 +11,8 @@ import {
 } from "@/components/ui/form";
 import { useGetTemplateSteps } from "../../hooks/useRomanticEventCreation";
 import { EventOption } from "@/types/event-schema";
-import { useMemo } from "react";
+
+import { useMemo, useEffect, useRef } from "react";
 import { useCreateRomanticEventStep } from "../../hooks/useRomanticEventCreation";
 // dnd-kit
 import {
@@ -120,7 +121,7 @@ export default function StepThree() {
         onSuccess: (data) => {
           router.push("/romantic-event");
           console.log("Successfully created steps:", data);
-   
+
         },
         onError: (error) => {
           console.error("Error creating steps:", error);
@@ -129,7 +130,7 @@ export default function StepThree() {
     );
   };
 
-  // Map field ids for SortableContext
+
   const sortableIds = fields.map((f) => f.id);
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -140,22 +141,39 @@ export default function StepThree() {
     const newIndex = sortableIds.indexOf(over.id as string);
     if (oldIndex === -1 || newIndex === -1) return;
 
-    // Keep RHF array in sync
+
     move(oldIndex, newIndex);
   };
 
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const isFirstRun = useRef(true);
+  const watchedSteps = watch("steps");
+
+  const eventIdsHash = watchedSteps?.map((s) => s.selectedEventId).join(",");
+
+
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+
+    const timer = setTimeout(() => {
+
+      window.scrollTo({
+        top: document.documentElement.scrollHeight,
+        behavior: "smooth",
+      });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [fields.length, eventIdsHash]);
+
   return (
-    <div className="flex flex-col gap-4 w-[60vw]">
+    <div className="flex flex-col gap-4 w-full max-w-4xl mx-auto px-4 py-8">
       {/* Top bar with Add button */}
       <div className="flex items-center justify-between ">
         <h2 className="text-lg font-semibold">Events</h2>
-        <Button
-          type="button"
-          variant="secondary"
-          onClick={() => append({ selectedEventId: undefined, optionIds: [] })}
-        >
-          + Add another step
-        </Button>
+
       </div>
 
       <Form {...methods}>
@@ -191,9 +209,17 @@ export default function StepThree() {
             </SortableContext>
           </DndContext>
 
-          <div className="flex items-center gap-3">
+          <div className="flex w-full items-center justify-between gap-3">
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => append({ selectedEventId: undefined, optionIds: [] })}
+            >
+              + Add another step
+            </Button>
             <Button type="submit">Create a romantic event</Button>
           </div>
+          <div ref={bottomRef} />
         </form>
       </Form>
     </div>
