@@ -185,7 +185,7 @@ export default function StepThree() {
               items={sortableIds}
               strategy={verticalListSortingStrategy}
             >
-              <div className="space-y-4">
+              <div className="space-y-4 w-full">
                 {fields.map((f, index) => (
                   <SortableStepCard
                     key={f.id}
