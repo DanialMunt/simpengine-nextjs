@@ -3,11 +3,7 @@ import { useForm, useFieldArray } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import SortableStepCard from "./sortableStepCard";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
+  Form
 } from "@/components/ui/form";
 import { useGetTemplateSteps } from "../../hooks/useRomanticEventCreation";
 import { EventOption } from "@/types/event-schema";
@@ -26,8 +22,6 @@ import {
 import {
   SortableContext,
   verticalListSortingStrategy,
-  useSortable,
-  arrayMove,
 } from "@dnd-kit/sortable";
 import {
   restrictToVerticalAxis,

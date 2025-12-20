@@ -1,6 +1,5 @@
 "use client";
 
-import { SimpTarget } from "@/types/simpTarget";
 import { useDeleteRomanticEvent } from "../hooks/useRomanticEvent";
 import { usePublishRomanticEvent } from "@/modules/romantic-event-publish/hooks/useRomanticEventPublish";
 import { Button } from "@/components/ui/button";
@@ -53,13 +52,6 @@ const eventsBackgrounds = [
   "bg-linear-to-t from-purple-500 to-purple-300",
 ];
 
-
-const statusBackgrounds = [
-  "bg-green",
-  "bg-red",
-  "bg-yellow",
-  "bg-secondary"
-]
 
 function getStatusBackground(status: string) {
   if (status === "accepted") return "bg-green"

@@ -1,5 +1,5 @@
 "use client";
-import { eventStep, eventOption, romanticEvent } from "@/types/event-schema";
+import { romanticEvent } from "@/types/event-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -12,12 +12,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { useSimpTargets } from "@/modules/simp-target/hooks/useSimpTarget";
 import { useRomanticEventStore } from "@/stores/useRomanticEventStore";
 import {
-  Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
@@ -49,7 +47,7 @@ export default function StepOne() {
     const id = Number(data.simp_target_id);
     setData({
       ...data,
-      simp_target_id: id, 
+      simp_target_id: id,
     });
     router.push("/romantic-event-creation/step-two");
   };
@@ -61,13 +59,13 @@ export default function StepOne() {
         className="bg-card p-5 min-w-sm lg:min-w-md border rounded-lg space-y-8"
       >
         <FormField
-       
+
           control={form.control}
           name="simp_target_id"
           render={({ field }) => (
             <FormItem>
               <FormLabel>First Name</FormLabel>
-             
+
               <NumberSelect onValueChange={field.onChange} value={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -77,18 +75,18 @@ export default function StepOne() {
                 <SelectContent>
                   {targets?.map((target) => (
                     <SelectItem key={target.id} value={String(target.id)}>
-                      {target.name} 
+                      {target.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
-                </NumberSelect>
+              </NumberSelect>
               {/* </Select> */}
               <FormMessage />
             </FormItem>
           )}
         />
 
-       <div className="flex justify-between">
+        <div className="flex justify-between">
           <Link href="/dashboard">
             <Button variant="outline">Cancel</Button>
           </Link>

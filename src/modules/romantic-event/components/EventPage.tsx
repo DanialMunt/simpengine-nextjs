@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+
 import { EventCard } from "./EventCard";
 import { motion, AnimatePresence } from "framer-motion";
 import { CardSkeleton } from "@/components/ui/loadingComp/cardSkeleton";

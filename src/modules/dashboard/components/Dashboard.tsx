@@ -1,4 +1,4 @@
-import { info } from "console";
+
 import { MessageCircleHeart } from "lucide-react";
 import { User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 import {
@@ -221,12 +220,12 @@ export default function Dashboard() {
               </DropdownMenu>
             </div>
 
-           
+
             <ResponsiveContainer
               style={{
                 paddingRight: "50px",
                 paddingTop: "10px",
-          
+
               }}
               width="100%"
               height="80%"
@@ -260,12 +259,12 @@ export default function Dashboard() {
               </LineChart>
             </ResponsiveContainer>
 
-             <div className="flex justify-around ml-12 mr-10">
+            <div className="flex justify-around ml-12 mr-10">
               {/* Stat 1 */}
               <div className="relative flex items-end gap-2">
                 <div className="relative">
                   <p className="text-3xl font-semibold">5</p>
-                   <div className="absolute -top-2 left-3 lg:-top-1 lg:left-5 flex items-center">
+                  <div className="absolute -top-2 left-3 lg:-top-1 lg:left-5 flex items-center">
                     <p className="text-[0.6rem] font-semibold text-[#02a92b]">
                       +2.5%
                     </p>

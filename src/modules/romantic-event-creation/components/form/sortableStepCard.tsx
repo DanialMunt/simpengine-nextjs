@@ -17,7 +17,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { NumberSelect } from "@/components/ui/number-select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 
 type FormValues = {
@@ -55,8 +54,8 @@ export default function SortableStepCard({
   watch: any;
   setValue: any;
   templateSteps:
-    | { id: number; title: string; options?: EventOption[] }[]
-    | undefined;
+  | { id: number; title: string; options?: EventOption[] }[]
+  | undefined;
   optionsById: Map<number, EventOption[]>;
 }) {
   const {
@@ -165,11 +164,10 @@ export default function SortableStepCard({
                   className={`
                         relative cursor-pointer rounded-md overflow-hidden border
                          transition 
-                        ${
-                          checked
-                            ? "border-primary ring-2 ring-primary"
-                            : "border-border"
-                        }`}
+                        ${checked
+                      ? "border-primary ring-2 ring-primary"
+                      : "border-border"
+                    }`}
                 >
                   <input
                     type="checkbox"
