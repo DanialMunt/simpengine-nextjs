@@ -1,14 +1,10 @@
 import { api } from "@/lib/axios";
-import {Event} from "@/types/events";
-import { RomanticEvent } from "@/types/event-schema";
-import { TemplateStep } from "@/types/event-schema";
-import { CreateStepsPayload } from "@/types/event-schema";
 
 
 export const publishRomanticEvent = async (id: number) => {
-    const res = await api.post(`/romantic-event/${id}/publish`, id);
+  const res = await api.post(`/romantic-event/${id}/publish`, id);
 
-    return res.data
+  return res.data
 }
 
 

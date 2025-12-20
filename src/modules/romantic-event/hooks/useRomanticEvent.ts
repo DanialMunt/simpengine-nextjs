@@ -1,24 +1,24 @@
 "use client"
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Event } from "@/types/events";
+import { RomanticEvent } from "@/types/event-schema";
 import { createRomanticEventApi, getRomanticEventsApi, deleteRomanticEventApi } from "../api/romanticEventApi";
 
-export const useGetRomanticEvent = (params?: Partial<Event>) => {
-  return useQuery({ 
+export const useGetRomanticEvent = (params?: Partial<RomanticEvent>) => {
+  return useQuery({
     queryKey: ["romanticEvents", params],
     queryFn: () => getRomanticEventsApi(params),
   });
 }
 
 export const useCreateRomanticEvent = () => {
-    const qc = useQueryClient();
+  const qc = useQueryClient();
 
-    return useMutation({
-        mutationFn: createRomanticEventApi,
-        onSuccess: () => {
-            qc.invalidateQueries({ queryKey: ["romanticEvents"] });
-        },
-    });
+  return useMutation({
+    mutationFn: createRomanticEventApi,
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["romanticEvents"] });
+    },
+  });
 }
 
 export const useDeleteRomanticEvent = () => {
