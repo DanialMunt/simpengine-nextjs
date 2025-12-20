@@ -2,6 +2,7 @@
 
 import { useState, use } from "react";
 import { InvitationCard } from "@/modules/public-event/components/InvitationCard";
+import { FloatingHearts } from "@/modules/public-event/components/FloatingHearts";
 import {
   StepCard,
 } from "@/modules/public-event/components/StepCard";
@@ -36,15 +37,15 @@ export default function PublicRomanticEventPage({
 
   if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20">
-        <Loader2 className="w-10 h-10 animate-spin text-primary" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-100 to-pink-200">
+        <Loader2 className="w-10 h-10 animate-spin text-rose-500" />
       </div>
     );
   }
 
   if (error || !event) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-secondary/20">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-100 to-pink-200">
         <div className="bg-destructive/10 text-destructive p-4 rounded-lg">
           Error loading event. Please check the link and try again.
         </div>
@@ -112,8 +113,9 @@ export default function PublicRomanticEventPage({
   };
 
   return (
-    <main className="min-h-screen w-full bg-gradient-to-br from-background to-secondary/20 flex flex-col items-center justify-center p-4 md:p-8">
-      <div className="w-full max-w-4xl flex justify-center">
+    <main className="min-h-screen w-full bg-gradient-to-br from-pink-50 via-rose-100 to-pink-200 flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden">
+      <FloatingHearts />
+      <div className="w-full max-w-4xl flex justify-center z-10">
         <AnimatePresence mode="wait">
           {view === "invitation" && (
             <InvitationCard
@@ -129,11 +131,11 @@ export default function PublicRomanticEventPage({
           {view === "rejected" && (
             <div
               key="rejected"
-              className="text-center space-y-4 p-8 bg-card border border-border rounded-xl shadow-lg max-w-md"
+              className="text-center space-y-4 p-8 bg-white/80 border-2 border-rose-200 rounded-xl shadow-lg max-w-md backdrop-blur-sm"
             >
               <div className="text-4xl">💔</div>
-              <h2 className="text-2xl font-bold">Maybe next time...</h2>
-              <p className="text-muted-foreground">
+              <h2 className="text-2xl font-bold text-rose-700">Maybe next time...</h2>
+              <p className="text-rose-500 font-medium">
                 The invitation has been declined.
               </p>
             </div>
@@ -153,14 +155,14 @@ export default function PublicRomanticEventPage({
           {view === "finished" && (
             <div
               key="finished"
-              className="text-center space-y-4 p-8 bg-card border border-border rounded-xl shadow-lg max-w-md animate-in zoom-in-95 duration-500"
+              className="text-center space-y-4 p-8 bg-white/90 border-2 border-rose-300 rounded-xl shadow-xl max-w-md animate-in zoom-in-95 duration-500 backdrop-blur-md"
             >
               <div className="text-6xl animate-bounce">🎉</div>
-              <h2 className="text-2xl font-bold text-primary">
+              <h2 className="text-3xl font-bold text-rose-600">
                 It&apos;s a Date!
               </h2>
-              <p className="text-muted-foreground">
-                Your choices have been sent. Can&apos;t wait for our special night!
+              <p className="text-rose-500 text-lg">
+                Your choices have been sent. <br /> Can&apos;t wait for our special night!
               </p>
             </div>
           )}

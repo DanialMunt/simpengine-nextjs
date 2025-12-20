@@ -35,27 +35,27 @@ export function InvitationCard({
             transition={{ duration: 0.5 }}
             className="w-full max-w-md"
         >
-            <Card className="border-2 border-primary/20 shadow-xl bg-card/50 backdrop-blur-sm">
+            <Card className="border-2 border-rose-400/50 shadow-2xl shadow-rose-200/50 bg-white/80 backdrop-blur-md">
                 <CardHeader className="text-center space-y-4">
-                    <div className="mx-auto bg-primary/10 p-4 rounded-full w-20 h-20 flex items-center justify-center">
-                        <Heart className="w-10 h-10 text-primary animate-pulse" fill="currentColor" />
+                    <div className="mx-auto bg-rose-100 p-4 rounded-full w-24 h-24 flex items-center justify-center animate-pulse">
+                        <Heart className="w-12 h-12 text-rose-500 fill-rose-500" />
                     </div>
-                    <CardTitle className="text-3xl font-bold bg-primary bg-clip-text text-transparent">
+                    <CardTitle className="text-4xl font-extrabold text-rose-600 drop-shadow-sm">
                         {title}
                     </CardTitle>
-                    <CardDescription className="text-lg font-medium">
+                    <CardDescription className="text-xl font-medium text-rose-400">
                         {format(new Date(date), "PPP p")}
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="text-center">
-                    <p className="text-muted-foreground leading-relaxed italic">
+                    <p className="text-slate-600 leading-relaxed italic text-lg opacity-90">
                         &ldquo;{description}&rdquo;
                     </p>
                 </CardContent>
                 <CardFooter className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center pt-6">
                     <Button
                         variant="outline"
-                        className="w-full text-red sm:w-auto border-destructive/50 hover:bg-destructive/10 hover:text-destructive transition-colors gap-2"
+                        className="w-full sm:w-auto border-rose-200 text-rose-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 transition-colors gap-2"
                         onClick={onReject}
                     >
                         <XCircle className="w-4 h-4" />
@@ -63,10 +63,10 @@ export function InvitationCard({
                     </Button>
                     <Button
                         size="lg"
-                        className="w-full sm:w-auto  from-primary  gap-2 shadow-lg shadow-primary/25"
+                        className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white gap-2 shadow-lg shadow-rose-300/50 transition-all hover:scale-105"
                         onClick={onAccept}
                     >
-                        <Heart className="w-4 h-4" fill="currentColor" />
+                        <Heart className="w-4 h-4 fill-current" />
                         I&apos;d love to!
                     </Button>
                 </CardFooter>

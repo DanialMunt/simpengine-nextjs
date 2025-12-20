@@ -58,9 +58,9 @@ export function StepCard({
             transition={{ duration: 0.3 }}
             className="w-full max-w-2xl"
         >
-            <Card className="border-border/50 shadow-xl bg-card/80 backdrop-blur-md">
+            <Card className="border-2 border-rose-300/50 shadow-2xl shadow-rose-200/50 bg-white/90 backdrop-blur-md">
                 <CardHeader>
-                    <CardTitle className="text-2xl font-bold">{title}</CardTitle>
+                    <CardTitle className="text-3xl font-bold text-rose-600 drop-shadow-sm">{title}</CardTitle>
                     {/* <CardDescription className="text-lg">{description}</CardDescription> */}
                 </CardHeader>
                 <CardContent>
@@ -72,34 +72,34 @@ export function StepCard({
                                     key={option.id}
                                     onClick={() => toggleSelection(option.id)}
                                     className={cn(
-                                        "cursor-pointer relative group rounded-xl border-2 p-4 transition-all duration-200 hover:shadow-md",
+                                        "cursor-pointer relative group rounded-xl border-2 p-4 transition-all duration-200 hover:shadow-lg hover:-translate-y-1",
                                         isSelected
-                                            ? "border-primary bg-primary/5 shadow-primary/20"
-                                            : "border-muted hover:border-primary/50 bg-secondary/30"
+                                            ? "border-rose-500 bg-rose-50 shadow-rose-200"
+                                            : "border-rose-100 hover:border-rose-300 bg-white"
                                     )}
                                 >
                                     <div className="flex items-center justify-between">
                                         <span
                                             className={cn(
                                                 "font-semibold text-lg",
-                                                isSelected ? "text-primary" : "text-foreground"
+                                                isSelected ? "text-rose-600" : "text-slate-700"
                                             )}
                                         >
                                             {option.label}
                                         </span>
                                         {isSelected && (
-                                            <div className="bg-primary text-primary-foreground rounded-full p-1">
+                                            <div className="bg-rose-500 text-white rounded-full p-1 animate-in zoom-in-50 duration-200">
                                                 <Check className="w-4 h-4" />
                                             </div>
                                         )}
                                     </div>
                                     {/* Image display */}
                                     {option.img_id && (
-                                        <div className="mt-3 aspect-video w-full rounded-lg overflow-hidden bg-muted/50">
+                                        <div className="mt-3 aspect-video w-full rounded-lg overflow-hidden bg-rose-100/50">
                                             <img
                                                 src={`${process.env.NEXT_PUBLIC_API_URL}/media/${option.img_id}`}
                                                 alt={option.label}
-                                                className="w-full h-full object-cover"
+                                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                             />
                                         </div>
                                     )}
@@ -108,12 +108,12 @@ export function StepCard({
                         })}
                     </div>
                 </CardContent>
-                <CardFooter className="flex justify-end pt-4">
+                <CardFooter className="flex justify-end pt-6 border-t border-rose-100">
                     <Button
                         size="lg"
                         disabled={selectedIds.length === 0}
                         onClick={() => onNext(selectedIds)}
-                        className="gap-2 shadow-lg shadow-primary/20"
+                        className="gap-2 shadow-lg shadow-rose-300/50 bg-rose-500 hover:bg-rose-600 text-white transition-all hover:scale-105"
                     >
                         {isLastStep ? "Finish" : "Next Step"}
                         {!isLastStep && <ChevronRight className="w-4 h-4" />}
