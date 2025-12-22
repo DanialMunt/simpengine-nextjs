@@ -4,6 +4,7 @@ import { useDeleteRomanticEvent } from "../hooks/useRomanticEvent";
 import { usePublishRomanticEvent } from "@/modules/romantic-event-publish/hooks/useRomanticEventPublish";
 import { Button } from "@/components/ui/button";
 import { RomanticEvent } from "@/types/event-schema";
+import { format } from "date-fns";
 import {
   EllipsisVertical,
   Image as ImageIcon,
@@ -41,6 +42,7 @@ import { Input } from "@/components/ui/input";
 import { Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
+import { toast } from "sonner";
 type EventCard = {
   event: RomanticEvent;
   onEdit?: (event: RomanticEvent) => void;
@@ -53,7 +55,6 @@ const eventsBackgrounds = [
   "bg-linear-to-t from-rose-400 to-rose-300",
   "bg-linear-to-t from-purple-500 to-purple-300",
 ];
-
 
 
 function getStatusBackground(status: string) {
@@ -79,6 +80,24 @@ export function EventCard({ event, onEdit }: EventCard) {
   const [publishedToken, setPublishedToken] = useState<string | null>(null);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
   const router = useRouter();
+  const handleDelete = (id: number) => {
+    deleteRomanticEvent.mutate(id, {
+      onSuccess: () => {
+        toast.success("Event deleted successfully");
+        router.refresh();
+      },
+      onError: (error: unknown) => {
+        const message =
+          error instanceof Error
+            ? error.message
+            : typeof error === "string"
+              ? error
+              : "Something went wrong";
+
+        toast.error(message);
+      },
+    });
+  };
   const handlePublish = () => {
     if (!event.id) return;
     publishRomanticEvent.mutate(event.id, {
@@ -86,6 +105,7 @@ export function EventCard({ event, onEdit }: EventCard) {
         if (data.token) {
           setPublishedToken(data.token);
           setIsSuccessOpen(true);
+          toast.success("Event published successfully");
         }
       },
     });
@@ -128,12 +148,19 @@ export function EventCard({ event, onEdit }: EventCard) {
                       Edit
                     </DropdownMenuItem>
                   )}
+
+                  <DropdownMenuItem
+
+                  >
+                    Edit
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     disabled={deleteRomanticEvent.isPending}
+                    variant="destructive"
                     onClick={() => {
                       if (event.id !== undefined) {
-                        deleteRomanticEvent.mutate(event.id);
+                        handleDelete(event.id);
                       } else {
                         console.warn("Event id is missing");
                       }
@@ -154,7 +181,7 @@ export function EventCard({ event, onEdit }: EventCard) {
               <Calendar className="w-[1.2rem] h-[1.2rem]" />
               <p>Date</p>
             </div>
-            <p>{event.event_date.slice(0, 10)}</p>
+            <p> {format(new Date(event.event_date), "PPP p")}</p>
           </div>
 
           <div className="flex gap-2 items-center">

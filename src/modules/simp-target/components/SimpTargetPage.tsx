@@ -61,8 +61,8 @@ export default function SimpTargetPage() {
             error instanceof Error
               ? error.message
               : typeof error === "string"
-              ? error
-              : "Something went wrong";
+                ? error
+                : "Something went wrong";
           toast.error(message);
         },
       }
@@ -112,9 +112,8 @@ export default function SimpTargetPage() {
           <motion.div
             layout
             transition={{ type: "spring", stiffness: 400, damping: 30 }}
-            className={`absolute top-0 bottom-0 w-1/2 bg-card rounded-lg ${
-              view === "cards" ? "left-0" : "left-1/2"
-            }`}
+            className={`absolute top-0 bottom-0 w-1/2 bg-card rounded-lg ${view === "cards" ? "left-0" : "left-1/2"
+              }`}
           />
         </div>
       </div>
@@ -151,7 +150,7 @@ export default function SimpTargetPage() {
                 <tr>
                   <th className="w-2/4 p-3 text-left font-medium">Name</th>
                   <th className="w-2/4 text-left font-medium">Description</th>
-                  <th className="w-1/6 text-left font-medium">Status</th>
+
                   <th className="w-1/6 p-3 text-left font-medium">Actions</th>
                 </tr>
               </thead>
@@ -163,11 +162,7 @@ export default function SimpTargetPage() {
                         {getEmojiAvatar(t.id)} {t.name}
                       </td>
                       <td>{t.description}</td>
-                      <td>
-                        <span className="py-1 px-3 bg-amber-400 rounded-lg text-white text-xs">
-                          Active
-                        </span>
-                      </td>
+
                       <td className="p-3">
                         <div className="flex justify-start gap-2">
                           <Button size="sm">

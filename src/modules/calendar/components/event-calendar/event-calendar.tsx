@@ -262,7 +262,7 @@ export function EventCalendar({
 
   return (
     <div
-      className="flex flex-col bg-card rounded-lg border has-data-[slot=month-view]:flex-1"
+      className="flex flex-col bg-card rounded-lg  has-data-[slot=month-view]:flex-1"
       style={
         {
           "--event-height": `${EventHeight}px`,
@@ -347,7 +347,7 @@ export function EventCalendar({
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <Button
+            {/* <Button
               className="max-[479px]:aspect-square max-[479px]:p-0!"
               onClick={() => {
                 setSelectedEvent(null) // Ensure we're creating a new event
@@ -360,7 +360,7 @@ export function EventCalendar({
                 aria-hidden="true"
               />
               <span className="max-sm:sr-only">New event</span>
-            </Button>
+            </Button> */}
           </div>
         </div>
 
