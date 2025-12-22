@@ -35,6 +35,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Copy, ExternalLink } from "lucide-react";
 import { useState } from "react";
@@ -51,6 +52,7 @@ const eventsBackgrounds = [
   "bg-linear-to-t from-rose-400 to-rose-300",
   "bg-linear-to-t from-purple-500 to-purple-300",
 ];
+
 
 
 function getStatusBackground(status: string) {
@@ -75,7 +77,7 @@ export function EventCard({ event, onEdit }: EventCard) {
   const publishRomanticEvent = usePublishRomanticEvent();
   const [publishedToken, setPublishedToken] = useState<string | null>(null);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
-
+  const router = useRouter();
   const handlePublish = () => {
     if (!event.id) return;
     publishRomanticEvent.mutate(event.id, {
@@ -190,8 +192,8 @@ export function EventCard({ event, onEdit }: EventCard) {
               </AlertDialogContent>
             </AlertDialog>
           ) : (
-            <Button variant="outline" disabled className="w-full">
-              Published
+            <Button onClick={() => router.push(`/public/romantic-event/${event.public_token}`)} className="w-full">
+              Look at the event
             </Button>
           )}
         </div>

@@ -19,6 +19,7 @@ interface InvitationCardProps {
     date: string;
     onAccept: () => void;
     onReject: () => void;
+    isCreatorViewing?: boolean;
 }
 
 export function InvitationCard({
@@ -27,6 +28,7 @@ export function InvitationCard({
     date,
     onAccept,
     onReject,
+    isCreatorViewing = false,
 }: InvitationCardProps) {
     return (
         <motion.div
@@ -36,6 +38,13 @@ export function InvitationCard({
             className="w-full max-w-md"
         >
             <Card className="border-2 border-rose-400/50 shadow-2xl shadow-rose-200/50 bg-white/80 backdrop-blur-md">
+                {isCreatorViewing && (
+                    <div className="bg-amber-100 border-b-2 border-amber-200 px-4 py-3 rounded-t-lg">
+                        <p className="text-center text-amber-800 font-medium text-sm">
+                            <strong>Preview Mode</strong> - You&apos;re viewing your own event
+                        </p>
+                    </div>
+                )}
                 <CardHeader className="text-center space-y-4">
                     <div className="mx-auto bg-rose-100 p-4 rounded-full w-24 h-24 flex items-center justify-center animate-pulse">
                         <Heart className="w-12 h-12 text-rose-500 fill-rose-500" />
@@ -55,16 +64,18 @@ export function InvitationCard({
                 <CardFooter className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center pt-6">
                     <Button
                         variant="outline"
-                        className="w-full sm:w-auto border-rose-200 text-rose-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 transition-colors gap-2"
+                        className="w-full sm:w-auto border-rose-200 text-rose-400 hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300 transition-colors gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={onReject}
+                        disabled={isCreatorViewing}
                     >
                         <XCircle className="w-4 h-4" />
                         No, thanks
                     </Button>
                     <Button
                         size="lg"
-                        className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white gap-2 shadow-lg shadow-rose-300/50 transition-all hover:scale-105"
+                        className="w-full sm:w-auto bg-rose-500 hover:bg-rose-600 text-white gap-2 shadow-lg shadow-rose-300/50 transition-all hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                         onClick={onAccept}
+                        disabled={isCreatorViewing}
                     >
                         <Heart className="w-4 h-4 fill-current" />
                         I&apos;d love to!

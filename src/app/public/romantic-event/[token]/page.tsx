@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, use } from "react";
+import { useState, use, useEffect } from "react";
 import { InvitationCard } from "@/modules/public-event/components/InvitationCard";
 import { FloatingHearts } from "@/modules/public-event/components/FloatingHearts";
 import {
@@ -15,6 +15,7 @@ import {
 } from "@/modules/public-event/hooks/usePublicEvent";
 import { AnswerPayload } from "@/modules/public-event/types";
 import { Loader2 } from "lucide-react";
+import useAuthStore from "@/stores/useAuthStore";
 
 type ViewState = "invitation" | "steps" | "rejected" | "finished";
 
@@ -35,6 +36,17 @@ export default function PublicRomanticEventPage({
   const rejectMutation = useRejectPublicEvent();
   const submitAnswersMutation = useSubmitPublicEventAnswers();
 
+  // Check if user is authenticated (creator viewing their own event)
+  const { token: authToken } = useAuthStore();
+  const isCreatorViewing = !!authToken;
+
+  // Auto-navigate to steps if event is already confirmed
+  // useEffect(() => {
+  //   if (event && event.status === "confirmed") {
+  //     setView("steps");
+  //   }
+  // }, [event]);
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-rose-100 to-pink-200">
@@ -52,6 +64,7 @@ export default function PublicRomanticEventPage({
       </div>
     );
   }
+
 
   // Sort steps by order
   const steps = event.steps.sort((a, b) => a.step_order - b.step_order);
@@ -117,6 +130,7 @@ export default function PublicRomanticEventPage({
       <FloatingHearts />
       <div className="w-full max-w-4xl flex justify-center z-10">
         <AnimatePresence mode="wait">
+          {/* && event.status !== "confirmed" */}
           {view === "invitation" && (
             <InvitationCard
               key="invitation"
@@ -125,6 +139,7 @@ export default function PublicRomanticEventPage({
               date={event.event_date}
               onAccept={handleAccept}
               onReject={handleReject}
+              isCreatorViewing={isCreatorViewing}
             />
           )}
 
