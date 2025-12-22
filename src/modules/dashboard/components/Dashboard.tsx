@@ -1,7 +1,6 @@
-
-import { MessageCircleHeart } from "lucide-react";
-import { User } from "lucide-react";
 import {
+  MessageCircleHeart,
+  User,
   CircleX,
   BadgeCheck,
 } from "lucide-react";
@@ -15,63 +14,63 @@ import { EventCalendar } from "@/modules/calendar/components/event-calendar";
 import { mapRomanticEventsToCalendar } from "@/utils/mapEvents";
 import { ScrollableCard } from "./ScrollableCard";
 
-
-
-
-
 export default function Dashboard() {
-
   const stats = [
     {
       name: "All dates",
       num: 12,
-      img: <MessageCircleHeart color="white" />,
+      icon: <MessageCircleHeart className="text-white" />,
       color: "bg-primary",
     },
     {
       name: "All targets",
       num: 4,
-      img: <User color="white" />,
+      icon: <User className="text-white" />,
       color: "bg-blue",
     },
     {
       name: "Successful dates",
       num: 9,
-      img: <BadgeCheck color="white" />,
+      icon: <BadgeCheck className="text-white" />,
       color: "bg-green",
     },
     {
       name: "Declined dates",
       num: 3,
-      img: <CircleX color="white" />,
+      icon: <CircleX className="text-white" />,
       color: "bg-red",
     },
   ];
 
   const { data: targets, isLoading: targetsLoading } = useSimpTargets();
+  const { data: romanticEvents, isLoading: eventsLoading } =
+    useGetRomanticEvent();
 
-  const { data: romanticEvents, isLoading: EventsLoading } = useGetRomanticEvent();
   const calendarEvents = romanticEvents
     ? mapRomanticEventsToCalendar(romanticEvents)
-    : []
+    : [];
+
   return (
-    <section className="flex flex-col gap-4 h-full overflow-hidden">
-      {/* Stats Section - Auto height */}
-      <section className="flex-shrink-0">
+    <section className="flex flex-col h-full gap-4 overflow-hidden min-h-0">
+
+      <section className="shrink-0">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {stats.map((info, index) => (
+          {stats.map((stat, index) => (
             <div
               key={index}
-              className="p-4 border border-border rounded-lg flex gap-5 bg-card"
+              className="flex gap-4 p-4 rounded-lg border bg-card"
             >
               <div
-                className={`min-w-12 min-h-12 max-w-12 max-h-12 rounded-full flex ${info.color} justify-center items-center`}
+                className={`w-12 h-12 rounded-full flex items-center justify-center ${stat.color}`}
               >
-                {info.img}
+                {stat.icon}
               </div>
+
               <div className="flex flex-col">
-                <h2 className="text-md text-muted-foreground">{info.name}</h2>
-                <p className="text-xl font-semibold">{info.num}</p>
+                <span className="text-sm text-muted-foreground">
+                  {stat.name}
+                </span>
+                <span className="text-xl font-semibold">{stat.num}</span>
               </div>
             </div>
           ))}
@@ -79,8 +78,8 @@ export default function Dashboard() {
       </section>
 
 
-      <section className="flex-shrink-0 h-[40vh] md:h-[38vh]">
-        <div className="h-full overflow-auto border rounded-lg">
+      <section className="shrink-0 h-[280px] sm:h-[320px]">
+        <div className="h-full overflow-auto rounded-lg border">
           <EventCalendar
             events={calendarEvents}
             initialView="week"
@@ -89,19 +88,18 @@ export default function Dashboard() {
       </section>
 
 
-      <section className="flex-shrink-0 h-[70vh] md:h-[30vh]">
-        <div className="flex h-full gap-4 flex-col lg:flex-row">
+      <section className="shrink-0 min-h-[30vh] max-h-[35vh] ">
+
+        <div className="flex h-full min-h-0 flex-col lg:flex-row gap-4">
           <ScrollableCard
             title="Romantic Events"
             viewAllHref="/romantic-event"
-            isLoading={EventsLoading}
+            isLoading={eventsLoading}
             emptyMessage="No events found"
           >
-            {EventsLoading ? (
+            {eventsLoading ? (
               <MiniCardSkeleton />
-            ) : romanticEvents &&
-              Array.isArray(romanticEvents) &&
-              romanticEvents.length > 0 ? (
+            ) : romanticEvents?.length ? (
               romanticEvents.map((event, index) => (
                 <EventMiniCard key={index} event={event} />
               ))
@@ -109,14 +107,14 @@ export default function Dashboard() {
           </ScrollableCard>
 
           <ScrollableCard
-            title="Simp targets"
+            title="Simp Targets"
             viewAllHref="/simp-target"
             isLoading={targetsLoading}
             emptyMessage="No targets found"
           >
             {targetsLoading ? (
               <MiniCardSkeleton />
-            ) : targets && Array.isArray(targets) && targets.length > 0 ? (
+            ) : targets?.length ? (
               targets.map((target, index) => (
                 <SimpTargetMiniCard key={index} target={target} />
               ))

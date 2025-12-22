@@ -31,35 +31,35 @@ export default function EventMiniCard({ event }: { event: RomanticEvent }) {
     return eventsBackgrounds[hash % eventsBackgrounds.length];
   }
   return (
-    <div className="p-4 mb-3 flex justify-between bg-card border b rounded-lg hover:bg-accent transition cursor-pointer">
-      <div className="flex gap-3">
-        <div className="rounded-lg flex justify-center items-center h-full">
+    <div className="p-3 sm:p-4 mb-3 flex justify-between bg-card border b rounded-lg hover:bg-accent transition cursor-pointer">
+      <div className="flex gap-2 sm:gap-3 min-w-0 flex-1">
+        <div className="flex-shrink-0">
           <div
-            className={`text-4xl shadow-md border-4 border-border p-4 rounded-full ${getBackground(
+            className={`w-12 h-12 sm:w-16 sm:h-16 aspect-square flex items-center justify-center text-2xl sm:text-4xl shadow-md border-2 sm:border-4 border-border rounded-full ${getBackground(
               event.id ?? 0
             )}`}
           >
             {getEmojiAvatar(event.id ?? 0)}
           </div>
         </div>
-        <div className="flex flex-col">
-          <h2 className="text-base font-bold mb-1">{event.title}</h2>
-          <div className="flex flex-col gap-3">
-            <div className="flex gap-2 items-center">
-              <div className="flex items-center gap-1 text-muted-foreground text-sm">
-                <Calendar className="w-[1.2rem] h-[1.2rem]" />
-                <p>Date</p>
+        <div className="flex flex-col min-w-0 flex-1">
+          <h2 className="text-sm sm:text-base font-bold mb-1 truncate">{event.title}</h2>
+          <div className="flex flex-col gap-2 sm:gap-3">
+            <div className="flex gap-2 items-center min-w-0">
+              <div className="flex items-center gap-1 text-muted-foreground text-xs sm:text-sm flex-shrink-0">
+                <Calendar className="w-4 h-4 sm:w-[1.2rem] sm:h-[1.2rem]" />
+                <p className="hidden sm:inline">Date</p>
               </div>
-              <p className="text-sm truncate w-[20rem]"> {format(new Date(event.event_date), "PPP p")}</p>
+              <p className="text-xs sm:text-sm truncate min-w-0">{format(new Date(event.event_date), "PPP")}</p>
             </div>
 
-            <div className="flex gap-2 items-center">
-              <div className="flex items-center gap-1 text-muted-foreground text-sm">
-                <CircleDotDashed className="w-[1.2rem] h-[1.2rem]" />
-                <p>Status</p>
+            <div className="flex gap-2 items-center min-w-0">
+              <div className="flex items-center gap-1 text-muted-foreground text-xs sm:text-sm flex-shrink-0">
+                <CircleDotDashed className="w-4 h-4 sm:w-[1.2rem] sm:h-[1.2rem]" />
+                <p className="hidden sm:inline">Status</p>
               </div>
               <p
-                className={`py-1 px-5 text-sm ${getStatusBackground(event.status)
+                className={`py-0.5 sm:py-1 px-3 sm:px-5 text-xs sm:text-sm ${getStatusBackground(event.status)
                   } text-white w-fit rounded-lg`}
               >
                 {event.status}
@@ -68,9 +68,9 @@ export default function EventMiniCard({ event }: { event: RomanticEvent }) {
           </div>
         </div>
       </div>
-      <div className="flex items-center">
-        <Button>
-          <ChevronRight />
+      <div className="flex items-center flex-shrink-0">
+        <Button size="sm" className="h-8 w-8 sm:h-10 sm:w-10 p-0">
+          <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
         </Button>
       </div>
     </div>

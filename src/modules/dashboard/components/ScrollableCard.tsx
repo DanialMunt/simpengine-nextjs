@@ -17,7 +17,7 @@ export function ScrollableCard({
     emptyMessage = "No items found",
 }: ScrollableCardProps) {
     return (
-        <div className="w-full h-full bg-card rounded-lg border border-border flex flex-col overflow-hidden">
+        <div className="w-full  h-full bg-card rounded-lg border border-border flex flex-col overflow-hidden">
             <div className="flex-shrink-0 pt-3 pb-2 px-3 flex justify-between items-center bg-card">
                 <p className="font-medium">{title}</p>
                 <Link href={viewAllHref}>
