@@ -13,6 +13,7 @@ import { cn } from "@/lib/utils";
 import { Check, ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export interface PublicOption {
     id: number;
@@ -26,6 +27,7 @@ interface StepCardProps {
     options: PublicOption[];
     onNext: (selectedOptionIds: number[]) => void;
     isLastStep?: boolean;
+    isCreatorViewing?: boolean;
 }
 
 export function StepCard({
@@ -33,16 +35,14 @@ export function StepCard({
     description,
     options,
     onNext,
+    isCreatorViewing = false,
     isLastStep = false,
 }: StepCardProps) {
-    // Assuming single selection for now based on typical flows, 
-    // but keeping it as an array state to support multi-select if needed later.
-    // For 'selecting options', usually it's one choice per step or multiple.
-    // I will implement single select logic for UI clarity but store as array.
+
     const [selectedIds, setSelectedIds] = useState<number[]>([]);
 
     const toggleSelection = (id: number) => {
-        // Multi select mode:
+
         if (selectedIds.includes(id)) {
             setSelectedIds(selectedIds.filter((i) => i !== id));
         } else {
@@ -60,17 +60,33 @@ export function StepCard({
         >
             <Card className="border-2 border-rose-300/50 shadow-2xl shadow-rose-200/50 bg-white/90 backdrop-blur-md">
                 <CardHeader>
+
                     <CardTitle className="text-3xl font-bold text-rose-600 drop-shadow-sm">{title}</CardTitle>
+                    {isCreatorViewing && (
+                        <div className="bg-amber-100 border-amber-200 px-4 py-3">
+                            <p className="text-center text-amber-800 font-medium text-sm">
+                                <strong>Preview Mode</strong> - You&apos;re viewing your own event
+                            </p>
+                        </div>
+                    )}
                     {/* <CardDescription className="text-lg">{description}</CardDescription> */}
+
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         {options.map((option) => {
                             const isSelected = selectedIds.includes(option.id);
                             return (
-                                <div
+                                <button
                                     key={option.id}
-                                    onClick={() => toggleSelection(option.id)}
+                                    onClick={() => {
+                                        if (!isCreatorViewing) {
+                                            toggleSelection(option.id)
+                                        } else {
+                                            toast.info("You can't select options in creator view")
+                                        }
+                                    }}
+                                    // disabled={isCreatorViewing}
                                     className={cn(
                                         "cursor-pointer relative group rounded-xl border-2 p-4 transition-all duration-200 hover:shadow-lg hover:-translate-y-1",
                                         isSelected
@@ -103,7 +119,7 @@ export function StepCard({
                                             />
                                         </div>
                                     )}
-                                </div>
+                                </button>
                             );
                         })}
                     </div>
@@ -111,7 +127,7 @@ export function StepCard({
                 <CardFooter className="flex justify-end pt-6 border-t border-rose-100">
                     <Button
                         size="lg"
-                        disabled={selectedIds.length === 0}
+                        disabled={!isCreatorViewing && selectedIds.length === 0}
                         onClick={() => onNext(selectedIds)}
                         className="gap-2 shadow-lg shadow-rose-300/50 bg-rose-500 hover:bg-rose-600 text-white transition-all hover:scale-105"
                     >

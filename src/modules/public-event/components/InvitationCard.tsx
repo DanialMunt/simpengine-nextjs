@@ -20,6 +20,7 @@ interface InvitationCardProps {
     onAccept: () => void;
     onReject: () => void;
     isCreatorViewing?: boolean;
+    onViewSteps: () => void;
 }
 
 export function InvitationCard({
@@ -28,6 +29,7 @@ export function InvitationCard({
     date,
     onAccept,
     onReject,
+    onViewSteps,
     isCreatorViewing = false,
 }: InvitationCardProps) {
     return (
@@ -39,9 +41,10 @@ export function InvitationCard({
         >
             <Card className="border-2 border-rose-400/50 shadow-2xl shadow-rose-200/50 bg-white/80 backdrop-blur-md">
                 {isCreatorViewing && (
-                    <div className="bg-amber-100 border-b-2 border-amber-200 px-4 py-3 rounded-t-lg">
+                    <div className="bg-amber-100 border-amber-200 px-4 py-3">
                         <p className="text-center text-amber-800 font-medium text-sm">
                             <strong>Preview Mode</strong> - You&apos;re viewing your own event
+                            <Button variant={"ghost"} onClick={onViewSteps}><u>Check out the event steps</u></Button>
                         </p>
                     </div>
                 )}

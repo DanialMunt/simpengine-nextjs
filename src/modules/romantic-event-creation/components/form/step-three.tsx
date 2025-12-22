@@ -30,6 +30,7 @@ import {
 import { useRomanticEventStore } from "@/stores/useRomanticEventStore";
 import { useRouter } from "next/navigation";
 import { TemplateStep, CreateStepsPayload } from "@/types/event-schema";
+import { toast } from "sonner";
 
 type EventBlock = {
   selectedEventId?: number;
@@ -112,9 +113,9 @@ export default function StepThree() {
     createStep.mutate(
       { romanticEventId: eventId!, data: payload },
       {
-        onSuccess: (data) => {
+        onSuccess: () => {
           router.push("/romantic-event");
-          console.log("Successfully created steps:", data);
+          toast.success("Event created successfully");
 
         },
         onError: (error) => {

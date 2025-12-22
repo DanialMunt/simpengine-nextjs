@@ -16,6 +16,7 @@ import {
 import { AnswerPayload } from "@/modules/public-event/types";
 import { Loader2 } from "lucide-react";
 import useAuthStore from "@/stores/useAuthStore";
+import { toast } from "sonner";
 
 type ViewState = "invitation" | "steps" | "rejected" | "finished";
 
@@ -79,6 +80,11 @@ export default function PublicRomanticEventPage({
     });
   };
 
+  const handleViewSteps = () => {
+    setView("steps");
+    setCurrentStepIndex(0);
+  };
+
   const handleReject = () => {
     rejectMutation.mutate(token, {
       onSuccess: () => {
@@ -98,7 +104,7 @@ export default function PublicRomanticEventPage({
     if (currentStepIndex < steps.length - 1) {
       setCurrentStepIndex((prev) => prev + 1);
     } else {
-      handleFinish(newSelections);
+      isCreatorViewing ? toast.info("You can't submit answers in creator view") : handleFinish(newSelections);
     }
   };
 
@@ -114,12 +120,12 @@ export default function PublicRomanticEventPage({
       { token, payload },
       {
         onSuccess: () => {
-          console.log("Answers submitted successfully");
+          toast.success("Answers submitted successfully");
           setView("finished");
         },
         onError: (e) => {
           console.error("Error submitting answers", e);
-          // Optionally show toast error here
+          toast.error("Error submitting answers");
         },
       }
     );
@@ -139,6 +145,7 @@ export default function PublicRomanticEventPage({
               date={event.event_date}
               onAccept={handleAccept}
               onReject={handleReject}
+              onViewSteps={handleViewSteps}
               isCreatorViewing={isCreatorViewing}
             />
           )}
@@ -164,6 +171,7 @@ export default function PublicRomanticEventPage({
               options={currentStep.options}
               onNext={handleNextStep}
               isLastStep={currentStepIndex === steps.length - 1}
+              isCreatorViewing={isCreatorViewing}
             />
           )}
 

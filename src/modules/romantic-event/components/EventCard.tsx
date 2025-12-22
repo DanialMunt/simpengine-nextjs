@@ -9,6 +9,7 @@ import {
   Image as ImageIcon,
   Calendar,
   CircleDotDashed,
+  Globe,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -173,7 +174,7 @@ export function EventCard({ event, onEdit }: EventCard) {
           {event.status === "draft" ? (
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button className="w-full">Publish</Button>
+                <Button className="w-full"><Globe className="h-4 w-4" />Publish</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -186,14 +187,15 @@ export function EventCard({ event, onEdit }: EventCard) {
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
                   <AlertDialogAction onClick={handlePublish}>
+                    <Globe className="h-4 w-4" />
                     Publish
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
           ) : (
-            <Button onClick={() => router.push(`/public/romantic-event/${event.public_token}`)} className="w-full">
-              Look at the event
+            <Button variant={"outlineLink"} onClick={() => window.open(`/public/romantic-event/${event.public_token}`)} className="w-full">
+              <ExternalLink className="h-4 w-4" /> Look at the event
             </Button>
           )}
         </div>
