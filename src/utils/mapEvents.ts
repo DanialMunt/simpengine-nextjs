@@ -19,13 +19,19 @@ export function mapRomanticEventsToCalendar(events: RomanticEvent[]): CalendarEv
 
 function statusToColor(status: string): CalendarEvent["color"] {
   switch (status.toLowerCase()) {
-    case "planned":
-      return "sky"
-    case "completed":
-      return "emerald"
+    case "accepted":
+    case "confirmed":
+      return "emerald"  // Green - success states
+    case "published":
+      return "sky"      // Blue - published/live state
+    case "draft":
+      return "amber"    // Yellow - in progress
+    case "rejected":
     case "cancelled":
-      return "rose"
+      return "rose"     // Red/Pink - negative states
+    case "planned":
+      return "violet"   // Purple - planned future events
     default:
-      return "amber"
+      return "orange"   // Orange - unknown/other states
   }
 }
